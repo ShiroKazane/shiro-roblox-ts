@@ -1,0 +1,82 @@
+name: Release Develop
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'src/**/*'
+      - default.project.json
+      - mantle.yaml
+      - package.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+concurrency:
+  group: development_environment
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --prod
+
+      - name: Install roblox-ts
+        run: pnpm add roblox-ts
+
+      - name: Setup Rokit
+        uses: CompeyDev/setup-rokit@d49be92bd9502180218c3f43e7988faa945217b0 # v0.1.2
+
+      - name: Compile
+        run: npx rbxtsc --verbose
+
+      - name: Build project
+        run: rojo build ./default.project.json --output place.rbxlx
+
+      - name: Upload place
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4
+        with:
+          name: place
+          path: place.rbxlx
+          if-no-files-found: error
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment: development
+    needs: build
+
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+
+      - name: Setup Rokit
+        uses: CompeyDev/setup-rokit@d49be92bd9502180218c3f43e7988faa945217b0 # v0.1.2
+
+      - name: Download place artifact
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4
+        with:
+          name: place
+
+      - name: Deploy place
+        run: mantle deploy mantle.yaml --environment development
+        env:
+          ROBLOSECURITY: ${{ secrets.ROBLOSECURITY }}
+          MANTLE_OPEN_CLOUD_API_KEY: ${{ secrets.MANTLE_OPEN_CLOUD_API_KEY }}
+          MANTLE_AWS_ACCESS_KEY_ID: ${{ secrets.MANTLE_AWS_ACCESS_KEY_ID }}
+          MANTLE_AWS_SECRET_ACCESS_KEY: ${{ secrets.MANTLE_AWS_SECRET_ACCESS_KEY }}
