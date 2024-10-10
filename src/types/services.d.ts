@@ -1,4 +1,4 @@
-interface ReplicatedStorage {
+interface ReplicatedStorage extends Instance {
 	rbxts_include: {
 		Promise: ModuleScript;
 		RuntimeLib: ModuleScript;
@@ -35,6 +35,7 @@ interface ReplicatedStorage {
 			"physics-util": ModuleScript;
 			"player-util": ModuleScript;
 		} & Folder;
+		wcs: Folder;
 	} & Folder;
 	"TS-types": {
 		enum: {
