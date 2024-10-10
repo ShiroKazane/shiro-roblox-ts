@@ -21,7 +21,7 @@ interface LeaderstatEntry<T extends keyof LeaderstatValueTypes = keyof Leadersta
 	ValueType: T;
 }
 
-type Leaderstats = "Coins" | "Example2";
+type Leaderstats = "Coins" | "Non";
 
 type LeaderstatValue = Instances[keyof LeaderstatValueTypes];
 

@@ -1,8 +1,9 @@
+/* eslint-disable ts/no-duplicate-enum-values -- Allow duplicate enum values */
 import { $NODE_ENV } from "rbxts-transform-env";
 
 export enum GameId {
-	Development = 6031475575,
-	Production = 6110424408,
+	Development = 6636482002,
+	Production = 6636482002,
 }
 
 function IsGameId(value: number): value is GameId {

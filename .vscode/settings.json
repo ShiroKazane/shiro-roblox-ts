@@ -5,7 +5,16 @@
 	"eslint.format.enable": true,
 	// Enable the ESlint flat config support
 	"eslint.useFlatConfig": true,
-	"eslint.validate": ["typescript", "typescriptreact", "markdown", "json", "jsonc", "yaml", "toml", "luau"],
+	"eslint.validate": [
+		"typescript",
+		"typescriptreact",
+		"markdown",
+		"json",
+		"jsonc",
+		"yaml",
+		"toml",
+		"luau"
+	],
 	// Silent the stylistic rules in you IDE, but still auto fix them
 	"eslint.rules.customizations": [
 		{ "rule": "style/*", "severity": "off", "fixable": true },
@@ -25,5 +34,7 @@
 		"source.organizeImports": "never"
 	},
 	"npm.packageManager": "pnpm",
-	"eslint.options": { "flags": ["unstable_ts_config"] }
+	"eslint.options": {
+		"flags": ["unstable_ts_config"]
+	}
 }

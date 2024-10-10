@@ -2,8 +2,7 @@ import { GameId, getConfigValueForGame } from "shared/functions/game-config";
 
 export const GamePass = {
 	Example: getConfigValueForGame({
-		[GameId.Development]: "6031475575",
-		[GameId.Production]: "6110424408",
+		[GameId.Production]: "6636482002",
 	}),
 } as const;
 
@@ -15,8 +14,7 @@ export interface GamePassData {
 
 export const Product = {
 	Example: getConfigValueForGame({
-		[GameId.Development]: "6031475575",
-		[GameId.Production]: "6110424408",
+		[GameId.Production]: "6636482002",
 	}),
 } as const;
 
