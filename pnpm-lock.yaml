@@ -95,8 +95,8 @@ importers:
         specifier: 2.2.0
         version: 2.2.0
       rbxts-transform-env:
-        specifier: github:roblox-aurora/rbxts-transform-env
-        version: https://codeload.github.com/roblox-aurora/rbxts-transform-env/tar.gz/50937a3b81e92c5b13ed35807ea0426dac91c985(patch_hash=mg5hkswgaqr7kg2fzrqehkqlsi)
+        specifier: 2.2.0
+        version: 2.2.0(patch_hash=mg5hkswgaqr7kg2fzrqehkqlsi)
     devDependencies:
       '@commitlint/cli':
         specifier: 19.5.0
@@ -4080,9 +4080,8 @@ packages:
   rbxts-transform-debug@2.2.0:
     resolution: {integrity: sha512-JWYia7sG/MbkDJ8AnIqMI/Kx1zn73QnszIj0qT9+lhZ4Zbtc/XEOeTDLFMh+x3SIWtppzopRkQvnl+gtR4YdeA==}
 
-  rbxts-transform-env@https://codeload.github.com/roblox-aurora/rbxts-transform-env/tar.gz/50937a3b81e92c5b13ed35807ea0426dac91c985:
-    resolution: {tarball: https://codeload.github.com/roblox-aurora/rbxts-transform-env/tar.gz/50937a3b81e92c5b13ed35807ea0426dac91c985}
-    version: 2.2.0
+  rbxts-transform-env@2.2.0:
+    resolution: {integrity: sha512-Ye6dDNBPZMZvk9n84Pn5E7+1JLDYLN4gccaKXiRIMRblSE1JJM4qpeOkdO1gNOFcJzTJlc01FE9hK2h5lOX0rw==}
 
   rbxts-transformer-flamework@1.2.3:
     resolution: {integrity: sha512-QuveQ/sgxMMOE3Kov3TeKKht8b/ZwWJcghPhILPaluWYzHTm3AfUnkG9+9FrkfuEvKL44ug9iLTtMiMJVKg8iw==}
@@ -9600,13 +9599,13 @@ snapshots:
       types-package-json: 2.0.39
       typescript: 5.2.2
 
-  rbxts-transform-env@https://codeload.github.com/roblox-aurora/rbxts-transform-env/tar.gz/50937a3b81e92c5b13ed35807ea0426dac91c985(patch_hash=mg5hkswgaqr7kg2fzrqehkqlsi):
+  rbxts-transform-env@2.2.0(patch_hash=mg5hkswgaqr7kg2fzrqehkqlsi):
     dependencies:
       chalk: 4.1.2
       colors: 1.4.0
       dotenv: 8.6.0
       ts-expose-internals: 5.2.2
-      typescript: 5.5.3
+      typescript: 5.2.2
 
   rbxts-transformer-flamework@1.2.3(typescript@5.5.3):
     dependencies:
