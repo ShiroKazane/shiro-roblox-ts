@@ -15,7 +15,7 @@ export class Sprint extends HoldableSkill {
 	}
 
 	public OnStartServer() {
-		Log.Info("Sprinto Stato.");
+		Log.Debug("Sprinto Stato.");
 		this.speedBoost = new SpeedBoost(this.Character);
 		this.speedBoost.Start();
 		this.ApplyCooldown(2);

@@ -1,3 +1,5 @@
+/* eslint-disable ts/no-magic-numbers -- Allow magic number */
+/* eslint-disable @cspell/spellchecker -- Disable spellchecker */
 import type { OnInit } from "@flamework/core";
 import { Service } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
@@ -38,6 +40,7 @@ type LeaderstatValue = Instances[keyof LeaderstatValueTypes];
  */
 @Service({})
 export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
+	private readonly ingameIntervalMap = new Map<Player, boolean>();
 	private readonly leaderstats = new Array<LeaderstatEntry>();
 	private readonly playerToLeaderstatsMap = new Map<Player, Folder>();
 	private readonly playerToValueMap = new Map<Player, Map<string, LeaderstatValue>>();
@@ -85,6 +88,8 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		this.subscribeToPlayerData(playerEntity, valueMap);
 
 		this.playerToValueMap.set(player, valueMap);
+
+		this.watchPlayer(player);
 	}
 
 	/** @ignore */
@@ -97,6 +102,8 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		}
 
 		this.playerToValueMap.delete(player);
+
+		this.unwatchPlayer(player);
 
 		// Destroy leaderstats on leave.
 		const leaderstats = this.playerToLeaderstatsMap.get(player);
@@ -187,6 +194,38 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 				}
 			}),
 		);
+	}
+
+	/**
+	 * Giving coin to a player every 1 minute.
+	 *
+	 * @param player - Player to watch.
+	 */
+	private watchPlayer(player: Player): void {
+		const statObject = this.getStatObject(player, "Coins");
+		if (statObject?.IsA("IntValue") !== true) {
+			this.logger.Warn(`Couldn't giving player ${player} coin, Coins stat not found.`);
+			return;
+		}
+
+		this.ingameIntervalMap.set(player, true);
+
+		task.defer(() => {
+			while (this.ingameIntervalMap.get(player) === true) {
+				task.wait(60);
+				statObject.Value += 1;
+				this.logger.Info(`Added coin to ${player.Name}.`);
+			}
+		});
+	}
+
+	/**
+	 * Stops the process of adding coins to a player's leaderstats.
+	 *
+	 * @param player - The player to stop the coin increment for.
+	 */
+	private unwatchPlayer(player: Player): void {
+		this.ingameIntervalMap.set(player, false);
 	}
 
 	/**
