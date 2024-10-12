@@ -93,7 +93,21 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	}
 
 	/** @ignore */
-	public onPlayerLeave({ player }: PlayerEntity): void {
+	public onPlayerLeave(playerEntity: PlayerEntity): void {
+		const { player } = playerEntity;
+
+		this.unwatchPlayer(player);
+
+		// const statObject = this.getStatObject(player, 'Coins');
+		// if (statObject?.IsA('IntValue') === true) {
+		// 	const currentCoins = statObject.Value;
+		// 	this.logger.Debug(`${player.Name} had ${currentCoins}.`);
+
+		// 	const playerData = store.getState(selectPlayerData(userId));
+
+		// 	this.logger.Info(`Saved coin value for player ${player.Name}`);
+		// }
+
 		const valueMap = this.playerToValueMap.get(player);
 		if (valueMap !== undefined) {
 			for (const [, value] of valueMap) {
@@ -102,8 +116,6 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		}
 
 		this.playerToValueMap.delete(player);
-
-		this.unwatchPlayer(player);
 
 		// Destroy leaderstats on leave.
 		const leaderstats = this.playerToLeaderstatsMap.get(player);
@@ -214,6 +226,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 			while (this.ingameIntervalMap.get(player) === true) {
 				task.wait(60);
 				statObject.Value += 1;
+				store.giveCurrency(tostring(player.UserId), 1);
 				this.logger.Info(`Added coin to ${player.Name}.`);
 			}
 		});

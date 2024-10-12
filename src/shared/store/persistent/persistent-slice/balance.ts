@@ -33,4 +33,14 @@ export const balanceSlice = createProducer(initialState, {
 			},
 		};
 	},
+
+	setCurrency: (state, player: string, amount: number): BalanceState => {
+		return {
+			...state,
+			[player]: {
+				...state[player],
+				currency: amount,
+			},
+		};
+	},
 });

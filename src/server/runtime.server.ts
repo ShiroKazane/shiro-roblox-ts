@@ -3,7 +3,7 @@ import type { Logger } from "@rbxts/log";
 import Log from "@rbxts/log";
 
 import { GAME_NAME } from "shared/constants";
-import { setupLogger } from "shared/functions/setup-logger";
+import { setupLogger } from "shared/functions/logger";
 
 function start(): void {
 	setupLogger();

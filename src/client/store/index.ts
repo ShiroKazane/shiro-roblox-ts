@@ -3,7 +3,7 @@ import type { InferState } from "@rbxts/reflex";
 import { combineProducers, loggerMiddleware } from "@rbxts/reflex";
 
 import { $NODE_ENV } from "rbxts-transform-env";
-import { LOG_LEVEL } from "shared/functions/setup-logger";
+import { LOG_LEVEL } from "shared/functions/logger";
 import { slices } from "shared/store";
 
 import { receiverMiddleware } from "./middleware/receiver";
