@@ -1,4 +1,3 @@
-/* eslint-disable ts/no-magic-numbers -- Allow magic number */
 /* eslint-disable @cspell/spellchecker -- Disable spellchecker */
 import type { OnInit } from "@flamework/core";
 import { Service } from "@flamework/core";
@@ -9,6 +8,7 @@ import type { PlayerData } from "shared/store/persistent";
 import { selectPlayerData } from "shared/store/persistent";
 
 import { store } from "../store";
+import type PlayerDataService from "./data/player-data-service";
 import type PlayerEntity from "./player-entity";
 import type { OnPlayerJoin, OnPlayerLeave } from "./player-service";
 
@@ -45,7 +45,10 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	private readonly playerToLeaderstatsMap = new Map<Player, Folder>();
 	private readonly playerToValueMap = new Map<Player, Map<string, LeaderstatValue>>();
 
-	constructor(private readonly logger: Logger) {}
+	constructor(
+		private readonly logger: Logger,
+		private readonly playerDataService: PlayerDataService,
+	) {}
 
 	/** @ignore */
 	public onInit(): void {
@@ -94,19 +97,21 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 
 	/** @ignore */
 	public onPlayerLeave(playerEntity: PlayerEntity): void {
-		const { player } = playerEntity;
+		const { player, userId } = playerEntity;
 
 		this.unwatchPlayer(player);
 
-		// const statObject = this.getStatObject(player, 'Coins');
-		// if (statObject?.IsA('IntValue') === true) {
-		// 	const currentCoins = statObject.Value;
-		// 	this.logger.Debug(`${player.Name} had ${currentCoins}.`);
-
-		// 	const playerData = store.getState(selectPlayerData(userId));
-
-		// 	this.logger.Info(`Saved coin value for player ${player.Name}`);
-		// }
+		const state = store.getState(selectPlayerData(userId));
+		if (state !== undefined) {
+			this.playerDataService
+				.setPlayerData(player, state)
+				.then(() => {
+					this.logger.Info(`Updated data for ${player.Name}.`);
+				})
+				.catch(() => {
+					this.logger.Warn(`Couldn't update data for ${player.Name}.`);
+				});
+		}
 
 		const valueMap = this.playerToValueMap.get(player);
 		if (valueMap !== undefined) {
@@ -225,7 +230,6 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		task.defer(() => {
 			while (this.ingameIntervalMap.get(player) === true) {
 				task.wait(60);
-				statObject.Value += 1;
 				store.giveCurrency(tostring(player.UserId), 1);
 				this.logger.Info(`Added coin to ${player.Name}.`);
 			}

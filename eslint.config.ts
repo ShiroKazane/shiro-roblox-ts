@@ -15,6 +15,7 @@ export default style(
 		},
 		react: true,
 		rules: {
+			"max-lines-per-function": "off",
 			"perfectionist/sort-objects": [
 				"warn",
 				{
@@ -42,21 +43,7 @@ export default style(
 		files: [GLOB_TS],
 		rules: {
 			"no-param-reassign": "error",
-			"ts/no-magic-numbers": [
-				"error",
-				{
-					ignore: [0, 1],
-					ignoreEnums: true,
-					ignoreReadonlyClassProperties: true,
-					ignoreTypeIndexes: true,
-				},
-			],
-		},
-	},
-	{
-		files: ["src/client/ui/hooks/**/*", "src/client/ui/components/**/*"],
-		rules: {
-			"max-lines-per-function": "off",
+			"ts/no-magic-numbers": "off",
 		},
 	},
 );

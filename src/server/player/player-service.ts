@@ -158,6 +158,7 @@ export default class PlayerService implements OnStart {
 	 *
 	 * @param player - The player that joined the game.
 	 */
+
 	private async onPlayerJoin(player: Player): Promise<void> {
 		const playerDocument = await this.playerDataService.loadPlayerData(player);
 		if (!playerDocument) {
