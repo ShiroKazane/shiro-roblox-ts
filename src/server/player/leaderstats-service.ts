@@ -23,7 +23,7 @@ interface LeaderstatEntry<T extends keyof LeaderstatValueTypes = keyof Leadersta
 	ValueType: T;
 }
 
-type Leaderstats = "Coins" | "Non";
+type Leaderstats = "Koban" | "Non";
 
 type LeaderstatValue = Instances[keyof LeaderstatValueTypes];
 
@@ -52,7 +52,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 
 	/** @ignore */
 	public onInit(): void {
-		this.registerStat("Coins", "IntValue", "balance.currency");
+		this.registerStat("Koban", "IntValue", "balance.currency");
 	}
 
 	/**
@@ -214,14 +214,14 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	}
 
 	/**
-	 * Giving coin to a player every 1 minute.
+	 * Giving koban to a player every 1 minute.
 	 *
 	 * @param player - Player to watch.
 	 */
 	private watchPlayer(player: Player): void {
-		const statObject = this.getStatObject(player, "Coins");
+		const statObject = this.getStatObject(player, "Koban");
 		if (statObject?.IsA("IntValue") !== true) {
-			this.logger.Warn(`Couldn't giving player ${player} coin, Coins stat not found.`);
+			this.logger.Warn(`Couldn't giving player ${player} koban, Koban stat not found.`);
 			return;
 		}
 
@@ -231,15 +231,15 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 			while (this.ingameIntervalMap.get(player) === true) {
 				task.wait(60);
 				store.giveCurrency(tostring(player.UserId), 1);
-				this.logger.Info(`Added coin to ${player.Name}.`);
+				this.logger.Info(`Added koban to ${player.Name}.`);
 			}
 		});
 	}
 
 	/**
-	 * Stops the process of adding coins to a player's leaderstats.
+	 * Stops the process of adding koban to a player's leaderstats.
 	 *
-	 * @param player - The player to stop the coin increment for.
+	 * @param player - The player to stop the koban increment for.
 	 */
 	private unwatchPlayer(player: Player): void {
 		this.ingameIntervalMap.set(player, false);

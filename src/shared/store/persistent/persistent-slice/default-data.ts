@@ -1,3 +1,4 @@
+/* eslint-disable @cspell/spellchecker -- Disable spellchecker */
 import type { Badge } from "types/enum/badge";
 import type { GamePass, GamePassData, Product, ProductData } from "types/enum/mtx";
 
@@ -23,6 +24,7 @@ export interface PlayerMtx {
 }
 
 export interface PlayerSettings {
+	readonly cframe: Array<string>;
 	readonly musicVolume: number;
 	readonly sfxVolume: number;
 }
@@ -44,6 +46,7 @@ export const defaultPlayerData: PlayerData = {
 		receiptHistory: [],
 	},
 	settings: {
+		cframe: [],
 		musicVolume: 0.5,
 		sfxVolume: 0.5,
 	},

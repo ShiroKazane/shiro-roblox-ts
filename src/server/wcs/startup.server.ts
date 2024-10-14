@@ -1,5 +1,4 @@
 /* eslint-disable @cspell/spellchecker -- Disable spellchecker */
-/* eslint-disable ts/no-magic-numbers -- Allow magic numbers */
 
 import { ReplicatedStorage } from "@rbxts/services";
 import { Character, CreateServer } from "@rbxts/wcs";

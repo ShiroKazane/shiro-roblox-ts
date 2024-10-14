@@ -8,7 +8,7 @@ interface ReplicatedStorage extends Instance {
 		constants: ModuleScript;
 		functions: {
 			"game-config": ModuleScript;
-			"setup-logger": ModuleScript;
+			logger: ModuleScript;
 		} & Folder;
 		modules: {
 			"3d-sound-system": ModuleScript;
