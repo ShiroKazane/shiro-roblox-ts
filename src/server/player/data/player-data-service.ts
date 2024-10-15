@@ -32,7 +32,6 @@ export default class PlayerDataService {
 		if ($NODE_ENV === "development" && RunService.IsStudio()) {
 			setConfig({
 				dataStoreService: new DataStoreServiceMock(),
-				showRetryWarnings: false,
 			});
 		}
 
@@ -50,50 +49,31 @@ export default class PlayerDataService {
 	 */
 	public async loadPlayerData(player: Player): Promise<Document<PlayerData> | void> {
 		try {
-			return await this.loadPlayerDataInternal(player);
+			const document = await this.collection.load(`${player.UserId}`, [player.UserId]);
+
+			if (!player.IsDescendantOf(Players)) {
+				await document.close();
+				return;
+			}
+
+			const unsubscribe = store.subscribe(selectPlayerData(tostring(player.UserId)), data => {
+				if (data) {
+					document.write(data);
+				}
+			});
+
+			document.beforeClose(() => {
+				unsubscribe();
+				store.closePlayerData(tostring(player.UserId));
+			});
+
+			store.loadPlayerData(tostring(player.UserId), document.read());
+
+			return document;
 		} catch (err) {
 			this.logger.Warn(`Failed to load data for ${player.UserId}: ${err}`);
+			await this.collection.remove(`${player.UserId}`);
 			this.playerRemovalService.removeForBug(player, KickCode.PlayerProfileUndefined);
-		}
-	}
-
-	private async loadPlayerDataInternal(player: Player): Promise<Document<PlayerData> | void> {
-		const document = await this.collection.load(`${player.UserId}`, [player.UserId]);
-
-		if (!player.IsDescendantOf(Players)) {
-			await document.close();
-			return;
-		}
-
-		const unsubscribe = store.subscribe(selectPlayerData(tostring(player.UserId)), data => {
-			if (data) {
-				document.write(data);
-			}
-		});
-
-		document.beforeClose(() => {
-			unsubscribe();
-			store.closePlayerData(tostring(player.UserId));
-		});
-
-		store.loadPlayerData(tostring(player.UserId), document.read());
-
-		return document;
-	}
-
-	/**
-	 * Sets the player data for the given player.
-	 *
-	 * @param player - The player to set data for.
-	 * @param data - The new player data.
-	 * @returns A promise that resolves when the data is saved successfully.
-	 */
-	public async setPlayerData(player: Player, data: PlayerData): Promise<void> {
-		try {
-			const document = await this.collection.load(`${player.UserId}`, [player.UserId]);
-			document.write(data);
-		} catch (err) {
-			this.logger.Warn(`Failed to set data for ${player.UserId}: ${err}`);
 		}
 	}
 }

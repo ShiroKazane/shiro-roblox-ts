@@ -8,7 +8,6 @@ import type { PlayerData } from "shared/store/persistent";
 import { selectPlayerData } from "shared/store/persistent";
 
 import { store } from "../store";
-import type PlayerDataService from "./data/player-data-service";
 import type PlayerEntity from "./player-entity";
 import type { OnPlayerJoin, OnPlayerLeave } from "./player-service";
 
@@ -45,10 +44,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	private readonly playerToLeaderstatsMap = new Map<Player, Folder>();
 	private readonly playerToValueMap = new Map<Player, Map<string, LeaderstatValue>>();
 
-	constructor(
-		private readonly logger: Logger,
-		private readonly playerDataService: PlayerDataService,
-	) {}
+	constructor(private readonly logger: Logger) {}
 
 	/** @ignore */
 	public onInit(): void {
@@ -97,21 +93,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 
 	/** @ignore */
 	public onPlayerLeave(playerEntity: PlayerEntity): void {
-		const { player, userId } = playerEntity;
-
-		this.unwatchPlayer(player);
-
-		const state = store.getState(selectPlayerData(userId));
-		if (state !== undefined) {
-			this.playerDataService
-				.setPlayerData(player, state)
-				.then(() => {
-					this.logger.Info(`Updated data for ${player.Name}.`);
-				})
-				.catch(() => {
-					this.logger.Warn(`Couldn't update data for ${player.Name}.`);
-				});
-		}
+		const { player } = playerEntity;
 
 		const valueMap = this.playerToValueMap.get(player);
 		if (valueMap !== undefined) {
@@ -129,6 +111,8 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		}
 
 		this.playerToLeaderstatsMap.delete(player);
+
+		this.unwatchPlayer(player);
 	}
 
 	/**
@@ -214,7 +198,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	}
 
 	/**
-	 * Giving koban to a player every 1 minute.
+	 * Giving koban to a player each minute.
 	 *
 	 * @param player - Player to watch.
 	 */

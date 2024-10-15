@@ -5,6 +5,14 @@ import type { SerializedSharedState } from "./store";
 
 /** Fired by client to server. */
 interface ClientToServerEvents {
+	activity: {
+		/**
+		 * Called by the client when they are idle.
+		 *
+		 * @param time - The amount of time the player was idle for.
+		 */
+		idle: () => void;
+	};
 	store: {
 		/**
 		 * Called by the client when they are ready to receive data from the
@@ -16,6 +24,10 @@ interface ClientToServerEvents {
 
 /** Fired by server to client. */
 interface ServerToClientEvents {
+	activity: {
+		/** Sends an event to the client when they are idle. */
+		idled: () => void;
+	};
 	store: {
 		/**
 		 * Sends state updates to the client.

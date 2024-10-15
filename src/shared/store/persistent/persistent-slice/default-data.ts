@@ -1,4 +1,3 @@
-/* eslint-disable @cspell/spellchecker -- Disable spellchecker */
 import type { Badge } from "types/enum/badge";
 import type { GamePass, GamePassData, Product, ProductData } from "types/enum/mtx";
 
@@ -24,15 +23,14 @@ export interface PlayerMtx {
 }
 
 export interface PlayerSettings {
-	readonly cframe: Array<string>;
 	readonly musicVolume: number;
 	readonly sfxVolume: number;
 }
 
 export type PlayerBalanceType = keyof PlayerBalance;
 export type PlayerMtxType = keyof PlayerMtx;
-export type PlayerSettingsType = keyof PlayerSettings;
 
+export type PlayerSettingsType = keyof PlayerSettings;
 export const defaultPlayerData: PlayerData = {
 	achievements: {
 		badges: new Map<Badge, boolean>(),
@@ -46,7 +44,6 @@ export const defaultPlayerData: PlayerData = {
 		receiptHistory: [],
 	},
 	settings: {
-		cframe: [],
 		musicVolume: 0.5,
 		sfxVolume: 0.5,
 	},

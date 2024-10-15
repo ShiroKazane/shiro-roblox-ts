@@ -3,6 +3,8 @@ import { Controller } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 import { Players } from "@rbxts/services";
 
+import { Events } from "client/network";
+
 @Controller({})
 export default class IdleController implements OnInit {
 	constructor(private readonly logger: Logger) {}
@@ -22,5 +24,8 @@ export default class IdleController implements OnInit {
 	 */
 	public OnPlayerIdled(time: number): void {
 		this.logger.Debug(`Player has been idled for ${time} seconds.`);
+		if (time > 1140) {
+			Events.activity.idle.fire();
+		}
 	}
 }

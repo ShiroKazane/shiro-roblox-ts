@@ -63,6 +63,7 @@ interface ServerScriptService {
 			"leaderstats-service": ModuleScript;
 			"player-badge-service": ModuleScript;
 			"player-entity": ModuleScript;
+			"player-idle-service": ModuleScript;
 			"player-removal-service": ModuleScript;
 			"player-service": ModuleScript;
 			"with-player-entity": ModuleScript;
