@@ -126,8 +126,8 @@ importers:
         specifier: 3.0.0-types.0
         version: 3.0.0-types.0
       '@rbxts/types':
-        specifier: 1.0.811
-        version: 1.0.811
+        specifier: 1.0.813
+        version: 1.0.813
       eslint:
         specifier: 9.12.0
         version: 9.12.0(jiti@2.3.3)
@@ -1583,8 +1583,8 @@ packages:
   '@rbxts/timer@0.0.9':
     resolution: {integrity: sha512-XeX68qpRjNxvDy5efcWI0jGKM4zRFyV6EhQHSmuBbWZDQl1pD2F7h95lSZK53ai2Z2mP1l94UQYY93WMODUcIQ==}
 
-  '@rbxts/types@1.0.811':
-    resolution: {integrity: sha512-MPhs5lxzxvDqie34Y9FzJ1R+k+33jjrkj03agX2y2WzBKyGmO0rD/kPuUaKXQgEiACXuk36C5FxUTYgkKJPbvA==}
+  '@rbxts/types@1.0.813':
+    resolution: {integrity: sha512-Qpsmqnl+TNdl5AYqKFkYHyUrv652r30qK6A3GObOyDz+cvn8i+HE61mO021oq0nu1FcA4pMHbYqLSbv2CMF9Ig==}
 
   '@rbxts/ui-labs@2.3.0':
     resolution: {integrity: sha512-cuV7W/rxeWNv62q2aD7UGenSAwYzFF2OUba8KKaTQAgtixBA883CGM+5kt7pKfAoDndMnEFJkkgWQABwj3Sldg==}
@@ -6546,7 +6546,7 @@ snapshots:
       '@rbxts/services': 1.5.5
       '@rbxts/signals-tooling': 1.0.8
 
-  '@rbxts/types@1.0.811': {}
+  '@rbxts/types@1.0.813': {}
 
   '@rbxts/ui-labs@2.3.0': {}
 
