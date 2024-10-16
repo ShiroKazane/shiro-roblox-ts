@@ -31,6 +31,7 @@ export default style(
 					type: "natural",
 				},
 			],
+			"ts/no-magic-numbers": "off",
 		},
 		typescript: {
 			parserOptions: {
@@ -43,7 +44,6 @@ export default style(
 		files: [GLOB_TS],
 		rules: {
 			"no-param-reassign": "error",
-			"ts/no-magic-numbers": "off",
 		},
 	},
 );
