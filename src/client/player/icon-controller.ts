@@ -1,13 +1,18 @@
 /* eslint-disable @cspell/spellchecker -- Disable spellchecker */
 import type { OnStart } from "@flamework/core";
 import { Controller } from "@flamework/core";
+import type { Logger } from "@rbxts/log";
 import { Icon } from "@rbxts/topbar-plus";
 
 const Koban = new Icon();
 
 @Controller({})
-export class ChatPrefixController implements OnStart {
+export class IconController implements OnStart {
+	constructor(private readonly logger: Logger) {}
+
 	public onStart(): void {
+		this.logger.Info(`Setup icon..`);
+
 		Koban.setName("Koban")
 			.setLabel("Koban")
 			.align("Right")
