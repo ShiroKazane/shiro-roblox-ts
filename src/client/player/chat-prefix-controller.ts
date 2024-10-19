@@ -35,6 +35,27 @@ export class ChatPrefixController implements OnStart {
 		],
 	]);
 
+	/**
+	 * A lifecycle event that is called when the controller is started.
+	 *
+	 * This method overrides the `TextChatService.OnIncomingMessage` event and
+	 * adds a prefix to incoming messages based on the player's rank.
+	 *
+	 * The prefix is determined by the rank name, which is retrieved from the
+	 * player's attribute "Rank". The rank name is used to look up the prefix
+	 * information in the `rankPrefixMapping` map.
+	 *
+	 * The prefix information consists of three parts: the border color, the
+	 * text color, and the prefix text. The prefix text is the text that is
+	 * displayed before the player's name, and the border color and text color
+	 * are used to style the prefix text.
+	 *
+	 * The prefix text is formatted as follows: `<font
+	 * color="${border}">[</font><font color="${color}">${prefix}</font><font
+	 * color="${border}">]</font> ${message.PrefixText}`.
+	 *
+	 * This method returns the modified `TextChatMessageProperties` instance.
+	 */
 	public onStart(): void {
 		TextChatService.OnIncomingMessage = (message: TextChatMessage) => {
 			const textSource = message.TextSource;

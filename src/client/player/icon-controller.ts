@@ -10,6 +10,7 @@ const Koban = new Icon();
 export class IconController implements OnStart {
 	constructor(private readonly logger: Logger) {}
 
+	/** This method initializes icon. */
 	public onStart(): void {
 		this.logger.Info(`Setup icon..`);
 
