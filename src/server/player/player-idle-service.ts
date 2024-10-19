@@ -40,7 +40,6 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 				return;
 			}
 
-			this.logger.Info(`${player.Name} almost disconnected. Starting teleportation..`);
 			this.savePosition(player);
 			this.teleportService(player);
 		});

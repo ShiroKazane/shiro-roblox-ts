@@ -23,8 +23,13 @@ export default class IdleController implements OnInit {
 	 * @param time - The amount of time the player was idle for.
 	 */
 	public OnPlayerIdled(time: number): void {
-		if (time > 1140) {
-			Events.activity.idle.fire();
+		if (time < 1140) {
+			return;
 		}
+
+		this.logger.Info(
+			`${Players.LocalPlayer.Name} almost disconnected. Starting teleportation..`,
+		);
+		Events.activity.idle.fire();
 	}
 }
