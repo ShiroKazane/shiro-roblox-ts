@@ -2,6 +2,7 @@
 import type { OnInit } from "@flamework/core";
 import { Service } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
+import { AnalyticsService, RunService } from "@rbxts/services";
 import { t } from "@rbxts/t";
 
 import type { PlayerData } from "shared/store/persistent";
@@ -39,8 +40,9 @@ type LeaderstatValue = Instances[keyof LeaderstatValueTypes];
  */
 @Service({})
 export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
-	private readonly ingameIntervalMap = new Map<Player, boolean>();
+	private readonly ingameIntervalMap = new Map<string, boolean>();
 	private readonly leaderstats = new Array<LeaderstatEntry>();
+	private readonly playerTask = new Map<string, thread>();
 	private readonly playerToLeaderstatsMap = new Map<Player, Folder>();
 	private readonly playerToValueMap = new Map<Player, Map<string, LeaderstatValue>>();
 
@@ -65,7 +67,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 
 		this.playerToLeaderstatsMap.set(player, leaderstats);
 
-		this.logger.Info(`Assigning leaderboard stats to ${name}.`);
+		this.logger.Info(`Assigning leaderstats to ${name}.`);
 
 		const playerData = store.getState(selectPlayerData(userId));
 		const valueMap = new Map<Leaderstats, LeaderstatValue>();
@@ -87,7 +89,6 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		this.subscribeToPlayerData(playerEntity, valueMap);
 
 		this.playerToValueMap.set(player, valueMap);
-
 		this.watchPlayer(player);
 	}
 
@@ -111,7 +112,6 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		}
 
 		this.playerToLeaderstatsMap.delete(player);
-
 		this.unwatchPlayer(player);
 	}
 
@@ -162,7 +162,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 			ValueType: valueType,
 		});
 
-		this.logger.Info(`Registered leaderboard stat {@stat}`, statName);
+		this.logger.Info(`Registered leaderstat {@stat}`, statName);
 	}
 
 	/**
@@ -203,21 +203,49 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	 * @param player - Player to watch.
 	 */
 	private watchPlayer(player: Player): void {
+		const playerId = tostring(player.UserId);
+
+		const existingTask = this.playerTask.get(playerId);
+		if (existingTask) {
+			task.cancel(existingTask);
+			this.logger.Info(`Cancelled existing koban task for ${player.Name}.`);
+		}
+
 		const statObject = this.getStatObject(player, "Koban");
 		if (statObject?.IsA("IntValue") !== true) {
 			this.logger.Warn(`Couldn't giving player ${player} koban, Koban stat not found.`);
 			return;
 		}
 
-		this.ingameIntervalMap.set(player, true);
+		this.ingameIntervalMap.set(playerId, true);
 
-		task.defer(() => {
-			while (this.ingameIntervalMap.get(player) === true) {
+		const taskHandle = task.spawn(() => {
+			this.logger.Debug(`Task spawned for ${player.Name}`);
+			while (this.ingameIntervalMap.get(playerId) === true) {
 				task.wait(60);
-				store.giveCurrency(tostring(player.UserId), 1);
+
+				if (!player.Parent) {
+					this.logger.Info(`${player.Name} left, no more koban.`);
+					return;
+				}
+
+				store.giveCurrency(playerId, 1);
+				if (!RunService.IsStudio()) {
+					AnalyticsService.LogEconomyEvent(
+						player,
+						Enum.AnalyticsEconomyFlowType.Source,
+						"Koban",
+						1,
+						store.getState(selectPlayerData(playerId))?.balance.currency ?? 1,
+						Enum.AnalyticsEconomyTransactionType.TimedReward.Name,
+					);
+				}
+
 				this.logger.Info(`Added koban to ${player.Name}.`);
 			}
 		});
+
+		this.playerTask.set(playerId, taskHandle);
 	}
 
 	/**
@@ -226,7 +254,22 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	 * @param player - The player to stop the koban increment for.
 	 */
 	private unwatchPlayer(player: Player): void {
-		this.ingameIntervalMap.set(player, false);
+		const playerId = tostring(player.UserId);
+
+		const existingTask = this.playerTask.get(playerId);
+		if (existingTask) {
+			task.cancel(existingTask);
+			this.logger.Info(`Stop watching ${player.Name}.`);
+		}
+
+		this.playerTask.delete(playerId);
+
+		// if (!this.ingameIntervalMap.has(playerId)) {
+		// 	return;
+		// }
+
+		// this.ingameIntervalMap.set(playerId, false);
+		// this.logger.Info(`Stop watching ${player.Name}.`);
 	}
 
 	/**

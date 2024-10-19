@@ -24,6 +24,12 @@ export interface PlayerMtx {
 
 export interface PlayerSettings {
 	readonly musicVolume: number;
+	readonly position: {
+		idle: boolean;
+		x: number;
+		y: number;
+		z: number;
+	};
 	readonly sfxVolume: number;
 }
 
@@ -45,6 +51,12 @@ export const defaultPlayerData: PlayerData = {
 	},
 	settings: {
 		musicVolume: 0.5,
+		position: {
+			idle: false,
+			x: 0,
+			y: 0,
+			z: 0,
+		},
 		sfxVolume: 0.5,
 	},
 };

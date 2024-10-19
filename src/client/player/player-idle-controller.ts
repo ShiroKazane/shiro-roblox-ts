@@ -23,7 +23,6 @@ export default class IdleController implements OnInit {
 	 * @param time - The amount of time the player was idle for.
 	 */
 	public OnPlayerIdled(time: number): void {
-		this.logger.Debug(`Player has been idled for ${time} seconds.`);
 		if (time > 1140) {
 			Events.activity.idle.fire();
 		}
