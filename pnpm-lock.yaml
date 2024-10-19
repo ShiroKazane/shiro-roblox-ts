@@ -85,6 +85,9 @@ importers:
       '@rbxts/t':
         specifier: 3.1.1
         version: 3.1.1
+      '@rbxts/topbar-plus':
+        specifier: 3.0.2-ts.2
+        version: 3.0.2-ts.2
       '@rbxts/ui-labs':
         specifier: 2.3.0
         version: 2.3.0
@@ -1576,6 +1579,9 @@ packages:
 
   '@rbxts/timer@0.0.9':
     resolution: {integrity: sha512-XeX68qpRjNxvDy5efcWI0jGKM4zRFyV6EhQHSmuBbWZDQl1pD2F7h95lSZK53ai2Z2mP1l94UQYY93WMODUcIQ==}
+
+  '@rbxts/topbar-plus@3.0.2-ts.2':
+    resolution: {integrity: sha512-Hs7hLu2evwW1Z+0ri1Do9ughrKqTPZDM4tRfgZMUwRyy0mG0NpWMEid/i266MaM+tD6xy1RZxnCnkwA48Bx3Wg==}
 
   '@rbxts/types@1.0.813':
     resolution: {integrity: sha512-Qpsmqnl+TNdl5AYqKFkYHyUrv652r30qK6A3GObOyDz+cvn8i+HE61mO021oq0nu1FcA4pMHbYqLSbv2CMF9Ig==}
@@ -6538,6 +6544,8 @@ snapshots:
       '@rbxts/dumpster': 1.0.8
       '@rbxts/services': 1.5.5
       '@rbxts/signals-tooling': 1.0.8
+
+  '@rbxts/topbar-plus@3.0.2-ts.2': {}
 
   '@rbxts/types@1.0.813': {}
 
