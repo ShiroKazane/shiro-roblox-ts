@@ -66,6 +66,7 @@ interface ServerScriptService {
 			"player-idle-service": ModuleScript;
 			"player-removal-service": ModuleScript;
 			"player-service": ModuleScript;
+			"rank-service": ModuleScript;
 			"with-player-entity": ModuleScript;
 		} & Folder;
 		runtime: Script;
