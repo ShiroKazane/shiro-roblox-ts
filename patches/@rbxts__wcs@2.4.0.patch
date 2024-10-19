@@ -1,0 +1,24 @@
+diff --git a/out/source/client.luau b/out/source/client.luau
+index 72f2fde87d11f5ce708d5fbe06f14dc386066655..4499ad44ad346bc660a52be0fe38aa98565f70a7 100644
+--- a/out/source/client.luau
++++ b/out/source/client.luau	
+@@ -211,7 +211,6 @@ do
+ 			end
+ 			return returnedValue
+ 		end)
+-		logMessage("Started Client successfully")
+ 	end
+ 	function Client:_internal_setupCharacterReplication()
+ 		local character
+diff --git a/out/source/server.luau b/out/source/server.luau
+index f476500595e3dee4010f518e289a23057f274710..f8cf6f5d92f04af30771c4da1cd9384da93da33c 100644
+--- a/out/source/server.luau
++++ b/out/source/server.luau	
+@@ -285,7 +285,6 @@ do
+ 		end)
+ 		setActiveHandler(self)
+ 		self._internal_isActive = true
+-		logMessage("Started Server successfully")
+ 	end
+ 	function Server:IsActive()
+ 		return self._internal_isActive

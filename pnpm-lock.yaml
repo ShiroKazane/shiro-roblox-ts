@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
+  '@rbxts/topbar-plus@3.0.2-ts.2':
+    hash: o6u24zfckdcnlhu3wtctko2pga
+    path: patches/@rbxts__topbar-plus@3.0.2-ts.2.patch
+  '@rbxts/wcs@2.4.0':
+    hash: e66c6v3qkmxpebebtulg7va354
+    path: patches/@rbxts__wcs@2.4.0.patch
   rbxts-transform-env@2.2.0:
     hash: rwxalljtggkhvgst7nv6s2dtlq
     path: patches/rbxts-transform-env@2.2.0.patch
@@ -87,7 +93,7 @@ importers:
         version: 3.1.1
       '@rbxts/topbar-plus':
         specifier: 3.0.2-ts.2
-        version: 3.0.2-ts.2
+        version: 3.0.2-ts.2(patch_hash=o6u24zfckdcnlhu3wtctko2pga)
       '@rbxts/ui-labs':
         specifier: 2.3.0
         version: 2.3.0
@@ -96,7 +102,7 @@ importers:
         version: 2.0.2
       '@rbxts/wcs':
         specifier: 2.4.0
-        version: 2.4.0(@rbxts/react@17.2.1)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))
+        version: 2.4.0(patch_hash=e66c6v3qkmxpebebtulg7va354)(@rbxts/charm-sync@0.1.0)(@rbxts/react@17.2.1)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))
       rbxts-transform-debug:
         specifier: 2.2.0
         version: 2.2.0
@@ -1457,10 +1463,13 @@ packages:
     resolution: {integrity: sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@rbxts/charm-payload-converter@1.0.2':
-    resolution: {integrity: sha512-LG59ms/mIWN8OfkK0Zm+CAIMfjbdL8gXsPoe2VzbHlM8CnvpOP56FqznDM9INtrW0doRUmKBEsM+V7Xp+SoHWw==}
+  '@rbxts/charm-payload-converter@1.0.3':
+    resolution: {integrity: sha512-zgf5jwONxY2FBaSeOL8R2hQ9ta8BVQG8/D4kkRe9XCHa7Qjt5VvcQmLo/m/7LLFc4NSRtcGKnydCFE0/e0wWRA==}
     peerDependencies:
-      '@rbxts/charm': 0.x
+      '@rbxts/charm-sync': 0.x
+
+  '@rbxts/charm-sync@0.1.0':
+    resolution: {integrity: sha512-Her9Z+Cx5bnhs1wXPHkSfkrLd+ZqvXb6/XF+wedkCaaFPKsMh8E0UztKuAMHwrxrR+GjAF3u5gttT3cFYeQgoA==}
 
   '@rbxts/charm@0.6.2':
     resolution: {integrity: sha512-N8q4Cg2Hm5EYvqbstKJKDZ8SzRBwLwqqFG6qMG5z0tYj9njWmkwCY5fLwYyUmRg8UatA7pgSYiZ4hf6J0WJ3Fg==}
@@ -1469,6 +1478,9 @@ packages:
     peerDependenciesMeta:
       '@rbxts/react':
         optional: true
+
+  '@rbxts/charm@0.8.0':
+    resolution: {integrity: sha512-fdDYM1R6LABMXtKkL4hq2+hfvC5LIn543+Ipi7vmUT2jkkhqfKu8VqSSY1g/p5txCowyCtteFFskad12tnyWrA==}
 
   '@rbxts/compiler-types@3.0.0-types.0':
     resolution: {integrity: sha512-VGOHJPoL7+56NTatMGqQj3K7xWuzEV+aP4QD5vZiHu+bcff3kiTmtoadaF6NkJrmwfFAvbsd4Dg764ZjWNceag==}
@@ -6437,13 +6449,19 @@ snapshots:
 
   '@pkgr/core@0.1.1': {}
 
-  '@rbxts/charm-payload-converter@1.0.2(@rbxts/charm@0.6.2(@rbxts/react@17.2.1))':
+  '@rbxts/charm-payload-converter@1.0.3(@rbxts/charm-sync@0.1.0)':
     dependencies:
-      '@rbxts/charm': 0.6.2(@rbxts/react@17.2.1)
+      '@rbxts/charm-sync': 0.1.0
+
+  '@rbxts/charm-sync@0.1.0':
+    dependencies:
+      '@rbxts/charm': 0.8.0
 
   '@rbxts/charm@0.6.2(@rbxts/react@17.2.1)':
     optionalDependencies:
       '@rbxts/react': 17.2.1
+
+  '@rbxts/charm@0.8.0': {}
 
   '@rbxts/compiler-types@3.0.0-types.0': {}
 
@@ -6545,7 +6563,7 @@ snapshots:
       '@rbxts/services': 1.5.5
       '@rbxts/signals-tooling': 1.0.8
 
-  '@rbxts/topbar-plus@3.0.2-ts.2': {}
+  '@rbxts/topbar-plus@3.0.2-ts.2(patch_hash=o6u24zfckdcnlhu3wtctko2pga)': {}
 
   '@rbxts/types@1.0.813': {}
 
@@ -6553,12 +6571,12 @@ snapshots:
 
   '@rbxts/validate-tree@2.0.2': {}
 
-  '@rbxts/wcs@2.4.0(@rbxts/react@17.2.1)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))':
+  '@rbxts/wcs@2.4.0(patch_hash=e66c6v3qkmxpebebtulg7va354)(@rbxts/charm-sync@0.1.0)(@rbxts/react@17.2.1)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))':
     dependencies:
       '@flamework/core': 1.2.3
       '@flamework/networking': 1.2.3(@flamework/core@1.2.3)
       '@rbxts/charm': 0.6.2(@rbxts/react@17.2.1)
-      '@rbxts/charm-payload-converter': 1.0.2(@rbxts/charm@0.6.2(@rbxts/react@17.2.1))
+      '@rbxts/charm-payload-converter': 1.0.3(@rbxts/charm-sync@0.1.0)
       '@rbxts/flamework-binary-serializer': 0.6.0(@flamework/core@1.2.3)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))
       '@rbxts/immut': 0.4.4-ts.0
       '@rbxts/janitor': 1.16.0-ts.0
@@ -6567,6 +6585,7 @@ snapshots:
       '@rbxts/t': 3.1.1
       '@rbxts/timer': 0.0.9
     transitivePeerDependencies:
+      - '@rbxts/charm-sync'
       - '@rbxts/react'
       - rbxts-transformer-flamework
 
