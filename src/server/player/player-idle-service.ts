@@ -4,7 +4,7 @@ import type { Logger } from "@rbxts/log";
 import { MessagingService, Players, RunService, TeleportService } from "@rbxts/services";
 
 import { store } from "server/store";
-import { selectPlayerSettings } from "shared/store/persistent";
+import { selectPlayerProfile } from "shared/store/persistent";
 
 import { Events } from "../network";
 import type PlayerEntity from "./player-entity";
@@ -48,24 +48,20 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 
 	/**
 	 * Called when a player joins the game. If the player has a stored
-	 * coordinate in their settings, then we teleport them to that location.
+	 * coordinate in their profile, then we teleport them to that location.
 	 *
 	 * @param playerEntity - The player entity that join.
 	 */
 	public onPlayerJoin({ player }: PlayerEntity): void {
-		const state = store.getState(selectPlayerSettings(tostring(player.UserId)));
+		const state = store.getState(selectPlayerProfile(tostring(player.UserId)))?.position;
 
-		if (state?.position.idle !== undefined && state.position.idle) {
+		if (state?.idle !== undefined && state.idle) {
 			const Character = player.Character ?? player.CharacterAdded.Wait()[0];
 			const Humanoid = Character.WaitForChild("Humanoid", 10) as Humanoid;
 
 			if (Humanoid.RootPart) {
-				Humanoid.RootPart.CFrame = new CFrame(
-					state.position.x,
-					state.position.y,
-					state.position.z,
-				);
-				store.changeSetting(tostring(player.UserId), "position", {
+				Humanoid.RootPart.CFrame = new CFrame(state.x, state.y, state.z);
+				store.changeProfile(tostring(player.UserId), "position", {
 					idle: false,
 					x: 0,
 					y: 0,
@@ -88,7 +84,7 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 
 		if (Humanoid.RootPart) {
 			const { Position } = Humanoid.RootPart;
-			store.changeSetting(tostring(player.UserId), "position", {
+			store.changeProfile(tostring(player.UserId), "position", {
 				idle: true,
 				x: Position.X,
 				y: Position.Y,

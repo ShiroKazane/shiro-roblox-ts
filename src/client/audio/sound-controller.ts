@@ -8,8 +8,8 @@ import { USER_ID } from "client/constants";
 import { store } from "client/store";
 import SoundSystem from "shared/modules/3d-sound-system";
 import Make from "shared/modules/make";
-import type { PlayerSettings } from "shared/store/persistent";
-import { selectPlayerSettings } from "shared/store/persistent";
+import type { PlayerSetting } from "shared/store/persistent";
+import { selectPlayerSetting } from "shared/store/persistent";
 
 export const enum SoundType {
 	Music = "Music",
@@ -52,7 +52,7 @@ export default class SoundController implements OnInit, OnStart {
 
 	/** @ignore */
 	public onStart(): void {
-		store.subscribe(selectPlayerSettings(USER_ID), current => {
+		store.subscribe(selectPlayerSetting(USER_ID), current => {
 			if (!current) {
 				return;
 			}
@@ -108,7 +108,9 @@ export default class SoundController implements OnInit, OnStart {
 			Enum.EasingDirection.Out,
 		);
 
-		TweenService.Create(soundObject, tweenInfo, { Volume: desiredVolume }).Play();
+		TweenService.Create(soundObject, tweenInfo, {
+			Volume: desiredVolume,
+		}).Play();
 	}
 
 	private makeSoundGroup(soundType: SoundType): SoundGroup {
@@ -125,7 +127,7 @@ export default class SoundController implements OnInit, OnStart {
 		});
 	}
 
-	private onSettingsChanged(current: PlayerSettings): void {
+	private onSettingsChanged(current: PlayerSetting): void {
 		const musicGroup = this.soundGroups.get(SoundType.Music);
 		assert(musicGroup, `Music SoundGroup not found`);
 		musicGroup.Volume = current.musicVolume;

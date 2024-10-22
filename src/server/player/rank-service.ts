@@ -2,6 +2,8 @@
 import { Service } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 
+import { store } from "server/store";
+
 import type PlayerEntity from "./player-entity";
 import type { OnPlayerJoin } from "./player-service";
 
@@ -24,18 +26,14 @@ export class RankService implements OnPlayerJoin {
 	 * @param playerEntity - The player entity that joined the game.
 	 */
 	public onPlayerJoin({ player }: PlayerEntity): void {
-		const rankName = this.getPlayerRank(player);
-		this.logger.Info(`${player.Name} has the rank: ${rankName}`);
+		const rank = this.getPlayerRank(player);
+		this.logger.Info(`${player.Name} has the rank: ${rank.name} [${rank.id}]`);
 
-		this.setPlayerRank(player, rankName);
+		store.changeProfile(tostring(player.UserId), "rank", rank);
 	}
 
-	private getPlayerRank(player: Player): string {
+	private getPlayerRank(player: Player): { id: number; name: string } {
 		const rankId = player.GetRankInGroup(this.groupId);
-		return this.rankMapping.get(rankId) ?? "Guest";
-	}
-
-	private setPlayerRank(player: Player, rankName: string): void {
-		player.SetAttribute("Rank", rankName);
+		return { id: rankId, name: this.rankMapping.get(rankId) ?? "Guest" };
 	}
 }

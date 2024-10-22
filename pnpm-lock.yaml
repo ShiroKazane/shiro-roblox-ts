@@ -28,6 +28,9 @@ importers:
       '@flamework/networking':
         specifier: 1.2.3
         version: 1.2.3(@flamework/core@1.2.3)
+      '@rbxts/cmdr':
+        specifier: 1.12.1
+        version: 1.12.1
       '@rbxts/flamework-binary-serializer':
         specifier: 0.6.0
         version: 0.6.0(@flamework/core@1.2.3)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))
@@ -1481,6 +1484,9 @@ packages:
 
   '@rbxts/charm@0.8.0':
     resolution: {integrity: sha512-fdDYM1R6LABMXtKkL4hq2+hfvC5LIn543+Ipi7vmUT2jkkhqfKu8VqSSY1g/p5txCowyCtteFFskad12tnyWrA==}
+
+  '@rbxts/cmdr@1.12.1':
+    resolution: {integrity: sha512-1I/Wnz4hY5fv6Eup7RZ2xGwog4X28dk5zUKYGc/Uo0ENfhwg344c2yf8Sn4CkimLOE2jpLYHq0p8IJ1i1AQg6g==}
 
   '@rbxts/compiler-types@3.0.0-types.0':
     resolution: {integrity: sha512-VGOHJPoL7+56NTatMGqQj3K7xWuzEV+aP4QD5vZiHu+bcff3kiTmtoadaF6NkJrmwfFAvbsd4Dg764ZjWNceag==}
@@ -6462,6 +6468,8 @@ snapshots:
       '@rbxts/react': 17.2.1
 
   '@rbxts/charm@0.8.0': {}
+
+  '@rbxts/cmdr@1.12.1': {}
 
   '@rbxts/compiler-types@3.0.0-types.0': {}
 

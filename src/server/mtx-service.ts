@@ -8,7 +8,7 @@ import Sift from "@rbxts/sift";
 import Signal from "@rbxts/signal";
 
 import type { PlayerData } from "shared/store/persistent";
-import { selectPlayerData, selectPlayerMtx } from "shared/store/persistent";
+import { selectPlayerData, selectPlayerGames } from "shared/store/persistent";
 import { noYield } from "shared/util/no-yield";
 import { GamePass, Product } from "types/enum/mtx";
 
@@ -81,7 +81,7 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
 		const { userId } = playerEntity;
 
-		const gamePasses = store.getState(selectPlayerMtx(userId))?.gamePasses;
+		const gamePasses = store.getState(selectPlayerGames(userId))?.mtx.gamePasses;
 		if (gamePasses === undefined) {
 			return;
 		}
@@ -176,7 +176,10 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 	 * @returns A boolean indicating whether the game pass is active or not.
 	 */
 	public isGamePassActive({ userId }: PlayerEntity, gamePassId: GamePass): boolean {
-		return store.getState(selectPlayerMtx(userId))?.gamePasses.get(gamePassId)?.active ?? false;
+		return (
+			store.getState(selectPlayerGames(userId))?.mtx.gamePasses.get(gamePassId)?.active ??
+			false
+		);
 	}
 
 	private async checkForGamePassOwned(
@@ -188,7 +191,7 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 			throw `Invalid game pass id ${gamePassId}`;
 		}
 
-		const owned = store.getState(selectPlayerMtx(userId))?.gamePasses.has(gamePassId);
+		const owned = store.getState(selectPlayerGames(userId))?.mtx.gamePasses.has(gamePassId);
 		if (owned === true) {
 			return true;
 		}
@@ -284,7 +287,7 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 	): Promise<Enum.ProductPurchaseDecision> {
 		const { document, userId } = playerEntity;
 
-		if (document.read().mtx.receiptHistory.includes(PurchaseId)) {
+		if (document.read().games.mtx.receiptHistory.includes(PurchaseId)) {
 			const [success] = document.save().await();
 			if (!success) {
 				return Enum.ProductPurchaseDecision.NotProcessedYet;
@@ -317,7 +320,7 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 		document: Document<PlayerData>,
 		purchaseId: string,
 	): void {
-		const { receiptHistory } = data.mtx;
+		const { receiptHistory } = data.games.mtx;
 
 		let updatedReceiptHistory = Sift.Array.push(receiptHistory, purchaseId);
 		if (updatedReceiptHistory.size() > this.purchaseIdLog) {
@@ -330,7 +333,7 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 		document.write(
 			Sift.Dictionary.merge(data, {
 				mtx: {
-					...data.mtx,
+					...data.games.mtx,
 					receiptHistory: updatedReceiptHistory,
 				},
 			}),

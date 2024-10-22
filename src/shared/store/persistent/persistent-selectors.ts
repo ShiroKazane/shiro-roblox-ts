@@ -3,38 +3,32 @@ import { createSelector } from "@rbxts/reflex";
 import type { SharedState } from "..";
 import type { PlayerData } from "./persistent-slice";
 
-export function selectPlayerAchievements(playerId: string) {
-	return (state: SharedState) => state.persistent.achievements[playerId];
+export function selectPlayerGames(playerId: string) {
+	return (state: SharedState) => state.persistent.games[playerId];
 }
 
-export function selectPlayerBalance(playerId: string) {
-	return (state: SharedState) => state.persistent.balance[playerId];
+export function selectPlayerProfile(playerId: string) {
+	return (state: SharedState) => state.persistent.profile[playerId];
 }
 
-export function selectPlayerMtx(playerId: string) {
-	return (state: SharedState) => state.persistent.mtx[playerId];
-}
-
-export function selectPlayerSettings(playerId: string) {
-	return (state: SharedState) => state.persistent.settings[playerId];
+export function selectPlayerSetting(playerId: string) {
+	return (state: SharedState) => state.persistent.setting[playerId];
 }
 
 export function selectPlayerData(playerId: string): (state: SharedState) => PlayerData | undefined {
 	return createSelector(
-		selectPlayerAchievements(playerId),
-		selectPlayerBalance(playerId),
-		selectPlayerMtx(playerId),
-		selectPlayerSettings(playerId),
-		(achievements, balance, mtx, settings): PlayerData | undefined => {
-			if (!achievements || !balance || !mtx || !settings) {
+		selectPlayerGames(playerId),
+		selectPlayerProfile(playerId),
+		selectPlayerSetting(playerId),
+		(games, profile, setting): PlayerData | undefined => {
+			if (!games || !profile || !setting) {
 				return undefined;
 			}
 
 			return {
-				achievements,
-				balance,
-				mtx,
-				settings,
+				games,
+				profile,
+				setting,
 			};
 		},
 	);

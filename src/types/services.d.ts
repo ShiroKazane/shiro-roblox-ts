@@ -21,11 +21,10 @@ interface ReplicatedStorage extends Instance {
 			persistent: {
 				"persistent-selectors": ModuleScript;
 				"persistent-slice": {
-					achievements: ModuleScript;
-					balance: ModuleScript;
 					"default-data": ModuleScript;
-					mtx: ModuleScript;
-					settings: ModuleScript;
+					games: ModuleScript;
+					profile: ModuleScript;
+					setting: ModuleScript;
 				} & ModuleScript;
 			} & ModuleScript;
 		} & ModuleScript;
@@ -75,6 +74,7 @@ interface ServerScriptService {
 				broadcaster: ModuleScript;
 			} & Folder;
 		} & ModuleScript;
+		wcs: Folder;
 	} & Folder;
 }
 

@@ -50,7 +50,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 
 	/** @ignore */
 	public onInit(): void {
-		this.registerStat("Koban", "IntValue", "balance.currency");
+		this.registerStat("Koban", "IntValue", "profile.balance.currency");
 	}
 
 	/**
@@ -236,7 +236,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 						Enum.AnalyticsEconomyFlowType.Source,
 						"Koban",
 						1,
-						store.getState(selectPlayerData(playerId))?.balance.currency ?? 1,
+						store.getState(selectPlayerData(playerId))?.profile.balance.currency ?? 1,
 						Enum.AnalyticsEconomyTransactionType.TimedReward.Name,
 					);
 				}

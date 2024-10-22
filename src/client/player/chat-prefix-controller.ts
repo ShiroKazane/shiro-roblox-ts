@@ -3,6 +3,9 @@ import type { OnStart } from "@flamework/core";
 import { Controller } from "@flamework/core";
 import { Players, TextChatService } from "@rbxts/services";
 
+import { store } from "client/store";
+import { selectPlayerProfile } from "shared/store/persistent";
+
 @Controller({})
 export class ChatPrefixController implements OnStart {
 	private readonly rankPrefixMapping = new Map<
@@ -66,9 +69,10 @@ export class ChatPrefixController implements OnStart {
 			const properties = new Instance("TextChatMessageProperties");
 			const player = Players.GetPlayerByUserId(textSource.UserId);
 			if (player) {
-				const rankName = player.GetAttribute("Rank") as string | undefined;
-				if (rankName !== undefined) {
-					const rankInfo = this.rankPrefixMapping.get(rankName);
+				const state = store.getState(selectPlayerProfile(tostring(player.UserId)))?.rank;
+
+				if (state?.name !== undefined && state.name) {
+					const rankInfo = this.rankPrefixMapping.get(state.name);
 					if (rankInfo) {
 						const { border, color, prefix } = rankInfo;
 						properties.PrefixText = `<font color="${border}">[</font><font color="${color}">${prefix}</font><font color="${border}">]</font> ${message.PrefixText}`;

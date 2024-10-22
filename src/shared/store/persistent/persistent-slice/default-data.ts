@@ -2,61 +2,73 @@ import type { Badge } from "types/enum/badge";
 import type { GamePass, GamePassData, Product, ProductData } from "types/enum/mtx";
 
 export interface PlayerData {
-	readonly achievements: PlayerAchievements;
-	readonly balance: PlayerBalance;
-	readonly mtx: PlayerMtx;
-	readonly settings: PlayerSettings;
+	readonly games: PlayerGames;
+	readonly profile: PlayerProfile;
+	readonly setting: PlayerSetting;
 }
 
-export interface PlayerAchievements {
-	readonly badges: Map<Badge, boolean>;
+export interface PlayerGames {
+	readonly achievements: {
+		badges: Map<Badge, boolean>;
+	};
+	readonly mtx: {
+		gamePasses: Map<GamePass, GamePassData>;
+		products: Map<Product, ProductData>;
+		receiptHistory: Array<string>;
+	};
 }
 
-export interface PlayerBalance {
-	readonly currency: number;
-}
-
-export interface PlayerMtx {
-	readonly gamePasses: Map<GamePass, GamePassData>;
-	readonly products: Map<Product, ProductData>;
-	readonly receiptHistory: Array<string>;
-}
-
-export interface PlayerSettings {
-	readonly musicVolume: number;
+export interface PlayerProfile {
+	readonly balance: {
+		currency: number;
+	};
 	readonly position: {
 		idle: boolean;
 		x: number;
 		y: number;
 		z: number;
 	};
+	readonly rank: {
+		id: number;
+		name: string;
+	};
+}
+
+export interface PlayerSetting {
+	readonly musicVolume: number;
 	readonly sfxVolume: number;
 }
 
-export type PlayerBalanceType = keyof PlayerBalance;
-export type PlayerMtxType = keyof PlayerMtx;
+export type PlayerSettingType = keyof PlayerSetting;
 
-export type PlayerSettingsType = keyof PlayerSettings;
 export const defaultPlayerData: PlayerData = {
-	achievements: {
-		badges: new Map<Badge, boolean>(),
+	games: {
+		achievements: {
+			badges: new Map<Badge, boolean>(),
+		},
+		mtx: {
+			gamePasses: new Map<GamePass, GamePassData>(),
+			products: new Map<Product, ProductData>(),
+			receiptHistory: [],
+		},
 	},
-	balance: {
-		currency: 0,
-	},
-	mtx: {
-		gamePasses: new Map<GamePass, GamePassData>(),
-		products: new Map<Product, ProductData>(),
-		receiptHistory: [],
-	},
-	settings: {
-		musicVolume: 0.5,
+	profile: {
+		balance: {
+			currency: 0,
+		},
 		position: {
 			idle: false,
 			x: 0,
 			y: 0,
 			z: 0,
 		},
+		rank: {
+			id: 0,
+			name: "Guest",
+		},
+	},
+	setting: {
+		musicVolume: 0.5,
 		sfxVolume: 0.5,
 	},
 };

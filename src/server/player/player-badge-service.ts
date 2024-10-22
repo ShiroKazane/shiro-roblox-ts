@@ -3,7 +3,7 @@ import type { Logger } from "@rbxts/log";
 import { BadgeService } from "@rbxts/services";
 
 import { store } from "server/store";
-import { selectPlayerAchievements } from "shared/store/persistent";
+import { selectPlayerGames } from "shared/store/persistent";
 import { Badge } from "types/enum/badge";
 
 import type PlayerEntity from "./player-entity";
@@ -50,7 +50,7 @@ export default class PlayerBadgeService implements OnPlayerJoin {
 		{ player, userId }: PlayerEntity,
 		badge: Badge,
 	): Promise<boolean> {
-		const hasBadge = store.getState(selectPlayerAchievements(userId))?.badges.get(badge);
+		const hasBadge = store.getState(selectPlayerGames(userId))?.achievements.badges.get(badge);
 		if (hasBadge !== undefined) {
 			return true;
 		}
@@ -90,7 +90,7 @@ export default class PlayerBadgeService implements OnPlayerJoin {
 	private async awardUnrewardedBadges(playerEntity: PlayerEntity): Promise<void> {
 		const { userId } = playerEntity;
 
-		const badges = store.getState(selectPlayerAchievements(userId))?.badges;
+		const badges = store.getState(selectPlayerGames(userId))?.achievements.badges;
 		if (badges === undefined) {
 			return;
 		}
