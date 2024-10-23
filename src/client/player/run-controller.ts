@@ -2,13 +2,21 @@
 import type { OnStart } from "@flamework/core";
 import { Controller } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
-import { ContextActionService as CAS, UserInputService as UIS } from "@rbxts/services";
+import { ContextActionService as CAS } from "@rbxts/services";
 
 import type CharacterController from "./character/character-controller";
 
 @Controller({})
 export class RunController implements OnStart {
 	private readonly maxHoldTime = 5;
+	private readonly toggleSprint = (name: string, state: Enum.UserInputState): void => {
+		if (name === "Sprint" && state === Enum.UserInputState.Begin) {
+			this.sprint(true);
+		} else if (name === "Sprint" && state === Enum.UserInputState.End) {
+			this.sprint(false);
+		}
+	};
+
 	private sprinting = false;
 
 	constructor(
@@ -19,45 +27,13 @@ export class RunController implements OnStart {
 	public onStart(): void {
 		const Humanoid = this.characterController.getCurrentCharacter()?.Humanoid;
 		if (Humanoid) {
-			UIS.InputBegan.Connect((Input, GameProcessed) => {
-				if (GameProcessed) {
-					return;
-				}
+			CAS.BindAction("Sprint", this.toggleSprint, true, Enum.KeyCode.LeftControl);
 
-				if (Input.KeyCode === Enum.KeyCode.LeftShift) {
-					this.sprint(true);
-					this.logger.Debug("Sprinto stato.");
-				}
-			});
-
-			UIS.InputEnded.Connect((Input, GameProcessed) => {
-				if (GameProcessed) {
-					return;
-				}
-
-				if (Input.KeyCode === Enum.KeyCode.LeftShift) {
-					this.sprint(false);
-				}
-			});
-
-			CAS.BindAction(
-				"Sprint",
-				(_name, state) => {
-					if (state === Enum.UserInputState.Begin) {
-						this.sprint(true);
-					} else {
-						this.sprint(false);
-					}
-				},
-				true,
-				Enum.KeyCode.LeftShift,
-			);
-
-			CAS.SetTitle("Sprint", "Fuck");
+			CAS.SetImage("Sprint", "rbxassetid://9760497816");
 			CAS.SetPosition("Sprint", new UDim2(0.2, 0, 0.5, 0));
 			const SprintButton = CAS.GetButton("Sprint");
 			if (SprintButton !== undefined) {
-				SprintButton.Size = new UDim2(0, 16, 0, 16);
+				SprintButton.Size = new UDim2(0, 48, 0, 48);
 			}
 		}
 	}
