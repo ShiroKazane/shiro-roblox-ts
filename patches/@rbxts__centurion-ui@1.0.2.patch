@@ -1,0 +1,147 @@
+diff --git a/out/app/centurion-app.luau b/out/app/centurion-app.luau
+index f54f2df44f23f6725f074f01bf9361b2bfc5fdcc..90c94d9282571e7b810a49eedd6cded20a3aa9ea 100644
+--- a/out/app/centurion-app.luau
++++ b/out/app/centurion-app.luau	
+@@ -1,6 +1,7 @@
+ -- Compiled with roblox-ts v3.0.0
+ local TS = _G[script]
+ local UserInputService = TS.import(script, TS.getModule(script, "@rbxts", "services")).UserInputService
++local TextChatService = TS.import(script, TS.getModule(script, "@rbxts", "services")).TextChatService
+ local _vide = TS.import(script, TS.getModule(script, "@rbxts", "vide").src)
+ local Vide = _vide
+ local derive = _vide.derive
+@@ -40,11 +41,16 @@ local function CenturionApp(client)
+ 		local _exp = validKeys()
+ 		local _keyCode = input.KeyCode
+ 		local _condition = _exp[_keyCode] ~= nil
+-		if _condition then
+-			_condition = not gameProcessed
+-		end
+-		if _condition then
+-			interfaceVisible(not visible())
++		if _condition and not gameProcessed then
++			if visible() then
++				interfaceVisible(false)
++				TextChatService.ChatWindowConfiguration.Enabled = true
++				TextChatService.ChatInputBarConfiguration.Enabled = true
++			else
++				interfaceVisible(true)
++				TextChatService.ChatWindowConfiguration.Enabled = false
++				TextChatService.ChatInputBarConfiguration.Enabled = false
++			end
+ 		else
+ 			local _condition_1 = options().hideOnLostFocus
+ 			if _condition_1 then
+@@ -60,7 +66,7 @@ local function CenturionApp(client)
+ 		end
+ 	end)
+ 	return Vide.jsx(Layer, {
+-		name = "Centurion",
++		name = "Shiro",
+ 		displayOrder = function()
+ 			return options().displayOrder
+ 		end,
+diff --git a/out/app/init.luau b/out/app/init.luau
+index b6d5f648a023b5b34e65f477c45a6a575046f549..4d1b96c8f5a96f4b7d54a55f3787aaa1c64b2ba4 100644
+--- a/out/app/init.luau
++++ b/out/app/init.luau	
+@@ -96,7 +96,7 @@ do
+ 				palette = DefaultPalette[theme],
+ 			})
+ 			ctx:reply(`Set theme to '{theme}'`)
+-		end, { "centurion" })
++		end, { "shiro" })
+ 	end
+ end
+ return {
+diff --git a/out/components/suggestions/badge.luau b/out/components/suggestions/badge.luau
+index 31c0b5f73ed3060515770ab1b7c46158ca3c8bcf..2200c2f79b2c4859ce16cd2e2fa36c263cad429e 100644
+--- a/out/components/suggestions/badge.luau
++++ b/out/components/suggestions/badge.luau	
+@@ -13,6 +13,8 @@ local function Badge(props)
+ 		textColor = props.textColor,
+ 		textSize = props.textSize,
+ 		textXAlignment = "Center",
++		textScaled = true,
++		textWrapped = true,
+ 		size = UDim2.fromScale(1, 1),
+ 		font = function()
+ 			return options().font.bold
+diff --git a/out/components/suggestions/main-suggestion.luau b/out/components/suggestions/main-suggestion.luau
+index f866ee499b244af6fedd3dca0f6708a940b3daaf..8e2e0c53828ebd9c0d9372959ac9787015148641 100644
+--- a/out/components/suggestions/main-suggestion.luau
++++ b/out/components/suggestions/main-suggestion.luau	
+@@ -78,7 +78,11 @@ local function MainSuggestion(_param)
+ 		size = spring(function()
+ 			return UDim2.fromOffset(read(badgeSize).X.Offset + px(4), px(SUGGESTION_TITLE_TEXT_SIZE))
+ 		end, 0.2),
+-	}), Vide.jsx(Text, {
++	}, Vide.jsx(Padding, {
++		all = function()
++			return UDim.new(0, px(3))
++		end,
++	})), Vide.jsx(Text, {
+ 		text = function()
+ 			local currentSuggestion = read(suggestion)
+ 			local _result = currentSuggestion
+@@ -106,6 +110,8 @@ local function MainSuggestion(_param)
+ 		end,
+ 		textXAlignment = "Left",
+ 		textYAlignment = "Top",
++		textScaled = true,
++		textWrapped = true,
+ 		font = function()
+ 			return options().font.bold
+ 		end,
+@@ -131,6 +137,7 @@ local function MainSuggestion(_param)
+ 		end,
+ 		textXAlignment = "Left",
+ 		textYAlignment = "Top",
++		textScaled = true,
+ 		textWrapped = true,
+ 		richText = true,
+ 		position = function()
+@@ -171,6 +178,8 @@ local function MainSuggestion(_param)
+ 			return if _condition then 0 else 1
+ 		end, 0.2),
+ 		textXAlignment = "Left",
++		textScaled = true,
++		textWrapped = true,
+ 		anchor = Vector2.new(0, 1),
+ 		position = UDim2.fromScale(0, 1),
+ 		size = errorSize,
+diff --git a/out/components/suggestions/suggestion-list.luau b/out/components/suggestions/suggestion-list.luau
+index 830d66f23d15c884702ed2eb89f7a5fd89ca148e..e29455aaceebff77cc92f8330a086a7c0afa4a56 100644
+--- a/out/components/suggestions/suggestion-list.luau
++++ b/out/components/suggestions/suggestion-list.luau	
+@@ -47,7 +47,7 @@ local function SuggestionList(_param)
+ 	}, Vide.jsx("uilistlayout", {
+ 		SortOrder = "LayoutOrder",
+ 		Padding = function()
+-			return UDim.new(0, px(8))
++			return UDim.new(0, px(5))
+ 		end,
+ 	}), Vide.jsx(For, {
+ 		each = suggestions,
+@@ -89,6 +89,8 @@ local function SuggestionList(_param)
+ 				return px(SUGGESTION_TEXT_SIZE)
+ 			end,
+ 			textXAlignment = "Left",
++			textScaled = true,
++			textWrapped = true,
+ 			richText = true,
+ 		}))
+ 	end))
+diff --git a/out/components/terminal/terminal.luau b/out/components/terminal/terminal.luau
+index e16dcf77622e9dff770d0c89fdb35ed4d2468b0c..8adb6d841bd4377b843ebe64fecb9314c6b92041 100644
+--- a/out/components/terminal/terminal.luau
++++ b/out/components/terminal/terminal.luau	
+@@ -36,7 +36,7 @@ local getArgumentSuggestion = _suggestion.getArgumentSuggestion
+ local getCommandSuggestion = _suggestion.getCommandSuggestion
+ local TerminalTextField = TS.import(script, script.Parent, "terminal-text-field").TerminalTextField
+ local MAX_HEIGHT = HISTORY_TEXT_SIZE * 10
+-local TEXT_FIELD_HEIGHT = 40
++local TEXT_FIELD_HEIGHT = 30
+ local TRAILING_SPACE_PATTERN = "(%s+)$"
+ local function Terminal()
+ 	local client = useClient()

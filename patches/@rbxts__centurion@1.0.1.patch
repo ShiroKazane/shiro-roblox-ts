@@ -1,0 +1,24 @@
+diff --git a/out/client/builtin/commands/centurion.luau b/out/client/builtin/commands/centurion.luau
+index 774e62b48db02be82e043f8cbf3e922672d2ff13..75474b36b9d0bf4049927af9c955b8b65f722e54 100644
+--- a/out/client/builtin/commands/centurion.luau
++++ b/out/client/builtin/commands/centurion.luau	
+@@ -1,14 +1,14 @@
+ -- Compiled with roblox-ts v3.0.0
+ return function(registry)
+ 	registry:registerGroup({
+-		name = "centurion",
+-		description = "Commands relating to Centurion",
++		name = "shiro",
++		description = "Commands relating to Shiro",
+ 	})
+ 	local version = "1.0.1"
+ 	registry:registerCommand({
+ 		name = "version",
+-		description = "Display the current version of Centurion",
++		description = "Display the current version of Shiro",
+ 	}, function(ctx)
+-		ctx:reply(`Centurion v{version}`)
+-	end, { "centurion" })
++		ctx:reply(`Shiro v{version}`)
++	end, { "shiro" })
+ end

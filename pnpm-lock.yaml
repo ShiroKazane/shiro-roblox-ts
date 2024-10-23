@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
+  '@rbxts/centurion-ui@1.0.2':
+    hash: np4ip3ijyixe5yefvzfj3javii
+    path: patches/@rbxts__centurion-ui@1.0.2.patch
+  '@rbxts/centurion@1.0.1':
+    hash: bcodzags6aw7esxx3ajiarheeu
+    path: patches/@rbxts__centurion@1.0.1.patch
   '@rbxts/topbar-plus@3.0.2-ts.2':
     hash: o6u24zfckdcnlhu3wtctko2pga
     path: patches/@rbxts__topbar-plus@3.0.2-ts.2.patch
@@ -28,9 +34,12 @@ importers:
       '@flamework/networking':
         specifier: 1.2.3
         version: 1.2.3(@flamework/core@1.2.3)
-      '@rbxts/cmdr':
-        specifier: 1.12.1
-        version: 1.12.1
+      '@rbxts/centurion':
+        specifier: 1.0.1
+        version: 1.0.1(patch_hash=bcodzags6aw7esxx3ajiarheeu)
+      '@rbxts/centurion-ui':
+        specifier: 1.0.2
+        version: 1.0.2(patch_hash=np4ip3ijyixe5yefvzfj3javii)(@rbxts/centurion@1.0.1(patch_hash=bcodzags6aw7esxx3ajiarheeu))(@rbxts/react@17.2.1)
       '@rbxts/flamework-binary-serializer':
         specifier: 0.6.0
         version: 0.6.0(@flamework/core@1.2.3)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))
@@ -1466,6 +1475,17 @@ packages:
     resolution: {integrity: sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
+  '@rbxts/beacon@2.1.1':
+    resolution: {integrity: sha512-QeFMSGj+Iijp+tHcV9eyqVyeKZ/9zp7GqRJ/hecKiHmoTu4yFcyGnUQAaX7OdQKBCgLvWMJ9wK/FXMECjFA2Kg==}
+
+  '@rbxts/centurion-ui@1.0.2':
+    resolution: {integrity: sha512-onfrBJIKOfreBciEUEMKfmHixrVMaIGNzUEgkri+XzIoWqdpJW1Kef7F6NRINYnPjeELiE/OkXTNys8vXoEtNg==}
+    peerDependencies:
+      '@rbxts/centurion': ^1.0.0
+
+  '@rbxts/centurion@1.0.1':
+    resolution: {integrity: sha512-RFkIvnivn43/jYCg0ue90fXg+aRlhFUUc8OmYP0UWpIPRxTF3PTHpMKp7EZMXoZl7J7XzUngcqYcL1senBnenQ==}
+
   '@rbxts/charm-payload-converter@1.0.3':
     resolution: {integrity: sha512-zgf5jwONxY2FBaSeOL8R2hQ9ta8BVQG8/D4kkRe9XCHa7Qjt5VvcQmLo/m/7LLFc4NSRtcGKnydCFE0/e0wWRA==}
     peerDependencies:
@@ -1482,11 +1502,16 @@ packages:
       '@rbxts/react':
         optional: true
 
+  '@rbxts/charm@0.7.6':
+    resolution: {integrity: sha512-MG4m7h+0+SUv1QQwvCULnW7sMgJkGSwbY9Hu9KDPpfP+P61PHsu4Ndp8eRs/YYei/e8v+ON8YizuBXPHymFyZQ==}
+    peerDependencies:
+      '@rbxts/react': '*'
+    peerDependenciesMeta:
+      '@rbxts/react':
+        optional: true
+
   '@rbxts/charm@0.8.0':
     resolution: {integrity: sha512-fdDYM1R6LABMXtKkL4hq2+hfvC5LIn543+Ipi7vmUT2jkkhqfKu8VqSSY1g/p5txCowyCtteFFskad12tnyWrA==}
-
-  '@rbxts/cmdr@1.12.1':
-    resolution: {integrity: sha512-1I/Wnz4hY5fv6Eup7RZ2xGwog4X28dk5zUKYGc/Uo0ENfhwg344c2yf8Sn4CkimLOE2jpLYHq0p8IJ1i1AQg6g==}
 
   '@rbxts/compiler-types@3.0.0-types.0':
     resolution: {integrity: sha512-VGOHJPoL7+56NTatMGqQj3K7xWuzEV+aP4QD5vZiHu+bcff3kiTmtoadaF6NkJrmwfFAvbsd4Dg764ZjWNceag==}
@@ -1609,6 +1634,9 @@ packages:
 
   '@rbxts/validate-tree@2.0.2':
     resolution: {integrity: sha512-OA0E9ZjEeOpPa3XeV5/oC51aro2QFcL5dItufbagYZW8TOsX8C+FDXLx+A/ulMwcF42WcFNcQybxzcWSS/QSrA==}
+
+  '@rbxts/vide@0.4.6':
+    resolution: {integrity: sha512-xYtvCS05nGq1YU7fyQVmp4z1CcvuOR+VKpKj/Y7lFPvKobQ3oHTQEzZiJFEMZ+iSeHxwZhwpzVjrP+6+e2EoQw==}
 
   '@rbxts/wcs@2.4.0':
     resolution: {integrity: sha512-vNlG+9awLRFDJggxfdogL7hQ2JKXCXnST+pKvWn3XP5jrvzY13tblBlINREwobZXTATwyYfKVdRuAVFw6Q8rlQ==}
@@ -6451,6 +6479,24 @@ snapshots:
 
   '@pkgr/core@0.1.1': {}
 
+  '@rbxts/beacon@2.1.1': {}
+
+  '@rbxts/centurion-ui@1.0.2(patch_hash=np4ip3ijyixe5yefvzfj3javii)(@rbxts/centurion@1.0.1(patch_hash=bcodzags6aw7esxx3ajiarheeu))(@rbxts/react@17.2.1)':
+    dependencies:
+      '@rbxts/centurion': 1.0.1(patch_hash=bcodzags6aw7esxx3ajiarheeu)
+      '@rbxts/charm': 0.7.6(@rbxts/react@17.2.1)
+      '@rbxts/services': 1.5.5
+      '@rbxts/set-timeout': 1.1.2
+      '@rbxts/vide': 0.4.6
+    transitivePeerDependencies:
+      - '@rbxts/react'
+
+  '@rbxts/centurion@1.0.1(patch_hash=bcodzags6aw7esxx3ajiarheeu)':
+    dependencies:
+      '@rbxts/beacon': 2.1.1
+      '@rbxts/services': 1.5.5
+      '@rbxts/t': 3.1.1
+
   '@rbxts/charm-payload-converter@1.0.3(@rbxts/charm-sync@0.1.0)':
     dependencies:
       '@rbxts/charm-sync': 0.1.0
@@ -6463,9 +6509,11 @@ snapshots:
     optionalDependencies:
       '@rbxts/react': 17.2.1
 
-  '@rbxts/charm@0.8.0': {}
+  '@rbxts/charm@0.7.6(@rbxts/react@17.2.1)':
+    optionalDependencies:
+      '@rbxts/react': 17.2.1
 
-  '@rbxts/cmdr@1.12.1': {}
+  '@rbxts/charm@0.8.0': {}
 
   '@rbxts/compiler-types@3.0.0-types.0': {}
 
@@ -6574,6 +6622,8 @@ snapshots:
   '@rbxts/ui-labs@2.3.0': {}
 
   '@rbxts/validate-tree@2.0.2': {}
+
+  '@rbxts/vide@0.4.6': {}
 
   '@rbxts/wcs@2.4.0(patch_hash=e66c6v3qkmxpebebtulg7va354)(@rbxts/charm-sync@0.1.0)(@rbxts/react@17.2.1)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))':
     dependencies:

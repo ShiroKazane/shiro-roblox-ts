@@ -49,6 +49,9 @@ interface ReplicatedStorage extends Instance {
 
 interface ServerScriptService {
 	TS: {
+		centurion: {
+			commands: Folder;
+		} & Folder;
 		"mtx-service": ModuleScript;
 		network: ModuleScript;
 		player: {
