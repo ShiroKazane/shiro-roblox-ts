@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@rbxts/centurion-ui@1.0.2':
-    hash: np4ip3ijyixe5yefvzfj3javii
+    hash: 2p4pmqcq3dpmts3bgfvhchvrke
     path: patches/@rbxts__centurion-ui@1.0.2.patch
   '@rbxts/centurion@1.0.1':
     hash: bcodzags6aw7esxx3ajiarheeu
@@ -14,9 +14,6 @@ patchedDependencies:
   '@rbxts/topbar-plus@3.0.2-ts.2':
     hash: o6u24zfckdcnlhu3wtctko2pga
     path: patches/@rbxts__topbar-plus@3.0.2-ts.2.patch
-  '@rbxts/wcs@2.4.0':
-    hash: e66c6v3qkmxpebebtulg7va354
-    path: patches/@rbxts__wcs@2.4.0.patch
   rbxts-transform-env@2.2.0:
     hash: rwxalljtggkhvgst7nv6s2dtlq
     path: patches/rbxts-transform-env@2.2.0.patch
@@ -39,7 +36,7 @@ importers:
         version: 1.0.1(patch_hash=bcodzags6aw7esxx3ajiarheeu)
       '@rbxts/centurion-ui':
         specifier: 1.0.2
-        version: 1.0.2(patch_hash=np4ip3ijyixe5yefvzfj3javii)(@rbxts/centurion@1.0.1(patch_hash=bcodzags6aw7esxx3ajiarheeu))(@rbxts/react@17.2.1)
+        version: 1.0.2(patch_hash=2p4pmqcq3dpmts3bgfvhchvrke)(@rbxts/centurion@1.0.1(patch_hash=bcodzags6aw7esxx3ajiarheeu))(@rbxts/react@17.2.1)
       '@rbxts/flamework-binary-serializer':
         specifier: 0.6.0
         version: 0.6.0(@flamework/core@1.2.3)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))
@@ -114,7 +111,7 @@ importers:
         version: 2.0.2
       '@rbxts/wcs':
         specifier: 2.4.0
-        version: 2.4.0(patch_hash=e66c6v3qkmxpebebtulg7va354)(@rbxts/charm-sync@0.1.0)(@rbxts/react@17.2.1)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))
+        version: 2.4.0(@rbxts/charm-sync@0.1.0)(@rbxts/react@17.2.1)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))
       rbxts-transform-debug:
         specifier: 2.2.0
         version: 2.2.0
@@ -6481,7 +6478,7 @@ snapshots:
 
   '@rbxts/beacon@2.1.1': {}
 
-  '@rbxts/centurion-ui@1.0.2(patch_hash=np4ip3ijyixe5yefvzfj3javii)(@rbxts/centurion@1.0.1(patch_hash=bcodzags6aw7esxx3ajiarheeu))(@rbxts/react@17.2.1)':
+  '@rbxts/centurion-ui@1.0.2(patch_hash=2p4pmqcq3dpmts3bgfvhchvrke)(@rbxts/centurion@1.0.1(patch_hash=bcodzags6aw7esxx3ajiarheeu))(@rbxts/react@17.2.1)':
     dependencies:
       '@rbxts/centurion': 1.0.1(patch_hash=bcodzags6aw7esxx3ajiarheeu)
       '@rbxts/charm': 0.7.6(@rbxts/react@17.2.1)
@@ -6625,7 +6622,7 @@ snapshots:
 
   '@rbxts/vide@0.4.6': {}
 
-  '@rbxts/wcs@2.4.0(patch_hash=e66c6v3qkmxpebebtulg7va354)(@rbxts/charm-sync@0.1.0)(@rbxts/react@17.2.1)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))':
+  '@rbxts/wcs@2.4.0(@rbxts/charm-sync@0.1.0)(@rbxts/react@17.2.1)(rbxts-transformer-flamework@1.2.3(typescript@5.6.3))':
     dependencies:
       '@flamework/core': 1.2.3
       '@flamework/networking': 1.2.3(@flamework/core@1.2.3)

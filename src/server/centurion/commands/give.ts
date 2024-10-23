@@ -27,14 +27,14 @@ export class Give {
 			{
 				name: "amount",
 				description: "amount to give",
-				type: CenturionType.Number,
+				type: CenturionType.Integer,
 			},
 		],
-		description: "an koban to player",
+		description: "give koban to player",
 	})
 	@Guard(isAdmin)
 	public give(context: CommandContext, player: Player, amount: number): void {
 		store.giveCurrency(tostring(player.UserId), amount);
-		context.reply(`gave ${player.Name} ${amount} koban`);
+		context.reply(`${amount} koban has been given to ${player.Name}`);
 	}
 }

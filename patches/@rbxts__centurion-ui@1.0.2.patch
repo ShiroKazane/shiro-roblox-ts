@@ -132,6 +132,30 @@ index 830d66f23d15c884702ed2eb89f7a5fd89ca148e..e29455aaceebff77cc92f8330a086a7c
  			richText = true,
  		}))
  	end))
+diff --git a/out/components/terminal/terminal-text-field/terminal-text-field.luau b/out/components/terminal/terminal-text-field/terminal-text-field.luau
+index 22417ba9cc84fd0d48bbdabc4fbfad33de6ea999..a3b9514a369c109dfc720b9839d785d7a1fc3ca4 100644
+--- a/out/components/terminal/terminal-text-field/terminal-text-field.luau
++++ b/out/components/terminal/terminal-text-field/terminal-text-field.luau	
+@@ -2,6 +2,7 @@
+ local TS = _G[script]
+ local subscribe = TS.import(script, TS.getModule(script, "@rbxts", "charm").src).subscribe
+ local UserInputService = TS.import(script, TS.getModule(script, "@rbxts", "services")).UserInputService
++local TextChatService = TS.import(script, TS.getModule(script, "@rbxts", "services")).TextChatService
+ local _vide = TS.import(script, TS.getModule(script, "@rbxts", "vide").src)
+ local Vide = _vide
+ local cleanup = _vide.cleanup
+@@ -116,6 +117,11 @@ local function TerminalTextField(_param)
+ 		if _condition then
+ 			return nil
+ 		end
++		if input.KeyCode == Enum.KeyCode.F2 then
++			interfaceVisible(false)
++			TextChatService.ChatWindowConfiguration.Enabled = true
++			TextChatService.ChatInputBarConfiguration.Enabled = true
++		end
+ 		-- Handle history traversal
+ 		if input.KeyCode == Enum.KeyCode.Up then
+ 			traverseHistory(true)
 diff --git a/out/components/terminal/terminal.luau b/out/components/terminal/terminal.luau
 index e16dcf77622e9dff770d0c89fdb35ed4d2468b0c..8adb6d841bd4377b843ebe64fecb9314c6b92041 100644
 --- a/out/components/terminal/terminal.luau

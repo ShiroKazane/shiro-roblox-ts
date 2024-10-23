@@ -20,6 +20,21 @@ export class Stats {
 	})
 	@Guard(isAdmin)
 	public stats(context: CommandContext): void {
-		context.reply(`server uptime: ${math.floor(Workspace.DistributedGameTime)}`);
+		const uptime = math.floor(Workspace.DistributedGameTime);
+		let time = "";
+		if (uptime >= 86400) {
+			time += `${math.floor(uptime / 86400)}d `;
+		}
+
+		if (uptime >= 3600) {
+			time += `${math.floor((uptime % 86400) / 3600)}h `;
+		}
+
+		if (uptime >= 60) {
+			time += `${math.floor((uptime % 3600) / 60)}m `;
+		}
+
+		time += `${uptime % 60}s`;
+		context.reply(`server uptime: ${time}`);
 	}
 }
