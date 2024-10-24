@@ -8,7 +8,7 @@ import { isAdmin } from "../utils/is-admin";
 	groups: [
 		{
 			name: "stats",
-			description: "show server stats",
+			description: "Show server stats",
 		},
 	],
 })
@@ -16,7 +16,7 @@ import { isAdmin } from "../utils/is-admin";
 export class Stats {
 	@Command({
 		name: "uptime",
-		description: "show server uptime",
+		description: "Show server uptime",
 	})
 	@Guard(isAdmin)
 	public stats(context: CommandContext): void {
@@ -35,6 +35,6 @@ export class Stats {
 		}
 
 		time += `${uptime % 60}s`;
-		context.reply(`server uptime: ${time}`);
+		context.reply(`<font size="18">Server uptime: <b>${time}</b></font>`);
 	}
 }

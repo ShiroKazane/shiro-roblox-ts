@@ -5,9 +5,9 @@ import { Layer } from "./components/primitive";
 export function App(): React.ReactNode {
 	return (
 		<>
-			<Layer key="example-layer" />
+			<Layer key="shiro-layer" />
 
-			<Layer key="example-layer1" />
+			<Layer key="shiro-layer1" />
 		</>
 	);
 }

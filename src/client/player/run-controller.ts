@@ -1,7 +1,5 @@
-/* eslint-disable @cspell/spellchecker -- Disable spellchecker */
 import type { OnStart } from "@flamework/core";
 import { Controller } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
 import { ContextActionService as CAS } from "@rbxts/services";
 
 import type CharacterController from "./character/character-controller";
@@ -19,22 +17,16 @@ export class RunController implements OnStart {
 
 	private sprinting = false;
 
-	constructor(
-		private readonly logger: Logger,
-		private readonly characterController: CharacterController,
-	) {}
+	constructor(private readonly characterController: CharacterController) {}
 
 	public onStart(): void {
-		const Humanoid = this.characterController.getCurrentCharacter()?.Humanoid;
-		if (Humanoid) {
-			CAS.BindAction("Sprint", this.toggleSprint, true, Enum.KeyCode.LeftControl);
+		CAS.BindAction("Sprint", this.toggleSprint, true, Enum.KeyCode.LeftShift);
 
-			CAS.SetImage("Sprint", "rbxassetid://9760497816");
-			CAS.SetPosition("Sprint", new UDim2(0.2, 0, 0.5, 0));
-			const SprintButton = CAS.GetButton("Sprint");
-			if (SprintButton !== undefined) {
-				SprintButton.Size = new UDim2(0, 48, 0, 48);
-			}
+		CAS.SetImage("Sprint", "rbxassetid://9760497816");
+		CAS.SetPosition("Sprint", new UDim2(0.2, 0, 0.5, 0));
+		const SprintButton = CAS.GetButton("Sprint");
+		if (SprintButton !== undefined) {
+			SprintButton.Size = new UDim2(0, 48, 0, 48);
 		}
 	}
 
@@ -47,7 +39,6 @@ export class RunController implements OnStart {
 		if (state) {
 			this.sprinting = true;
 			Humanoid.WalkSpeed = 25;
-			this.logger.Debug("Sprinto stato.");
 
 			const sprintStart = tick();
 			// eslint-disable-next-line ts/no-unnecessary-condition -- it'll be false sometime

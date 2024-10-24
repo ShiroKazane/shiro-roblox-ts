@@ -64,4 +64,17 @@ export const profileSlice = createProducer(initialState, {
 			},
 		};
 	},
+
+	takeCurrency: (state, player: string, amount: number): ProfileState => {
+		const profile = state[player];
+		return {
+			...state,
+			[player]: profile && {
+				...profile,
+				balance: {
+					currency: profile.balance.currency - amount,
+				},
+			},
+		};
+	},
 });

@@ -9,32 +9,32 @@ import { isAdmin } from "../utils/is-admin";
 @Register({
 	groups: [
 		{
-			name: "give",
-			description: "Give player something",
+			name: "take",
+			description: "Take something from player",
 		},
 	],
 })
-@Group("give")
-export class Give {
+@Group("take")
+export class Take {
 	@Command({
 		name: "koban",
 		arguments: [
 			{
 				name: "player",
-				description: "Player to give",
+				description: "Player to take from",
 				type: CenturionType.Player,
 			},
 			{
 				name: "amount",
-				description: "Amount to give",
+				description: "Amount to take",
 				type: CenturionType.Integer,
 			},
 		],
-		description: "Give koban to player",
+		description: "Take koban from player",
 	})
 	@Guard(isAdmin)
-	public give(context: CommandContext, player: Player, amount: number): void {
-		store.giveCurrency(tostring(player.UserId), amount);
-		context.reply(`${player.Name} has been given ${amount} koban`);
+	public take(context: CommandContext, player: Player, amount: number): void {
+		store.takeCurrency(tostring(player.UserId), amount);
+		context.reply(`${amount} has been taken from ${player.Name}`);
 	}
 }

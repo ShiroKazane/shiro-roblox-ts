@@ -10,24 +10,24 @@ export class Teleport {
 		arguments: [
 			{
 				name: "player",
-				description: "player to teleport",
+				description: "Player to teleport",
 				type: CenturionType.Player,
 			},
 			{
 				name: "destination",
-				description: "player destination",
+				description: "Player destination",
 				type: CenturionType.Player,
 			},
 		],
-		description: "teleport player to other player",
+		description: "Teleport player to other player",
 	})
 	@Guard(isAdmin)
 	public teleport(context: CommandContext, player: Player, destination: Player): void {
 		if (player === context.executor && context.executor === destination) {
-			context.error("you can't teleport yourself to yourself");
+			context.error("You can't teleport yourself to yourself");
 			return;
 		} else if (player === destination) {
-			context.error("you can't teleport player to itself");
+			context.error("You can't teleport player to itself");
 			return;
 		}
 
@@ -41,7 +41,7 @@ export class Teleport {
 			PlayerHumanoid.RootPart.CFrame = DestinationHumanoid.RootPart.CFrame;
 			context.reply(`${player.Name} has been bring here`);
 		} else {
-			context.error("couldn't teleport, root part not found");
+			context.error("Couldn't teleport, root part not found");
 		}
 	}
 
@@ -50,16 +50,16 @@ export class Teleport {
 		arguments: [
 			{
 				name: "player",
-				description: "player to bring",
+				description: "Player to bring",
 				type: CenturionType.Player,
 			},
 		],
-		description: "bring player to your location",
+		description: "Bring player to your location",
 	})
 	@Guard(isAdmin)
 	public bring(context: CommandContext, player: Player): void {
 		if (player === context.executor) {
-			context.error("you can't bring yourself");
+			context.error("You can't bring yourself");
 			return;
 		}
 
@@ -74,7 +74,7 @@ export class Teleport {
 			PlayerHumanoid.RootPart.CFrame = ExecutorHumanoid.RootPart.CFrame;
 			context.reply(`${player.Name} has been bring here`);
 		} else {
-			context.error("couldn't bring, root part not found");
+			context.error("Couldn't bring, root part not found");
 		}
 	}
 
@@ -83,16 +83,16 @@ export class Teleport {
 		arguments: [
 			{
 				name: "player",
-				description: "teleport destination",
+				description: "Teleport destination",
 				type: CenturionType.Player,
 			},
 		],
-		description: "teleport to another player",
+		description: "Teleport to another player",
 	})
 	@Guard(isAdmin)
 	public to(context: CommandContext, player: Player): void {
 		if (player === context.executor) {
-			context.error("you can't teleport to yourself");
+			context.error("You can't teleport to yourself");
 			return;
 		}
 
@@ -105,9 +105,9 @@ export class Teleport {
 
 		if (ExecutorHumanoid.RootPart && PlayerHumanoid.RootPart) {
 			ExecutorHumanoid.RootPart.CFrame = PlayerHumanoid.RootPart.CFrame;
-			context.reply(`teleported to ${player.Name}`);
+			context.reply(`Teleported to ${player.Name}`);
 		} else {
-			context.error("couldn't teleport, root part not found");
+			context.error("Couldn't teleport, root part not found");
 		}
 	}
 }

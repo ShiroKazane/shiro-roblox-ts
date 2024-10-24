@@ -34,7 +34,6 @@ interface ReplicatedStorage extends Instance {
 			"physics-util": ModuleScript;
 			"player-util": ModuleScript;
 		} & Folder;
-		wcs: Folder;
 	} & Folder;
 	"TS-types": {
 		enum: {
@@ -51,6 +50,7 @@ interface ServerScriptService {
 	TS: {
 		centurion: {
 			commands: Folder;
+			types: Folder;
 		} & Folder;
 		"mtx-service": ModuleScript;
 		network: ModuleScript;
@@ -77,7 +77,6 @@ interface ServerScriptService {
 				broadcaster: ModuleScript;
 			} & Folder;
 		} & ModuleScript;
-		wcs: Folder;
 	} & Folder;
 }
 
