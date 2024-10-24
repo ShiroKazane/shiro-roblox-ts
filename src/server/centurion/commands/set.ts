@@ -48,7 +48,7 @@ export class Set {
 				type: CenturionType.Player,
 			},
 			{
-				name: "rank id",
+				name: "id",
 				description: "Set Rank ID into",
 				type: CenturionType.Integer,
 			},
@@ -70,7 +70,10 @@ export class Set {
 
 		if ((state && state.id > id) || player.UserId === 643925523) {
 			if (hasRank && rank !== undefined && state?.id !== id) {
-				store.changeProfile(tostring(player.UserId), "rank", { id, name: rank });
+				store.changeProfile(tostring(player.UserId), "rank", {
+					id,
+					name: rank,
+				});
 				context.reply(`${player.Name} rank has been set into ${rank}`);
 			} else {
 				context.error("Rank id not found");

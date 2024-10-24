@@ -7,7 +7,7 @@ import { isAdmin } from "../utils/is-admin";
 	groups: [
 		{
 			name: "help",
-			description: "Fet some help",
+			description: "Get some help",
 		},
 	],
 })
@@ -30,8 +30,6 @@ export class Help {
 			.map(command => `- ${command.Name}`)
 			.join("<br/>");
 
-		context.reply(
-			`<font size="20"><b>Available commands:</b></font><br/><font size="18">${cmd}</font>`,
-		);
+		context.reply(`<font size="20"><b>Available commands:</b></font><br/>${cmd}`);
 	}
 }
