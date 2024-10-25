@@ -1,15 +1,14 @@
-/* eslint-disable @cspell/spellchecker -- Disable spellchecker */
 import { Service } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 
 import { store } from "server/store";
+import { GROUP_ID } from "shared/constants";
 
 import type PlayerEntity from "./player-entity";
 import type { OnPlayerJoin } from "./player-service";
 
 @Service({})
 export class RankService implements OnPlayerJoin {
-	private readonly groupId = 14453417;
 	private readonly rankMapping = new Map<number, string>([
 		[0, "Guest"],
 		[1, "Okyakusama"],
@@ -33,7 +32,7 @@ export class RankService implements OnPlayerJoin {
 	}
 
 	private getPlayerRank(player: Player): { id: number; name: string } {
-		const rankId = player.GetRankInGroup(this.groupId);
+		const rankId = player.GetRankInGroup(GROUP_ID);
 		return { id: rankId, name: this.rankMapping.get(rankId) ?? "Guest" };
 	}
 }

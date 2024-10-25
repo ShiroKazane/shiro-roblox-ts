@@ -3,6 +3,7 @@ import type { CommandContext } from "@rbxts/centurion";
 import { CenturionType, Command, Group, Guard, Register } from "@rbxts/centurion";
 
 import { store } from "server/store";
+import { CREATOR_ID } from "shared/constants";
 import { selectPlayerProfile } from "shared/store/persistent";
 
 import { isAdmin } from "../utils/is-admin";
@@ -68,7 +69,7 @@ export class Set {
 		const hasRank = rankMapping.has(id);
 		const rank = rankMapping.get(id);
 
-		if ((state && state.id > id) || player.UserId === 643925523) {
+		if ((state && state.id > id) || context.executor.UserId === CREATOR_ID) {
 			if (hasRank && rank !== undefined && state?.id !== id) {
 				store.changeProfile(tostring(player.UserId), "rank", {
 					id,

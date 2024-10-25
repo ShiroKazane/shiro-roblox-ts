@@ -12,7 +12,7 @@ export class Join {
 		arguments: [
 			{
 				name: "player",
-				description: "Player to join",
+				description: "Name of player to join",
 				type: CenturionType.String,
 			},
 		],
@@ -20,19 +20,34 @@ export class Join {
 	})
 	@Guard(isAdmin)
 	public join(context: CommandContext, player: string): void {
-		const userId = Players.GetUserIdFromNameAsync(player);
-		if (userId === 0) {
-			context.error("User ID not found");
-			return;
-		}
+		try {
+			const userId = Players.GetUserIdFromNameAsync(player);
+			if (userId === 0) {
+				context.error("User ID not found");
+				return;
+			}
 
-		const getplayer = Players.GetPlayerByUserId(userId);
-		if (!getplayer || getplayer === context.executor) {
-			context.error("You coulnd't join to yourself? you already here..");
-			return;
-		}
+			const getplayer = Players.GetPlayerByUserId(userId);
+			if (getplayer === context.executor) {
+				context.error("You can't join yourself—you are already here..");
+				return;
+			}
 
-		const place = TeleportService.GetPlayerPlaceInstanceAsync(userId)[3] as unknown as number;
-		TeleportService.TeleportAsync(place, [getplayer]);
+			const [currentInstance, err, placeId, instanceId] =
+				TeleportService.GetPlayerPlaceInstanceAsync(userId);
+
+			if (err !== "") {
+				context.error(`Error fetching player's server: ${error}`);
+				return;
+			} else if (currentInstance) {
+				context.error(`Player is already in your current server.`);
+				return;
+			}
+
+			context.reply("Teleporting...");
+			TeleportService.TeleportToPlaceInstance(placeId, instanceId, context.executor);
+		} catch {
+			context.error("Failed to retrieve player's server on teleport");
+		}
 	}
 }

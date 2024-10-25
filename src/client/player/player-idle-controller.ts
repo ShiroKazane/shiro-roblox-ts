@@ -3,6 +3,7 @@ import { Controller } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 import { Players } from "@rbxts/services";
 
+import { USER_NAME } from "client/constants";
 import { Events } from "client/network";
 
 @Controller({})
@@ -27,9 +28,7 @@ export default class IdleController implements OnInit {
 			return;
 		}
 
-		this.logger.Info(
-			`${Players.LocalPlayer.Name} almost disconnected. Starting teleportation..`,
-		);
+		this.logger.Info(`${USER_NAME} almost disconnected. Starting teleportation..`);
 		Events.activity.idle.fire();
 	}
 }

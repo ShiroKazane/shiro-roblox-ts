@@ -1,20 +1,12 @@
 import type { CommandContext } from "@rbxts/centurion";
-import { Command, Group, Guard, Register } from "@rbxts/centurion";
+import { Command, Guard, Register } from "@rbxts/centurion";
 
 import { isAdmin } from "../utils/is-admin";
 
-@Register({
-	groups: [
-		{
-			name: "help",
-			description: "Get some help",
-		},
-	],
-})
-@Group("help")
+@Register()
 export class Help {
 	@Command({
-		name: "list",
+		name: "help",
 		description: "List all available commands",
 	})
 	@Guard(isAdmin)

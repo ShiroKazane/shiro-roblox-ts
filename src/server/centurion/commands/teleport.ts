@@ -7,6 +7,7 @@ import { isAdmin } from "../utils/is-admin";
 export class Teleport {
 	@Command({
 		name: "teleport",
+		aliases: ["tp"],
 		arguments: [
 			{
 				name: "player",
@@ -39,7 +40,7 @@ export class Teleport {
 
 		if (PlayerHumanoid.RootPart && DestinationHumanoid.RootPart) {
 			PlayerHumanoid.RootPart.CFrame = DestinationHumanoid.RootPart.CFrame;
-			context.reply(`${player.Name} has been bring here`);
+			context.reply(`${player.Name} has been teleported to ${destination.Name}`);
 		} else {
 			context.error("Couldn't teleport, root part not found");
 		}
