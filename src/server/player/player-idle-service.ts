@@ -16,18 +16,18 @@ interface ServerData {
 	playerCount: number;
 }
 
-const SERVER_ANNOUNCE_TOPIC = "ServerAnnounce";
+const SERVER_PING_TOPIC = "ServerPing";
 
 @Service({})
 export class PlayerIdleService implements OnInit, OnPlayerJoin {
-	private readonly availablePublicServers: Array<ServerData> = [];
+	private readonly publicServers: Array<ServerData> = [];
 
 	constructor(private readonly logger: Logger) {}
 
 	public onInit(): void {
 		this.OnPlayerIdled();
-		this.listenForPublicServers();
-		this.announcePublicServer();
+		this.listenPing();
+		this.pingServer();
 	}
 
 	/**
@@ -105,9 +105,7 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 	private teleportService(player: Player): void {
 		const otherPlayers = Players.GetPlayers().filter(plr => plr !== player);
 
-		const isPrivateServer = game.PrivateServerId !== "" && game.PrivateServerOwnerId !== 0;
-
-		if (isPrivateServer) {
+		if (this.isPrivateServer()) {
 			this.logger.Info(`${player.Name} is in a private server.`);
 			TeleportService.TeleportToPrivateServer(game.PlaceId, game.PrivateServerId, [player]);
 		} else if (otherPlayers.size() > 0) {
@@ -115,9 +113,7 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 		} else {
 			this.logger.Info(`${player.Name} is the only player. Teleport to a new server...`);
 
-			const availableServer = this.availablePublicServers.find(
-				server => server.jobId !== game.JobId,
-			);
+			const availableServer = this.publicServers.find(server => server.jobId !== game.JobId);
 			if (availableServer) {
 				this.logger.Info(`${player.Name} is teleport to an available public server.`);
 				TeleportService.Teleport(availableServer.placeId, player, availableServer.jobId);
@@ -132,12 +128,16 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 	}
 
 	/** Listens for announcements of other public servers using MessagingService. */
-	private listenForPublicServers(): void {
-		MessagingService.SubscribeAsync(SERVER_ANNOUNCE_TOPIC, message => {
+	private listenPing(): void {
+		if (this.isPrivateServer()) {
+			return;
+		}
+
+		MessagingService.SubscribeAsync(SERVER_PING_TOPIC, message => {
 			const serverData = message.Data as ServerData;
 
 			if (serverData.jobId !== game.JobId) {
-				this.availablePublicServers.push(serverData);
+				this.publicServers.push(serverData);
 			}
 		});
 	}
@@ -146,7 +146,11 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 	 * Periodically announces this server as a public server, broadcasting its
 	 * open slots.
 	 */
-	private announcePublicServer(): void {
+	private pingServer(): void {
+		if (this.isPrivateServer()) {
+			return;
+		}
+
 		task.spawn(() => {
 			while (true) {
 				const playerCount = Players.GetPlayers().size();
@@ -157,11 +161,16 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 						playerCount,
 					};
 
-					MessagingService.PublishAsync(SERVER_ANNOUNCE_TOPIC, serverData);
+					MessagingService.PublishAsync(SERVER_PING_TOPIC, serverData);
 				}
 
 				task.wait(60);
 			}
 		});
+	}
+
+	/** @ignore */
+	private isPrivateServer(): boolean {
+		return game.PrivateServerId !== "" && game.PrivateServerOwnerId !== 0;
 	}
 }
