@@ -1,8 +1,11 @@
-/* eslint-disable @cspell/spellchecker -- Disable spellchecker */
 import type { OnStart } from "@flamework/core";
 import { Controller } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 import { Icon } from "@rbxts/topbar-plus";
+
+import { USER_ID } from "client/constants";
+import { store } from "client/store";
+import { selectPlayerProfile } from "shared/store/persistent";
 
 const Koban = new Icon();
 
@@ -10,15 +13,23 @@ const Koban = new Icon();
 export class IconController implements OnStart {
 	constructor(private readonly logger: Logger) {}
 
-	/** This method initializes icon. */
+	/** @ignore */
 	public onStart(): void {
-		this.logger.Info(`Setup icon..`);
+		this.logger.Info(`Icon starting up!`);
+		this.initializeIcon();
+	}
 
+	/** This method initializes icon. */
+	private initializeIcon(): void {
 		Koban.setName("Koban")
 			.setLabel("Koban")
 			.align("Right")
 			.setTextFont(Enum.Font.SpecialElite, Enum.FontWeight.Medium, Enum.FontStyle.Normal)
 			.setTextSize(14)
+			.bindEvent("selected", () => {
+				const currentPage = store.getState(selectPlayerProfile(USER_ID))?.page;
+				store.setPage(USER_ID, currentPage === "Koban" ? undefined : "Koban");
+			})
 			.oneClick(true);
 	}
 }

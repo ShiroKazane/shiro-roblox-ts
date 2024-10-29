@@ -263,13 +263,6 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		}
 
 		this.playerTask.delete(playerId);
-
-		// if (!this.ingameIntervalMap.has(playerId)) {
-		// 	return;
-		// }
-
-		// this.ingameIntervalMap.set(playerId, false);
-		// this.logger.Info(`Stop watching ${player.Name}.`);
 	}
 
 	/**

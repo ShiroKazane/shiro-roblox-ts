@@ -3,19 +3,13 @@ import type { Logger } from "@rbxts/log";
 
 import { store } from "server/store";
 import { GROUP_ID } from "shared/constants";
+import { RankMap } from "types/enum/rank";
 
 import type PlayerEntity from "./player-entity";
 import type { OnPlayerJoin } from "./player-service";
 
 @Service({})
 export class RankService implements OnPlayerJoin {
-	private readonly rankMapping = new Map<number, string>([
-		[0, "Guest"],
-		[1, "Okyakusama"],
-		[254, "Adept"],
-		[255, "Shiro"],
-	]);
-
 	constructor(private readonly logger: Logger) {}
 
 	/**
@@ -33,6 +27,6 @@ export class RankService implements OnPlayerJoin {
 
 	private getPlayerRank(player: Player): { id: number; name: string } {
 		const rankId = player.GetRankInGroup(GROUP_ID);
-		return { id: rankId, name: this.rankMapping.get(rankId) ?? "Guest" };
+		return { id: rankId, name: RankMap.get(rankId) ?? "Guest" };
 	}
 }

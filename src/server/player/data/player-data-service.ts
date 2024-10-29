@@ -63,6 +63,7 @@ export default class PlayerDataService {
 			});
 
 			document.beforeClose(() => {
+				// store.setPage(tostring(player.UserId), undefined);
 				unsubscribe();
 				store.closePlayerData(tostring(player.UserId));
 			});

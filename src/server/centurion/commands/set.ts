@@ -1,10 +1,10 @@
-/* eslint-disable @cspell/spellchecker -- Disable spellchecker */
 import type { CommandContext } from "@rbxts/centurion";
 import { CenturionType, Command, Group, Guard, Register } from "@rbxts/centurion";
 
 import { store } from "server/store";
 import { CREATOR_ID } from "shared/constants";
 import { selectPlayerProfile } from "shared/store/persistent";
+import { RankMap } from "types/enum/rank";
 
 import { isAdmin } from "../utils/is-admin";
 
@@ -58,19 +58,11 @@ export class Set {
 	})
 	@Guard(isAdmin)
 	public rank(context: CommandContext, player: Player, id: number): void {
-		const rankMapping = new Map<number, string>([
-			[0, "Guest"],
-			[1, "Okyakusama"],
-			[254, "Adept"],
-			[255, "Shiro"],
-		]);
-
 		const state = store.getState(selectPlayerProfile(tostring(player.UserId)))?.rank;
-		const hasRank = rankMapping.has(id);
-		const rank = rankMapping.get(id);
+		const rank = RankMap.has(id) ? RankMap.get(id) : undefined;
 
 		if ((state && state.id > id) || context.executor.UserId === CREATOR_ID) {
-			if (hasRank && rank !== undefined && state?.id !== id) {
+			if (rank !== undefined && state?.id !== id) {
 				store.changeProfile(tostring(player.UserId), "rank", {
 					id,
 					name: rank,
