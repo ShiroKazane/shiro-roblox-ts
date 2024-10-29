@@ -1,4 +1,3 @@
-/* eslint-disable @cspell/spellchecker -- Disable spellchecker */
 import type { CommandContext } from "@rbxts/centurion";
 import { CenturionType, Command, Group, Guard, Register } from "@rbxts/centurion";
 

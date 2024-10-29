@@ -3,9 +3,8 @@ import { Controller } from "@flamework/core";
 import type { Logger } from "@rbxts/log";
 import { Icon } from "@rbxts/topbar-plus";
 
-import { USER_ID } from "client/constants";
 import { store } from "client/store";
-import { selectPlayerProfile } from "shared/store/persistent";
+import { selectClientData } from "shared/store/persistent";
 
 const Koban = new Icon();
 
@@ -27,8 +26,8 @@ export class IconController implements OnStart {
 			.setTextFont(Enum.Font.SpecialElite, Enum.FontWeight.Medium, Enum.FontStyle.Normal)
 			.setTextSize(14)
 			.bindEvent("selected", () => {
-				const currentPage = store.getState(selectPlayerProfile(USER_ID))?.page;
-				store.setPage(USER_ID, currentPage === "Koban" ? undefined : "Koban");
+				const currentPage = store.getState(selectClientData()).page;
+				store.setPage(currentPage === "Koban" ? undefined : "Koban");
 			})
 			.oneClick(true);
 	}

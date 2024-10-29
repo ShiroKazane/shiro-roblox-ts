@@ -22,7 +22,6 @@ export interface PlayerProfile {
 	readonly balance: {
 		currency: number;
 	};
-	readonly page: string | undefined;
 	readonly position: {
 		idle: boolean;
 		x: number;
@@ -57,7 +56,6 @@ export const defaultPlayerData: PlayerData = {
 		balance: {
 			currency: 0,
 		},
-		page: undefined,
 		position: {
 			idle: false,
 			x: 0,

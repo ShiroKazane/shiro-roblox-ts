@@ -1,4 +1,3 @@
-/* eslint-disable @cspell/spellchecker -- Disable spellchecker */
 import type { OnStart } from "@flamework/core";
 import { Controller } from "@flamework/core";
 import { Players, TextChatService } from "@rbxts/services";
