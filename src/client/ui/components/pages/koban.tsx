@@ -1,10 +1,10 @@
-import React from "@rbxts/react";
+import React, { memo } from "@rbxts/react";
 
 import { useRem } from "client/ui/hooks";
 
 import { Frame, TextLabel } from "../primitive";
 
-export function KobanApp(): React.ReactNode {
+const KobanContent = memo(() => {
 	const rem = useRem();
 	return (
 		<Frame
@@ -27,4 +27,8 @@ export function KobanApp(): React.ReactNode {
 			/>
 		</Frame>
 	);
+});
+
+export function KobanApp(): React.ReactNode {
+	return <KobanContent />;
 }

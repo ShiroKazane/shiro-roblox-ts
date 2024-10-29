@@ -27,7 +27,9 @@ export class IconController implements OnStart {
 			.setTextSize(14)
 			.bindEvent("selected", () => {
 				const currentPage = store.getState(selectClientData()).page;
-				store.setPage(currentPage === "Koban" ? undefined : "Koban");
+				if (currentPage === "Koban" || currentPage === undefined) {
+					store.setPage(currentPage === "Koban" ? undefined : "Koban");
+				}
 			})
 			.oneClick(true);
 	}

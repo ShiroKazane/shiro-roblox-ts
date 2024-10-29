@@ -10,6 +10,10 @@ const initialState: GuiState = {
 
 export const guiSlice = createProducer(initialState, {
 	setPage: (state, page: string | undefined) => {
+		if (state.page === page) {
+			return state;
+		}
+
 		return {
 			...state,
 			page,
