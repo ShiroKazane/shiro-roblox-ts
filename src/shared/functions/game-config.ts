@@ -1,8 +1,7 @@
-/* eslint-disable ts/no-duplicate-enum-values -- Allow duplicate enum values */
 import { $NODE_ENV } from "rbxts-transform-env";
 
 export enum GameId {
-	Development = 6636482002,
+	Development = 6497595992,
 	Production = 6636482002,
 }
 

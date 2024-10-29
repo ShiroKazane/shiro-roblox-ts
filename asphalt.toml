@@ -1,9 +1,10 @@
 asset_dir = "assets"
+exclude_assets = []
 write_dir = "src/shared/"
 
 [creator]
 type = "user"
-id = 1910140
+id = 643925523
 
 [codegen]
 output_name = "assets"

@@ -6,9 +6,9 @@ owner: personal
 
 state:
   remote:
-    region: eu-central-1
-    bucket: christopher-buss-mantle-states
-    key: roblox-ts-example
+    region: ap-southeast-1
+    bucket: shiro-mantle-states
+    key: shiro-roblox-ts
 
 environments:
   - label: development
@@ -17,7 +17,7 @@ environments:
     targetNamePrefix: environmentLabel
     targetAccess: private
     targetOverrides:
-      icon: assets/marketing/example-icon.png
+      icon: assets/shiro_icon.png
 
   - label: production
     branches:
@@ -26,11 +26,11 @@ environments:
 
 target:
   experience:
-    icon: assets/marketing/example-icon.png
+    icon: assets/shiro_icon.png
     configuration:
       playableDevices: [computer, console, phone, tablet]
       privateServers:
-        price: 0
+        price: 10
       enableStudioAccessToApis: true
       avatarType: playerChoice
       avatarAnimationType: playerChoice
@@ -40,25 +40,30 @@ target:
       start:
         file: place.rbxlx
         configuration:
-          name: roblox-ts Project Template
-          description: A project template for Roblox TypeScript projects.
-          maxPlayerCount: 700
-          allowCopying: true # !!! TURN THIS OFF FOR YOUR GAME !!!
+          name: \[WIP] Shiro
+          description: an AFK place.
+
+            if you're joining me, you probably meet error, just join public server, and wait I got teleported itself there xD
+
+            there will be chat tags in the future, and here where you can get rabbit chat tags :3
+            https://www.roblox.com/groups/14453417
+          maxPlayerCount: 12
+          allowCopying: false # !!! TURN THIS OFF FOR YOUR GAME !!!
     badges:
-      1-example:
-        name: Welcome Example Badge
-        description: This is an example badge.
-        icon: assets/badges/example-badge.png
+      welcome:
+        name: AFK Beginner
+        description: Uh oh, u starting to AFK here too!?
+        icon: assets/badges/sprout.png
         enabled: true
     products:
-      1-example:
-        name: Example Product
-        description: This is an example product.
+      nothin:
+        name: No Product
+        description: There no product yet.
         price: 5
-        icon: assets/marketing/example-icon.png
+        icon: assets/badges/burning.png
     passes:
-      1-example:
-        name: Example Pass
-        description: This is an example pass.
+      nothin:
+        name: No Pass
+        description: There no pass yet.
         price: 5
-        icon: assets/marketing/example-icon.png
+        icon: assets/badges/blooming.png

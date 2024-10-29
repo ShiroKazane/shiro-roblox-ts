@@ -1,9 +1,11 @@
 return {
 	badges = {
-		["example-badge"] = "rbxassetid://18110928024",
+		besties = "rbxassetid://110076099588944",
+		blooming = "rbxassetid://77416048720457",
+		burning = "rbxassetid://116203964412885",
+		royal = "rbxassetid://123208326600397",
+		sprout = "rbxassetid://136863949600242",
+		star = "rbxassetid://117122190661319",
 	},
-	marketing = {
-		["example-icon"] = "rbxassetid://18110928241",
-		googly = "rbxassetid://18110928530",
-	},
+	shiro_icon = "rbxassetid://121320575367495",
 }

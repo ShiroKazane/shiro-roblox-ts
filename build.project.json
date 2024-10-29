@@ -1,6 +1,9 @@
 {
-	"name": "example-build",
-	"globIgnorePaths": ["**/package.json", "**/tsconfig.json"],
+	"name": "shiro-roblox-ts",
+	"globIgnorePaths": [
+		"**/package.json",
+		"**/tsconfig.json"
+	],
 	"tree": {
 		"$className": "DataModel",
 		"ServerScriptService": {
