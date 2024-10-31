@@ -4,7 +4,6 @@ import type { Logger } from "@rbxts/log";
 import { Icon } from "@rbxts/topbar-plus";
 
 import { store } from "client/store";
-import { selectClientData } from "shared/store/persistent";
 
 const Koban = new Icon();
 
@@ -14,7 +13,7 @@ export class IconController implements OnStart {
 
 	/** @ignore */
 	public onStart(): void {
-		this.logger.Info(`Icon starting up!`);
+		this.logger.Info(`Setup TopBar icon`);
 		this.initializeIcon();
 	}
 
@@ -26,10 +25,8 @@ export class IconController implements OnStart {
 			.setTextFont(Enum.Font.SpecialElite, Enum.FontWeight.Medium, Enum.FontStyle.Normal)
 			.setTextSize(14)
 			.bindEvent("selected", () => {
-				const currentPage = store.getState(selectClientData()).page;
-				if (currentPage === "Koban" || currentPage === undefined) {
-					store.setPage(currentPage === "Koban" ? undefined : "Koban");
-				}
+				const currentPage = store.getState().client.page;
+				store.setPage(currentPage === "Koban" ? undefined : "Koban");
 			})
 			.oneClick(true);
 	}

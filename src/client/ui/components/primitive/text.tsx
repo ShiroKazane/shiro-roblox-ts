@@ -10,7 +10,7 @@ export interface TextLabelProps extends FrameProps<TextLabel> {
 	 * The font of the text, defaults to the primary font specified by the
 	 * default theme.
 	 */
-	Font?: BindingValue<Enum.Font>;
+	FontFace?: Font | React.Binding<Font>;
 	/**
 	 * The default properties of a `TextLabel` component, minus the ones
 	 * specified in the TextProps.
@@ -49,7 +49,7 @@ export interface TextLabelProps extends FrameProps<TextLabel> {
  */
 export const TextLabel = forwardRef(
 	(props: Readonly<TextLabelProps>, ref: React.Ref<TextLabel>) => {
-		const { CornerRadius, Font, Native, Text, TextColor, TextSize, children } = props;
+		const { CornerRadius, FontFace, Native, Text, TextColor, TextSize, children } = props;
 
 		const rem = useRem();
 		const theme = useTheme();
@@ -59,7 +59,7 @@ export const TextLabel = forwardRef(
 				ref={ref}
 				AnchorPoint={new Vector2(0.5, 0.5)}
 				BackgroundTransparency={1}
-				Font={Font ?? theme.fonts.primary.regular}
+				FontFace={FontFace ?? theme.fonts.specialElite.regular}
 				Position={new UDim2(0.5, 0, 0.5, 0)}
 				Text={Text}
 				TextColor3={TextColor}

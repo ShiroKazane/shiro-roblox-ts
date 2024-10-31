@@ -1,19 +1,15 @@
 import { createProducer } from "@rbxts/reflex";
 
-export interface GuiState {
+export interface ClientGui {
 	page: string | undefined;
 }
 
-const initialState: GuiState = {
+const initialState: ClientGui = {
 	page: undefined,
 };
 
 export const guiSlice = createProducer(initialState, {
 	setPage: (state, page: string | undefined) => {
-		if (state.page === page) {
-			return state;
-		}
-
 		return {
 			...state,
 			page,

@@ -3,10 +3,6 @@ import { createSelector } from "@rbxts/reflex";
 import type { SharedState } from "..";
 import type { PlayerData } from "./persistent-slice";
 
-export function selectClientData() {
-	return (state: SharedState) => state.client.gui;
-}
-
 export function selectPlayerGames(playerId: string) {
 	return (state: SharedState) => state.persistent.games[playerId];
 }

@@ -31,6 +31,7 @@ export default style(
 					type: "natural",
 				},
 			],
+			"react-naming-convention/filename-extension": "off",
 			"ts/no-magic-numbers": "off",
 		},
 		typescript: {

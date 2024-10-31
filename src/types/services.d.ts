@@ -23,7 +23,6 @@ interface ReplicatedStorage extends Instance {
 				"persistent-slice": {
 					"default-data": ModuleScript;
 					games: ModuleScript;
-					gui: ModuleScript;
 					profile: ModuleScript;
 					setting: ModuleScript;
 				} & ModuleScript;
