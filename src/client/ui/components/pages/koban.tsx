@@ -1,3 +1,4 @@
+/* eslint-disable @cspell/spellchecker -- Disable spellchecker */
 import React from "@rbxts/react";
 
 import { store } from "client/store";
@@ -8,6 +9,11 @@ import { Button, Frame, ScrollingFrame, TextLabel } from "../primitive";
 export function KobanApp(): React.ReactNode {
 	const rem = useRem();
 	const theme = useTheme();
+
+	const text1 = `	<b>Koban</b> is a traditional Japanese coin that was used during the Edo period (1603-1868). It is characterized by its oval shape and typically made of gold. Koban coins were used as currency for various transactions and were notable for their high value, which made them a popular choice for larger purchases.<br/>`;
+	const text2 = `	The most famous type of koban is the <b>"Koban Oban"</b>, which is a large, flat coin that often features intricate designs. The obverse side usually displays a unique emblem or symbol, while the reverse side typically has inscriptions indicating the coin's value. Koban coins played an essential role in Japan's economy, facilitating trade and commerce during a time when the country was largely isolated from foreign influences.<br/>`;
+	const text3 = `	As a historical artifact, koban coins are now highly sought after by collectors and historians alike, representing a significant part of Japan's monetary history and culture. They are also often associated with the samurai class, as many samurai were paid in koban during their service.<br/>`;
+	const footer = "that was a lot of text~<br/>";
 
 	return (
 		<Frame
@@ -34,34 +40,74 @@ export function KobanApp(): React.ReactNode {
 				CanvasSize={new Vector2(0, 0)}
 				Native={{
 					AnchorPoint: new Vector2(0.5, 1),
-					CanvasSize: new UDim2(0, 0, 1, 0),
-					Position: new UDim2(0.5, 0, 0.985, 0),
+					AutomaticCanvasSize: Enum.AutomaticSize.Y,
+					Position: new UDim2(0.5, 0, 0.995, 0),
 					ScrollBarThickness: 0,
 					Size: new UDim2(0.975, 0, 0.85, 0),
 				}}
 			>
+				<uilistlayout HorizontalAlignment={Enum.HorizontalAlignment.Center} />
 				<TextLabel
 					FontFace={theme.fonts.specialElite.regular}
 					Native={{
 						AnchorPoint: new Vector2(0.5, 0),
+						AutomaticSize: Enum.AutomaticSize.Y,
 						BackgroundTransparency: 1,
+						LineHeight: 1.2,
 						Position: new UDim2(0.5, 0, 0.02, 0),
-						Size: new UDim2(0.925, 0, 0, rem(3.125)),
+						RichText: true,
+						Size: new UDim2(0.925, 0, 0, 0),
+						TextWrapped: true,
 						TextXAlignment: "Left",
 						TextYAlignment: "Top",
 					}}
-					Text="try scrolling maybe?"
+					Text={text1}
 					TextColor={theme.colors.text.primary}
 				/>
 				<TextLabel
 					FontFace={theme.fonts.specialElite.regular}
 					Native={{
-						AnchorPoint: new Vector2(0.5, 1),
+						AnchorPoint: new Vector2(0.5, 0),
+						AutomaticSize: Enum.AutomaticSize.Y,
 						BackgroundTransparency: 1,
-						Position: new UDim2(0.5, 0, 0.99, 0),
-						Size: new UDim2(0, rem(7.5), 0, rem(1.25)),
+						LineHeight: 1.2,
+						Position: new UDim2(0.5, 0, 0.02, 0),
+						RichText: true,
+						Size: new UDim2(0.925, 0, 0, 0),
+						TextWrapped: true,
+						TextXAlignment: "Left",
+						TextYAlignment: "Top",
 					}}
-					Text="sadly nothin here"
+					Text={text2}
+					TextColor={theme.colors.text.primary}
+				/>
+				<TextLabel
+					FontFace={theme.fonts.specialElite.regular}
+					Native={{
+						AnchorPoint: new Vector2(0.5, 0),
+						AutomaticSize: Enum.AutomaticSize.Y,
+						BackgroundTransparency: 1,
+						LineHeight: 1.2,
+						Position: new UDim2(0.5, 0, 0.02, 0),
+						RichText: true,
+						Size: new UDim2(0.925, 0, 0, 0),
+						TextWrapped: true,
+						TextXAlignment: "Left",
+						TextYAlignment: "Top",
+					}}
+					Text={text3}
+					TextColor={theme.colors.text.primary}
+				/>
+				<TextLabel
+					FontFace={theme.fonts.specialElite.regular}
+					Native={{
+						AnchorPoint: new Vector2(0.5, 0),
+						AutomaticSize: Enum.AutomaticSize.XY,
+						BackgroundTransparency: 1,
+						Position: new UDim2(0.5, 0, 0.02, 0),
+						RichText: true,
+					}}
+					Text={footer}
 					TextColor={theme.colors.text.primary}
 					TextSize={rem(0.75)}
 				/>

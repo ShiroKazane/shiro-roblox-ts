@@ -4,6 +4,8 @@ import ReactRoblox from "@rbxts/react-roblox";
 
 import { store } from "client/store";
 
+import { RemProvider } from "../providers/rem-provider";
+
 export function makeStory(Story: () => React.ReactNode): unknown {
 	return {
 		react: React,
@@ -11,9 +13,11 @@ export function makeStory(Story: () => React.ReactNode): unknown {
 		story: () => {
 			return (
 				<StrictMode>
-					<ReflexProvider key="reflex-provider" producer={store}>
-						<Story />
-					</ReflexProvider>
+					<RemProvider>
+						<ReflexProvider key="reflex-provider" producer={store}>
+							<Story />
+						</ReflexProvider>
+					</RemProvider>
 				</StrictMode>
 			);
 		},
