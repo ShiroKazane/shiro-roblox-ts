@@ -40,8 +40,13 @@ jobs:
       - name: Setup Rokit
         uses: CompeyDev/setup-rokit@d49be92bd9502180218c3f43e7988faa945217b0 # v0.1.2
 
-      - name: Lint
-        run: pnpm lint
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+
+      - name: Run Biome
+        run: biome ci .
 
       - name: Compile
         run: pnpm prod:build

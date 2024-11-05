@@ -1,20 +1,20 @@
-import { Service } from "@flamework/core";
-import type { Collection, Document } from "@rbxts/lapis";
-import { createCollection, setConfig } from "@rbxts/lapis";
-import DataStoreServiceMock from "@rbxts/lapis-mockdatastore";
-import type { Logger } from "@rbxts/log";
-import { Players, RunService } from "@rbxts/services";
+import { Service } from '@flamework/core';
+import type { Collection, Document } from '@rbxts/lapis';
+import { createCollection, setConfig } from '@rbxts/lapis';
+import DataStoreServiceMock from '@rbxts/lapis-mockdatastore';
+import type { Logger } from '@rbxts/log';
+import { Players, RunService } from '@rbxts/services';
 
-import { $NODE_ENV } from "rbxts-transform-env";
-import { store } from "server/store";
-import type { PlayerData } from "shared/store/persistent";
-import { defaultPlayerData, selectPlayerData } from "shared/store/persistent";
-import KickCode from "types/enum/kick-reason";
+import { $NODE_ENV } from 'rbxts-transform-env';
+import { store } from 'server/store';
+import type { PlayerData } from 'shared/store/persistent';
+import { defaultPlayerData, selectPlayerData } from 'shared/store/persistent';
+import KickCode from 'types/enum/kick-reason';
 
-import type PlayerRemovalService from "../player-removal-service";
-import { validate } from "./validate-data";
+import type PlayerRemovalService from '../player-removal-service';
+import { validate } from './validate-data';
 
-const DATA_STORE_NAME = RunService.IsStudio() ? "Development" : "Production";
+const DATA_STORE_NAME = RunService.IsStudio() ? 'Development' : 'Production';
 
 /**
  * Service for loading and saving player data. This service is responsible for
@@ -29,7 +29,7 @@ export default class PlayerDataService {
 		private readonly logger: Logger,
 		private readonly playerRemovalService: PlayerRemovalService,
 	) {
-		if ($NODE_ENV === "development" && RunService.IsStudio()) {
+		if ($NODE_ENV === 'development' && RunService.IsStudio()) {
 			setConfig({
 				dataStoreService: new DataStoreServiceMock(),
 			});
@@ -56,7 +56,7 @@ export default class PlayerDataService {
 				return;
 			}
 
-			const unsubscribe = store.subscribe(selectPlayerData(tostring(player.UserId)), data => {
+			const unsubscribe = store.subscribe(selectPlayerData(tostring(player.UserId)), (data) => {
 				if (data) {
 					document.write(data);
 				}

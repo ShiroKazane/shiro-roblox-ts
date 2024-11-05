@@ -1,4 +1,4 @@
-import { createProducer } from "@rbxts/reflex";
+import { createProducer } from '@rbxts/reflex';
 
 export interface ClientGui {
 	page: string | undefined;

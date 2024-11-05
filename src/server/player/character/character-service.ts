@@ -1,24 +1,24 @@
-import type { OnStart } from "@flamework/core";
-import { Service } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
-import { PhysicsService } from "@rbxts/services";
-import { promiseTree } from "@rbxts/validate-tree";
+import type { OnStart } from '@flamework/core';
+import { Service } from '@flamework/core';
+import type { Logger } from '@rbxts/log';
+import { PhysicsService } from '@rbxts/services';
+import { promiseTree } from '@rbxts/validate-tree';
 
-import type PlayerEntity from "server/player/player-entity";
-import type { ListenerData } from "shared/util/flamework-util";
-import { setupLifecycle } from "shared/util/flamework-util";
-import { addToCollisionGroup } from "shared/util/physics-util";
+import type PlayerEntity from 'server/player/player-entity';
+import type { ListenerData } from 'shared/util/flamework-util';
+import { setupLifecycle } from 'shared/util/flamework-util';
+import { addToCollisionGroup } from 'shared/util/physics-util';
 import {
 	CHARACTER_LOAD_TIMEOUT,
 	type CharacterRig,
 	characterSchema,
 	loadCharacter,
 	onCharacterAdded,
-} from "shared/util/player-util";
-import CollisionGroup from "types/enum/collision-group";
-import Tag from "types/enum/tag";
+} from 'shared/util/player-util';
+import CollisionGroup from 'types/enum/collision-group';
+import Tag from 'types/enum/tag';
 
-import type { OnPlayerJoin } from "../player-service";
+import type { OnPlayerJoin } from '../player-service';
 
 PhysicsService.RegisterCollisionGroup(CollisionGroup.Character);
 
@@ -51,8 +51,8 @@ export default class CharacterService implements OnStart, OnPlayerJoin {
 		const { janitor, player } = playerEntity;
 
 		janitor.Add(
-			onCharacterAdded(player, character => {
-				janitor.AddPromise(this.characterAdded(playerEntity, character)).catch(err => {
+			onCharacterAdded(player, (character) => {
+				janitor.AddPromise(this.characterAdded(playerEntity, character)).catch((err) => {
 					this.logger.Fatal(`Could not get character rig because:\n${err}`);
 				});
 			}),
@@ -78,9 +78,7 @@ export default class CharacterService implements OnStart, OnPlayerJoin {
 	 * @returns A new callback that replaces the first argument with the
 	 *   player's character rig.
 	 */
-	public withPlayerRig<T extends Array<unknown>, R = void>(
-		func: (playerRig: CharacterRig, ...args: T) => R,
-	) {
+	public withPlayerRig<T extends Array<unknown>, R = void>(func: (playerRig: CharacterRig, ...args: T) => R) {
 		return (player: Player, ...args: T): R | undefined => {
 			const playerRig = this.getCharacterRig(player);
 			if (!playerRig) {
@@ -147,36 +145,30 @@ export default class CharacterService implements OnStart, OnPlayerJoin {
 
 		this.logger.Debug(`Loaded character rig for ${name}`);
 
-		debug.profilebegin("Lifecycle_Character_Added");
-		{
-			for (const { id, event } of this.characterAddedEvents) {
-				janitor
-					.Add(
-						Promise.defer(() => {
-							debug.profilebegin(id);
-							event.onCharacterAdded(rig, playerEntity);
-						}),
-					)
-					.catch(err => {
-						this.logger.Error(`Error in character lifecycle ${id}: ${err}`);
-					});
-			}
+		debug.profilebegin('Lifecycle_Character_Added');
+		for (const { id, event } of this.characterAddedEvents) {
+			janitor
+				.Add(
+					Promise.defer(() => {
+						debug.profilebegin(id);
+						event.onCharacterAdded(rig, playerEntity);
+					}),
+				)
+				.catch((err) => {
+					this.logger.Error(`Error in character lifecycle ${id}: ${err}`);
+				});
 		}
 
 		debug.profileend();
 
-		janitor.AddPromise(this.characterAppearanceLoaded(player, rig)).catch(err => {
-			this.logger.Info(
-				`Character appearance did not load for ${userId}, with reason: ${err}`,
-			);
+		janitor.AddPromise(this.characterAppearanceLoaded(player, rig)).catch((err) => {
+			this.logger.Info(`Character appearance did not load for ${userId}, with reason: ${err}`);
 		});
 	}
 
 	private async characterAppearanceLoaded(player: Player, rig: CharacterRig): Promise<void> {
 		if (!player.HasAppearanceLoaded()) {
-			await Promise.fromEvent(player.CharacterAppearanceLoaded).timeout(
-				CHARACTER_LOAD_TIMEOUT,
-			);
+			await Promise.fromEvent(player.CharacterAppearanceLoaded).timeout(CHARACTER_LOAD_TIMEOUT);
 		}
 
 		rig.Head.AddTag(Tag.PlayerHead);

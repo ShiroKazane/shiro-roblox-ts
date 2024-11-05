@@ -1,9 +1,9 @@
-import { GameId, getConfigValueForGame } from "shared/functions/game-config";
+import { GameId, getConfigValueForGame } from 'shared/functions/game-config';
 
 export const GamePass = {
 	nothin: getConfigValueForGame({
-		[GameId.Development]: "121418214359942",
-		[GameId.Production]: "129135868098925",
+		[GameId.Development]: '121418214359942',
+		[GameId.Production]: '129135868098925',
 	}),
 } as const;
 
@@ -15,8 +15,8 @@ export interface GamePassData {
 
 export const Product = {
 	nothin: getConfigValueForGame({
-		[GameId.Development]: "2533285203",
-		[GameId.Production]: "2533152713",
+		[GameId.Development]: '2533285203',
+		[GameId.Production]: '2533152713',
 	}),
 } as const;
 

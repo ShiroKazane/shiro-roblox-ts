@@ -1,16 +1,15 @@
-/* eslint-disable @cspell/spellchecker -- Disable spellchecker */
-import type { OnInit } from "@flamework/core";
-import { Service } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
-import { AnalyticsService, RunService } from "@rbxts/services";
-import { t } from "@rbxts/t";
+import type { OnInit } from '@flamework/core';
+import { Service } from '@flamework/core';
+import type { Logger } from '@rbxts/log';
+import { AnalyticsService, RunService } from '@rbxts/services';
+import { t } from '@rbxts/t';
 
-import type { PlayerData } from "shared/store/persistent";
-import { selectPlayerData } from "shared/store/persistent";
+import type { PlayerData } from 'shared/store/persistent';
+import { selectPlayerData } from 'shared/store/persistent';
 
-import { store } from "../store";
-import type PlayerEntity from "./player-entity";
-import type { OnPlayerJoin, OnPlayerLeave } from "./player-service";
+import { store } from '../store';
+import type PlayerEntity from './player-entity';
+import type { OnPlayerJoin, OnPlayerLeave } from './player-service';
 
 interface LeaderstatValueTypes {
 	IntValue: number;
@@ -23,7 +22,7 @@ interface LeaderstatEntry<T extends keyof LeaderstatValueTypes = keyof Leadersta
 	ValueType: T;
 }
 
-type Leaderstats = "Koban" | "Non";
+type Leaderstats = 'Koban' | 'Non';
 
 type LeaderstatValue = Instances[keyof LeaderstatValueTypes];
 
@@ -50,7 +49,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 
 	/** @ignore */
 	public onInit(): void {
-		this.registerStat("Koban", "IntValue", "profile.balance.currency");
+		this.registerStat('Koban', 'IntValue', 'profile.balance.currency');
 	}
 
 	/**
@@ -61,8 +60,8 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
 		const { name, player, userId } = playerEntity;
 
-		const leaderstats = new Instance("Folder");
-		leaderstats.Name = "leaderstats";
+		const leaderstats = new Instance('Folder');
+		leaderstats.Name = 'leaderstats';
 		leaderstats.Parent = player;
 
 		this.playerToLeaderstatsMap.set(player, leaderstats);
@@ -79,7 +78,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 			valueMap.set(entry.Name, stat);
 
 			if (playerData === undefined || entry.PlayerDataKey === undefined) {
-				stat.Value = entry.ValueType === "IntValue" ? 0 : "N/A";
+				stat.Value = entry.ValueType === 'IntValue' ? 0 : 'N/A';
 				continue;
 			}
 
@@ -130,7 +129,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 			return;
 		}
 
-		const entry = this.leaderstats.find(leaderstatsEntry => leaderstatsEntry.Name === statName);
+		const entry = this.leaderstats.find((leaderstatsEntry) => leaderstatsEntry.Name === statName);
 		if (!entry) {
 			return;
 		}
@@ -151,10 +150,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 		valueType: keyof LeaderstatValueTypes,
 		playerDataKey?: NestedKeyOf<PlayerData>,
 	): void {
-		assert(
-			this.leaderstats.find(entry => entry.Name === statName) === undefined,
-			`Stat provided already exists.`,
-		);
+		assert(this.leaderstats.find((entry) => entry.Name === statName) === undefined, 'Stat provided already exists.');
 
 		this.leaderstats.push({
 			Name: statName,
@@ -162,7 +158,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 			ValueType: valueType,
 		});
 
-		this.logger.Info(`Registered leaderstat {@stat}`, statName);
+		this.logger.Info('Registered leaderstat {@stat}', statName);
 	}
 
 	/**
@@ -171,12 +167,9 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	 * @param playerEntity - A reference to the player entity.
 	 * @param valueMap - The map of leaderstats to update.
 	 */
-	private subscribeToPlayerData(
-		playerEntity: PlayerEntity,
-		valueMap: Map<Leaderstats, LeaderstatValue>,
-	): void {
+	private subscribeToPlayerData(playerEntity: PlayerEntity, valueMap: Map<Leaderstats, LeaderstatValue>): void {
 		playerEntity.janitor.Add(
-			store.subscribe(selectPlayerData(playerEntity.userId), save => {
+			store.subscribe(selectPlayerData(playerEntity.userId), (save) => {
 				if (!save) {
 					return;
 				}
@@ -211,8 +204,8 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 			this.logger.Info(`Cancelled existing koban task for ${player.Name}.`);
 		}
 
-		const statObject = this.getStatObject(player, "Koban");
-		if (statObject?.IsA("IntValue") !== true) {
+		const statObject = this.getStatObject(player, 'Koban');
+		if (statObject?.IsA('IntValue') !== true) {
 			this.logger.Warn(`Couldn't giving player ${player} koban, Koban stat not found.`);
 			return;
 		}
@@ -234,7 +227,7 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 					AnalyticsService.LogEconomyEvent(
 						player,
 						Enum.AnalyticsEconomyFlowType.Source,
-						"Koban",
+						'Koban',
 						1,
 						store.getState(selectPlayerData(playerId))?.profile.balance.currency ?? 1,
 						Enum.AnalyticsEconomyTransactionType.TimedReward.Name,
@@ -272,11 +265,8 @@ export class LeaderstatsService implements OnInit, OnPlayerJoin, OnPlayerLeave {
 	 * @param nestedKey - The key to get the value of.
 	 * @returns The value of the nested key.
 	 */
-	private getPlayerData(
-		playerData: PlayerData,
-		nestedKey: NestedKeyOf<PlayerData>,
-	): ValueOf<LeaderstatValueTypes> {
-		const keys = nestedKey.split(".");
+	private getPlayerData(playerData: PlayerData, nestedKey: NestedKeyOf<PlayerData>): ValueOf<LeaderstatValueTypes> {
+		const keys = nestedKey.split('.');
 		let value = playerData;
 		for (const key of keys) {
 			value = value[key as never];

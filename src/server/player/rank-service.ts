@@ -1,12 +1,12 @@
-import { Service } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
+import { Service } from '@flamework/core';
+import type { Logger } from '@rbxts/log';
 
-import { store } from "server/store";
-import { GROUP_ID } from "shared/constants";
-import { RankMap } from "types/enum/rank";
+import { store } from 'server/store';
+import { GROUP_ID } from 'shared/constants';
+import { RankMap } from 'types/enum/rank';
 
-import type PlayerEntity from "./player-entity";
-import type { OnPlayerJoin } from "./player-service";
+import type PlayerEntity from './player-entity';
+import type { OnPlayerJoin } from './player-service';
 
 @Service({})
 export class RankService implements OnPlayerJoin {
@@ -22,11 +22,11 @@ export class RankService implements OnPlayerJoin {
 		const rank = this.getPlayerRank(player);
 		this.logger.Info(`${player.Name} has the rank: ${rank.name} [${rank.id}]`);
 
-		store.changeProfile(tostring(player.UserId), "rank", rank);
+		store.changeProfile(tostring(player.UserId), 'rank', rank);
 	}
 
 	private getPlayerRank(player: Player): { id: number; name: string } {
 		const rankId = player.GetRankInGroup(GROUP_ID);
-		return { id: rankId, name: RankMap.get(rankId) ?? "Guest" };
+		return { id: rankId, name: RankMap.get(rankId) ?? 'Guest' };
 	}
 }

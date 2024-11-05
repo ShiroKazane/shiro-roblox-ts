@@ -1,9 +1,9 @@
-import type { OnStart } from "@flamework/core";
-import { Controller } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
-import { Icon } from "@rbxts/topbar-plus";
+import type { OnStart } from '@flamework/core';
+import { Controller } from '@flamework/core';
+import type { Logger } from '@rbxts/log';
+import { Icon } from '@rbxts/topbar-plus';
 
-import { store } from "client/store";
+import { store } from 'client/store';
 
 const Koban = new Icon();
 
@@ -13,20 +13,20 @@ export class IconController implements OnStart {
 
 	/** @ignore */
 	public onStart(): void {
-		this.logger.Info(`Setup TopBar icon`);
+		this.logger.Info('Setup TopBar icon');
 		this.initializeIcon();
 	}
 
 	/** This method initializes icon. */
 	private initializeIcon(): void {
-		Koban.setName("Koban")
-			.setLabel("Koban")
-			.align("Right")
+		Koban.setName('Koban')
+			.setLabel('Koban')
+			.align('Right')
 			.setTextFont(Enum.Font.SpecialElite, Enum.FontWeight.Medium, Enum.FontStyle.Normal)
 			.setTextSize(14)
-			.bindEvent("selected", () => {
+			.bindEvent('selected', () => {
 				const currentPage = store.getState().client.page;
-				store.setPage(currentPage === "Koban" ? undefined : "Koban");
+				store.setPage(currentPage === 'Koban' ? undefined : 'Koban');
 			})
 			.oneClick(true);
 	}

@@ -1,5 +1,5 @@
-import type { SpringOptions } from "@rbxts/ripple";
-import { config } from "@rbxts/ripple";
+import type { SpringOptions } from '@rbxts/ripple';
+import { config } from '@rbxts/ripple';
 
 export const springs = {
 	...config.spring,

@@ -7,11 +7,11 @@ interface ReplicatedStorage extends Instance {
 		assets: ModuleScript;
 		constants: ModuleScript;
 		functions: {
-			"game-config": ModuleScript;
+			'game-config': ModuleScript;
 			logger: ModuleScript;
 		} & Folder;
 		modules: {
-			"3d-sound-system": ModuleScript;
+			'3d-sound-system': ModuleScript;
 		} & Folder;
 		network: ModuleScript;
 		store: {
@@ -19,9 +19,9 @@ interface ReplicatedStorage extends Instance {
 				profiler: ModuleScript;
 			} & Folder;
 			persistent: {
-				"persistent-selectors": ModuleScript;
-				"persistent-slice": {
-					"default-data": ModuleScript;
+				'persistent-selectors': ModuleScript;
+				'persistent-slice': {
+					'default-data': ModuleScript;
 					games: ModuleScript;
 					profile: ModuleScript;
 					setting: ModuleScript;
@@ -29,13 +29,13 @@ interface ReplicatedStorage extends Instance {
 			} & ModuleScript;
 		} & ModuleScript;
 		util: {
-			"core-call": ModuleScript;
-			"flamework-util": ModuleScript;
-			"physics-util": ModuleScript;
-			"player-util": ModuleScript;
+			'core-call': ModuleScript;
+			'flamework-util': ModuleScript;
+			'physics-util': ModuleScript;
+			'player-util': ModuleScript;
 		} & Folder;
 	} & Folder;
-	"TS-types": {
+	'TS-types': {
 		enum: {
 			badge: ModuleScript;
 			mtx: ModuleScript;
@@ -52,24 +52,24 @@ interface ServerScriptService {
 			commands: Folder;
 			types: Folder;
 		} & Folder;
-		"mtx-service": ModuleScript;
+		'mtx-service': ModuleScript;
 		network: ModuleScript;
 		player: {
 			character: {
-				"character-service": ModuleScript;
+				'character-service': ModuleScript;
 			} & Folder;
 			data: {
-				"player-data-service": ModuleScript;
-				"validate-data": ModuleScript;
+				'player-data-service': ModuleScript;
+				'validate-data': ModuleScript;
 			} & Folder;
-			"leaderstats-service": ModuleScript;
-			"player-badge-service": ModuleScript;
-			"player-entity": ModuleScript;
-			"player-idle-service": ModuleScript;
-			"player-removal-service": ModuleScript;
-			"player-service": ModuleScript;
-			"rank-service": ModuleScript;
-			"with-player-entity": ModuleScript;
+			'leaderstats-service': ModuleScript;
+			'player-badge-service': ModuleScript;
+			'player-entity': ModuleScript;
+			'player-idle-service': ModuleScript;
+			'player-removal-service': ModuleScript;
+			'player-service': ModuleScript;
+			'rank-service': ModuleScript;
+			'with-player-entity': ModuleScript;
 		} & Folder;
 		runtime: Script;
 		store: {

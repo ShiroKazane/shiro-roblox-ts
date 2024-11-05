@@ -1,5 +1,5 @@
 declare const enum CollisionGroup {
-	Character = "Character",
+	Character = 'Character',
 }
 
 export default CollisionGroup;

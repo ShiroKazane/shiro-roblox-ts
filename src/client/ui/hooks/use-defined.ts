@@ -1,4 +1,4 @@
-import { useLatest } from "@rbxts/pretty-react-hooks";
+import { useLatest } from '@rbxts/pretty-react-hooks';
 
 function isEqualOrUndefined(previousValue: unknown, value: unknown): boolean {
 	return previousValue === value || value === undefined;

@@ -1,6 +1,6 @@
-import React from "@rbxts/react";
+import React from '@rbxts/react';
 
-import type { FrameProps } from "./frame";
+import type { FrameProps } from './frame';
 
 export interface ButtonProps extends FrameProps<TextButton> {
 	/** The default properties of a `TextButton` component. */
@@ -80,7 +80,7 @@ export function Button({
 			AnchorPoint={new Vector2(0.5, 0.5)}
 			Event={event}
 			Position={new UDim2(0.5, 0, 0.5, 0)}
-			Text=""
+			Text=''
 			{...Native}
 		>
 			{CornerRadius ? <uicorner CornerRadius={CornerRadius} /> : undefined}

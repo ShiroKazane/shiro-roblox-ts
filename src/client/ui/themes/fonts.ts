@@ -1,5 +1,5 @@
-const interFont = "rbxassetid://12187365364";
-const specialElite = "SpecialElite";
+const interFont = 'rbxassetid://12187365364';
+const specialElite = 'SpecialElite';
 
 export const fonts = {
 	inter: {

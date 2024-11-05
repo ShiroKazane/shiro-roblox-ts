@@ -9,27 +9,19 @@
  * @returns A connection that will add any new descendants to the collision
  *   group.
  */
-export function addToCollisionGroup(
-	object: Instance,
-	group: string,
-	trackNewDescendants: true,
-): () => void;
-export function addToCollisionGroup(
-	object: Instance,
-	group: string,
-	trackNewDescendants?: false,
-): undefined;
+export function addToCollisionGroup(object: Instance, group: string, trackNewDescendants: true): () => void;
+export function addToCollisionGroup(object: Instance, group: string, trackNewDescendants?: false): undefined;
 export function addToCollisionGroup(
 	object: Instance,
 	group: string,
 	trackNewDescendants = false,
 ): (() => void) | undefined {
-	if (object.IsA("BasePart")) {
+	if (object.IsA('BasePart')) {
 		object.CollisionGroup = group;
 	}
 
 	for (const descendant of object.GetDescendants()) {
-		if (descendant.IsA("BasePart")) {
+		if (descendant.IsA('BasePart')) {
 			descendant.CollisionGroup = group;
 		}
 	}
@@ -38,8 +30,8 @@ export function addToCollisionGroup(
 		return undefined;
 	}
 
-	const connection = object.DescendantAdded.Connect(descendant => {
-		if (descendant.IsA("BasePart")) {
+	const connection = object.DescendantAdded.Connect((descendant) => {
+		if (descendant.IsA('BasePart')) {
 			descendant.CollisionGroup = group;
 		}
 	});

@@ -1,4 +1,4 @@
-import type { ProducerMiddleware } from "@rbxts/reflex";
+import type { ProducerMiddleware } from '@rbxts/reflex';
 
 export const profilerMiddleware: ProducerMiddleware = () => {
 	return (dispatch, name) => {

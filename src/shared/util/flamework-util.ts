@@ -1,9 +1,9 @@
-import type { Controller, Service } from "@flamework/core";
-import { Flamework, Modding, Reflect } from "@flamework/core";
+import type { Controller, Service } from '@flamework/core';
+import { Flamework, Modding, Reflect } from '@flamework/core';
 
 export const FLAMEWORK_DEFAULT_LOAD_ORDER = 1;
 
-export const FLAMEWORK_DECORATOR_PREFIX = `flamework:decorators.`;
+export const FLAMEWORK_DECORATOR_PREFIX = 'flamework:decorators.';
 
 /**
  * Checks if the given object is decorated with a specific identifier.
@@ -65,16 +65,15 @@ export interface ListenerData<T> {
  */
 export function setupLifecycle<T extends defined>(
 	lifecycle: Array<ListenerData<T>>,
-	specifier?: Modding.Generic<T, "id">,
+	specifier?: Modding.Generic<T, 'id'>,
 ): void {
-	assert(specifier, "[setupLifecycle] Specifier is required");
+	assert(specifier, '[setupLifecycle] Specifier is required');
 
-	Modding.onListenerAdded<T>(object => {
+	Modding.onListenerAdded<T>((object) => {
 		lifecycle.push({
-			id: Reflect.getMetadata(object, "identifier") ?? "flamework:unknown",
+			id: Reflect.getMetadata(object, 'identifier') ?? 'flamework:unknown',
 			event: object,
-			loadOrder:
-				Reflect.getMetadata(object, "flamework:loadOrder") ?? FLAMEWORK_DEFAULT_LOAD_ORDER,
+			loadOrder: Reflect.getMetadata(object, 'flamework:loadOrder') ?? FLAMEWORK_DEFAULT_LOAD_ORDER,
 		});
 	}, specifier);
 

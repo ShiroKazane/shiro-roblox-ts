@@ -1,5 +1,5 @@
-import type { fonts } from "./fonts";
-import type { images } from "./images";
+import type { fonts } from './fonts';
+import type { images } from './images';
 
 export interface Theme {
 	colors: {

@@ -1,5 +1,5 @@
-import type { Badge } from "types/enum/badge";
-import type { GamePass, GamePassData, Product, ProductData } from "types/enum/mtx";
+import type { Badge } from 'types/enum/badge';
+import type { GamePass, GamePassData, Product, ProductData } from 'types/enum/mtx';
 
 export interface PlayerData {
 	readonly games: PlayerGames;
@@ -64,7 +64,7 @@ export const defaultPlayerData: PlayerData = {
 		},
 		rank: {
 			id: 0,
-			name: "Guest",
+			name: 'Guest',
 		},
 	},
 	setting: {

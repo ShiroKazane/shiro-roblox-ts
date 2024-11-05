@@ -1,10 +1,7 @@
-import type { FunctionComponent } from "@rbxts/react";
-import React, { createElement } from "@rbxts/react";
+import type { FunctionComponent } from '@rbxts/react';
+import React, { createElement } from '@rbxts/react';
 
-export function profiler<P extends object>(
-	name: string,
-	render: FunctionComponent<P>,
-): FunctionComponent<P> {
+export function profiler<P extends object>(name: string, render: FunctionComponent<P>): FunctionComponent<P> {
 	return (props: P) => {
 		debug.profilebegin(name);
 		const result = render(props);
@@ -14,7 +11,7 @@ export function profiler<P extends object>(
 }
 
 function getName(callback: Callback): string {
-	const [name = "Component"] = debug.info(callback, "n");
+	const [name = 'Component'] = debug.info(callback, 'n');
 	return name;
 }
 
@@ -31,11 +28,10 @@ export function profileAllComponents(): void {
 
 	const profiledComponents = new Map<FunctionComponent, FunctionComponent>();
 
-	// eslint-disable-next-line react/prefer-read-only-props -- We need to modify the props
 	React.createElement = ((...args: Parameters<typeof React.createElement>) => {
 		const [component] = args;
 
-		if (!typeIs(component, "function")) {
+		if (!typeIs(component, 'function')) {
 			return createElement(...args);
 		}
 

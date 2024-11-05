@@ -1,10 +1,10 @@
-import { Dependency } from "@flamework/core";
-import Log from "@rbxts/log";
+import { Dependency } from '@flamework/core';
+import Log from '@rbxts/log';
 
-import type PlayerService from "server/player/player-service";
-import type { ServerResponse } from "types/interfaces/network";
+import type PlayerService from 'server/player/player-service';
+import type { ServerResponse } from 'types/interfaces/network';
 
-import type PlayerEntity from "./player-entity";
+import type PlayerEntity from './player-entity';
 
 let playerService: PlayerService | undefined;
 
@@ -26,7 +26,7 @@ export default function withPlayerEntity<T extends Array<unknown>>(
 	}
 
 	return (player: Player, ...args: T) => {
-		// eslint-disable-next-line ts/no-non-null-assertion -- We check for this above.
+		// biome-ignore lint/style/noNonNullAssertion: We check for this above.
 		const entity = playerService!.getPlayerEntity(player);
 		if (entity) {
 			return identity<ServerResponse>({
@@ -36,12 +36,11 @@ export default function withPlayerEntity<T extends Array<unknown>>(
 		}
 
 		Log.Error(
-			`Unable to find entity for player ${player}, unable to call callback. Stacktrace: \n` +
-				debug.traceback(),
+			`Unable to find entity for player ${player}, unable to call callback. Stacktrace: \n${debug.traceback()}`,
 		);
 
 		return identity<ServerResponse>({
-			error: "Internal error",
+			error: 'Internal error',
 			success: false,
 		});
 	};

@@ -1,4 +1,4 @@
-import { App } from "./app";
-import { makeStory } from "./functions/story";
+import { App } from './app';
+import { makeStory } from './functions/story';
 
 export = makeStory(App);

@@ -1,7 +1,7 @@
-import { Object } from "@rbxts/luau-polyfill";
-import { TableToString } from "@rbxts/rbx-debug";
-import { useEffect, useRef } from "@rbxts/react";
-import { t } from "@rbxts/t";
+import { Object } from '@rbxts/luau-polyfill';
+import { TableToString } from '@rbxts/rbx-debug';
+import { useEffect, useRef } from '@rbxts/react';
+import { t } from '@rbxts/t';
 
 interface ChangeObject {
 	from: unknown;
@@ -54,7 +54,7 @@ export function useWhyDidYouUpdate(
 		}
 
 		if (logEnabled && next(changesObject)[0]) {
-			logFunction(name + " " + TableToString(changesObject, true));
+			logFunction(`${name} ${TableToString(changesObject, true)}`);
 		}
 
 		previousProps.current = props;

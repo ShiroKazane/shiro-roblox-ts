@@ -1,13 +1,13 @@
-import React, { StrictMode } from "@rbxts/react";
-import { ReflexProvider } from "@rbxts/react-reflex";
-import type { Root } from "@rbxts/react-roblox";
-import { createPortal, createRoot } from "@rbxts/react-roblox";
+import React, { StrictMode } from '@rbxts/react';
+import { ReflexProvider } from '@rbxts/react-reflex';
+import type { Root } from '@rbxts/react-roblox';
+import { createPortal, createRoot } from '@rbxts/react-roblox';
 
-import { PLAYER_GUI } from "client/constants";
-import { store } from "client/store";
+import { PLAYER_GUI } from 'client/constants';
+import { store } from 'client/store';
 
-import type { RemProviderProps } from "../providers/rem-provider";
-import { RemProvider } from "../providers/rem-provider";
+import type { RemProviderProps } from '../providers/rem-provider';
+import { RemProvider } from '../providers/rem-provider';
 
 interface MountProps extends RemProviderProps {
 	/** The key for the UI component. */
@@ -25,11 +25,11 @@ interface MountProps extends RemProviderProps {
  * @returns The root object representing the mounted UI component.
  */
 export function mount({ baseRem, key, remOverride, children }: MountProps): Root {
-	const root = createRoot(new Instance("Folder"));
+	const root = createRoot(new Instance('Folder'));
 	root.render(
 		<StrictMode>
-			<RemProvider key="rem-provider" baseRem={baseRem} remOverride={remOverride}>
-				<ReflexProvider key="reflex-provider" producer={store}>
+			<RemProvider key='rem-provider' baseRem={baseRem} remOverride={remOverride}>
+				<ReflexProvider key='reflex-provider' producer={store}>
 					{createPortal(children, PLAYER_GUI, key)}
 				</ReflexProvider>
 			</RemProvider>

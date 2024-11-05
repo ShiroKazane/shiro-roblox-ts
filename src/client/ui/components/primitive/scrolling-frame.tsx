@@ -1,12 +1,12 @@
-import React from "@rbxts/react";
+import React from '@rbxts/react';
 
-import { useRem, useTheme } from "client/ui/hooks";
+import { useRem, useTheme } from 'client/ui/hooks';
 
 interface ScrollingFrameProps extends React.PropsWithChildren {
 	/** The size of the canvas. */
 	CanvasSize: Vector2;
 	/** All the default properties of a `ScrollingFrame` component. */
-	Native?: Partial<Omit<React.InstanceProps<ScrollingFrame>, "BackgroundTransparency">>;
+	Native?: Partial<Omit<React.InstanceProps<ScrollingFrame>, 'BackgroundTransparency'>>;
 }
 
 /**
@@ -39,11 +39,7 @@ interface ScrollingFrameProps extends React.PropsWithChildren {
  *
  * @see https://developer.roblox.com/en-us/api-reference/class/ScrollingFrame
  */
-export function ScrollingFrame({
-	CanvasSize,
-	Native,
-	children,
-}: Readonly<ScrollingFrameProps>): React.ReactNode {
+export function ScrollingFrame({ CanvasSize, Native, children }: Readonly<ScrollingFrameProps>): React.ReactNode {
 	const theme = useTheme();
 	const rem = useRem();
 

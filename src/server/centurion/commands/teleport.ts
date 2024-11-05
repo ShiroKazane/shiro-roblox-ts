@@ -1,42 +1,44 @@
-import type { CommandContext } from "@rbxts/centurion";
-import { CenturionType, Command, Guard, Register } from "@rbxts/centurion";
+import type { CommandContext } from '@rbxts/centurion';
+import { CenturionType, Command, Guard, Register } from '@rbxts/centurion';
 
-import { isAdmin } from "../utils/is-admin";
+import { isAdmin } from '../utils/is-admin';
 
 @Register()
 export class Teleport {
 	@Command({
-		name: "teleport",
-		aliases: ["tp"],
+		name: 'teleport',
+		aliases: ['tp'],
 		arguments: [
 			{
-				name: "player",
-				description: "Player to teleport",
+				name: 'player',
+				description: 'Player to teleport',
 				type: CenturionType.Player,
 			},
 			{
-				name: "destination",
-				description: "Player destination",
+				name: 'destination',
+				description: 'Player destination',
 				type: CenturionType.Player,
 			},
 		],
-		description: "Teleport player to other player",
+		description: 'Teleport player to other player',
 	})
 	@Guard(isAdmin)
 	public teleport(context: CommandContext, player: Player, destination: Player): void {
 		if (player === context.executor && context.executor === destination) {
 			context.error("You can't teleport yourself to yourself");
 			return;
-		} else if (player === destination) {
+		}
+
+		if (player === destination) {
 			context.error("You can't teleport player to itself");
 			return;
 		}
 
 		const PlayerCharacter = player.Character ?? player.CharacterAdded.Wait()[0];
-		const PlayerHumanoid = PlayerCharacter.WaitForChild("Humanoid", 10) as Humanoid;
+		const PlayerHumanoid = PlayerCharacter.WaitForChild('Humanoid', 10) as Humanoid;
 
 		const DestinationCharacter = destination.Character ?? destination.CharacterAdded.Wait()[0];
-		const DestinationHumanoid = DestinationCharacter.WaitForChild("Humanoid", 10) as Humanoid;
+		const DestinationHumanoid = DestinationCharacter.WaitForChild('Humanoid', 10) as Humanoid;
 
 		if (PlayerHumanoid.RootPart && DestinationHumanoid.RootPart) {
 			PlayerHumanoid.RootPart.CFrame = DestinationHumanoid.RootPart.CFrame;
@@ -47,15 +49,15 @@ export class Teleport {
 	}
 
 	@Command({
-		name: "bring",
+		name: 'bring',
 		arguments: [
 			{
-				name: "player",
-				description: "Player to bring",
+				name: 'player',
+				description: 'Player to bring',
 				type: CenturionType.Player,
 			},
 		],
-		description: "Bring player to your location",
+		description: 'Bring player to your location',
 	})
 	@Guard(isAdmin)
 	public bring(context: CommandContext, player: Player): void {
@@ -65,11 +67,10 @@ export class Teleport {
 		}
 
 		const PlayerCharacter = player.Character ?? player.CharacterAdded.Wait()[0];
-		const PlayerHumanoid = PlayerCharacter.WaitForChild("Humanoid", 10) as Humanoid;
+		const PlayerHumanoid = PlayerCharacter.WaitForChild('Humanoid', 10) as Humanoid;
 
-		const ExecutorCharacter =
-			context.executor.Character ?? context.executor.CharacterAdded.Wait()[0];
-		const ExecutorHumanoid = ExecutorCharacter.WaitForChild("Humanoid", 10) as Humanoid;
+		const ExecutorCharacter = context.executor.Character ?? context.executor.CharacterAdded.Wait()[0];
+		const ExecutorHumanoid = ExecutorCharacter.WaitForChild('Humanoid', 10) as Humanoid;
 
 		if (PlayerHumanoid.RootPart && ExecutorHumanoid.RootPart) {
 			PlayerHumanoid.RootPart.CFrame = ExecutorHumanoid.RootPart.CFrame;
@@ -80,15 +81,15 @@ export class Teleport {
 	}
 
 	@Command({
-		name: "to",
+		name: 'to',
 		arguments: [
 			{
-				name: "player",
-				description: "Teleport destination",
+				name: 'player',
+				description: 'Teleport destination',
 				type: CenturionType.Player,
 			},
 		],
-		description: "Teleport to another player",
+		description: 'Teleport to another player',
 	})
 	@Guard(isAdmin)
 	public to(context: CommandContext, player: Player): void {
@@ -97,12 +98,11 @@ export class Teleport {
 			return;
 		}
 
-		const ExecutorCharacter =
-			context.executor.Character ?? context.executor.CharacterAdded.Wait()[0];
-		const ExecutorHumanoid = ExecutorCharacter.WaitForChild("Humanoid", 10) as Humanoid;
+		const ExecutorCharacter = context.executor.Character ?? context.executor.CharacterAdded.Wait()[0];
+		const ExecutorHumanoid = ExecutorCharacter.WaitForChild('Humanoid', 10) as Humanoid;
 
 		const PlayerCharacter = player.Character ?? player.CharacterAdded.Wait()[0];
-		const PlayerHumanoid = PlayerCharacter.WaitForChild("Humanoid", 10) as Humanoid;
+		const PlayerHumanoid = PlayerCharacter.WaitForChild('Humanoid', 10) as Humanoid;
 
 		if (ExecutorHumanoid.RootPart && PlayerHumanoid.RootPart) {
 			ExecutorHumanoid.RootPart.CFrame = PlayerHumanoid.RootPart.CFrame;

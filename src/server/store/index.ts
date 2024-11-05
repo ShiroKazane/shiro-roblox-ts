@@ -1,11 +1,11 @@
-import type { InferState } from "@rbxts/reflex";
-import { combineProducers } from "@rbxts/reflex";
+import type { InferState } from '@rbxts/reflex';
+import { combineProducers } from '@rbxts/reflex';
 
-import { $NODE_ENV } from "rbxts-transform-env";
-import { slices } from "shared/store";
-import { profilerMiddleware } from "shared/store/middleware/profiler";
+import { $NODE_ENV } from 'rbxts-transform-env';
+import { slices } from 'shared/store';
+import { profilerMiddleware } from 'shared/store/middleware/profiler';
 
-import { broadcasterMiddleware } from "./middleware/broadcaster";
+import { broadcasterMiddleware } from './middleware/broadcaster';
 
 export type RootStore = typeof store;
 export type RootState = InferState<RootStore>;
@@ -17,7 +17,7 @@ export function createStore(): typeof store {
 
 	store.applyMiddleware(broadcasterMiddleware());
 
-	if ($NODE_ENV === "development") {
+	if ($NODE_ENV === 'development') {
 		store.applyMiddleware(profilerMiddleware);
 	}
 

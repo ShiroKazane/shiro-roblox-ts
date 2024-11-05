@@ -1,22 +1,22 @@
-import type { OnStart } from "@flamework/core";
-import { Service } from "@flamework/core";
-import { Janitor } from "@rbxts/janitor";
-import type { Document } from "@rbxts/lapis";
-import type { Logger } from "@rbxts/log";
-import { Object } from "@rbxts/luau-polyfill";
-import Signal from "@rbxts/rbx-better-signal";
-import { Players } from "@rbxts/services";
+import type { OnStart } from '@flamework/core';
+import { Service } from '@flamework/core';
+import { Janitor } from '@rbxts/janitor';
+import type { Document } from '@rbxts/lapis';
+import type { Logger } from '@rbxts/log';
+import { Object } from '@rbxts/luau-polyfill';
+import Signal from '@rbxts/rbx-better-signal';
+import { Players } from '@rbxts/services';
 
-import { $NODE_ENV } from "rbxts-transform-env";
-import PlayerEntity from "server/player/player-entity";
-import type { PlayerData } from "shared/store/persistent";
-import type { ListenerData } from "shared/util/flamework-util";
-import { setupLifecycle } from "shared/util/flamework-util";
-import { onPlayerAdded, promisePlayerDisconnected } from "shared/util/player-util";
-import KickCode from "types/enum/kick-reason";
+import { $NODE_ENV } from 'rbxts-transform-env';
+import PlayerEntity from 'server/player/player-entity';
+import type { PlayerData } from 'shared/store/persistent';
+import type { ListenerData } from 'shared/util/flamework-util';
+import { setupLifecycle } from 'shared/util/flamework-util';
+import { onPlayerAdded, promisePlayerDisconnected } from 'shared/util/player-util';
+import KickCode from 'types/enum/kick-reason';
 
-import type PlayerDataService from "./data/player-data-service";
-import type PlayerRemovalService from "./player-removal-service";
+import type PlayerDataService from './data/player-data-service';
+import type PlayerRemovalService from './player-removal-service';
 
 export interface OnPlayerJoin {
 	/**
@@ -57,15 +57,15 @@ export default class PlayerService implements OnStart {
 		setupLifecycle<OnPlayerJoin>(this.playerJoinEvents);
 		setupLifecycle<OnPlayerLeave>(this.playerLeaveEvents);
 
-		onPlayerAdded(player => {
-			this.onPlayerJoin(player).catch(err => {
+		onPlayerAdded((player) => {
+			this.onPlayerJoin(player).catch((err) => {
 				this.logger.Error(`Failed to load player ${player.UserId}: ${err}`);
 			});
 		});
 
 		Players.PlayerRemoving.Connect(
-			this.withPlayerEntity(playerEntity => {
-				this.onPlayerRemoving(playerEntity).catch(err => {
+			this.withPlayerEntity((playerEntity) => {
+				this.onPlayerRemoving(playerEntity).catch((err) => {
 					this.logger.Error(`Failed to close player ${playerEntity.userId}: ${err}`);
 				});
 			}),
@@ -114,7 +114,6 @@ export default class PlayerService implements OnStart {
 			(playerEntity: PlayerEntity) => playerEntity.player === player,
 		);
 
-		// eslint-disable-next-line promise/always-return -- This is the last callback
 		const disconnect = promisePlayerDisconnected(player).then(() => {
 			promise.cancel();
 		});
@@ -137,15 +136,11 @@ export default class PlayerService implements OnStart {
 	 * @returns A new callback that replaces the first argument with the
 	 *   player's `PlayerEntity` class.
 	 */
-	public withPlayerEntity<T extends Array<unknown>, R = void>(
-		func: (playerEntity: PlayerEntity, ...args: T) => R,
-	) {
+	public withPlayerEntity<T extends Array<unknown>, R = void>(func: (playerEntity: PlayerEntity, ...args: T) => R) {
 		return (player: Player, ...args: T): R | undefined => {
 			const playerEntity = this.getPlayerEntity(player);
 			if (!playerEntity) {
-				this.logger.Error(
-					`No entity for player ${player.UserId}, cannot continue to callback`,
-				);
+				this.logger.Error(`No entity for player ${player.UserId}, cannot continue to callback`);
 				return;
 			}
 
@@ -171,20 +166,18 @@ export default class PlayerService implements OnStart {
 		this.playerEntities.set(player, playerEntity);
 
 		// Call all connected lifecycle events
-		debug.profilebegin("Lifecycle_Player_Join");
-		{
-			for (const { id, event } of this.playerJoinEvents) {
-				janitor
-					.AddPromise(
-						Promise.defer(() => {
-							debug.profilebegin(id);
-							event.onPlayerJoin(playerEntity);
-						}),
-					)
-					.catch(err => {
-						this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
-					});
-			}
+		debug.profilebegin('Lifecycle_Player_Join');
+		for (const { id, event } of this.playerJoinEvents) {
+			janitor
+				.AddPromise(
+					Promise.defer(() => {
+						debug.profilebegin(id);
+						event.onPlayerJoin(playerEntity);
+					}),
+				)
+				.catch((err) => {
+					this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
+				});
 		}
 
 		debug.profileend();
@@ -222,30 +215,28 @@ export default class PlayerService implements OnStart {
 	private async onPlayerRemoving(playerEntity: PlayerEntity): Promise<void> {
 		// Call all connected lifecycle events
 		const promises = new Array<Promise<void>>();
-		debug.profilebegin("Lifecycle_Player_Leave");
-		{
-			for (const { id, event } of this.playerLeaveEvents) {
-				const promiseEvent = Promise.defer<void>((resolve, reject) => {
-					debug.profilebegin(id);
-					try {
-						const leaveEvent = async (): Promise<void> => {
-							await event.onPlayerLeave(playerEntity);
-						};
+		debug.profilebegin('Lifecycle_Player_Leave');
+		for (const { id, event } of this.playerLeaveEvents) {
+			const promiseEvent = Promise.defer<void>((resolve, reject) => {
+				debug.profilebegin(id);
+				try {
+					const leaveEvent = async (): Promise<void> => {
+						await event.onPlayerLeave(playerEntity);
+					};
 
-						const [success, err] = leaveEvent().await();
-						if (!success) {
-							reject(err);
-							return;
-						}
-
-						resolve();
-					} catch (err) {
-						this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
+					const [success, err] = leaveEvent().await();
+					if (!success) {
+						reject(err);
+						return;
 					}
-				});
 
-				promises.push(promiseEvent);
-			}
+					resolve();
+				} catch (err) {
+					this.logger.Error(`Error in player lifecycle ${id}: ${err}`);
+				}
+			});
+
+			promises.push(promiseEvent);
 		}
 
 		debug.profileend();
@@ -262,17 +253,17 @@ export default class PlayerService implements OnStart {
 		// up and removed.
 		game.BindToClose(() => {
 			// We don't want to hold the server open in development
-			if ($NODE_ENV !== "production") {
+			if ($NODE_ENV !== 'production') {
 				return;
 			}
 
-			this.logger.Debug(`Game closing, holding open until all player entities are removed.`);
+			this.logger.Debug('Game closing, holding open until all player entities are removed.');
 
 			while (!this.playerEntities.isEmpty()) {
 				this.onEntityRemoving.Wait();
 			}
 
-			this.logger.Debug(`All player entities removed, closing game.`);
+			this.logger.Debug('All player entities removed, closing game.');
 		});
 	}
 }

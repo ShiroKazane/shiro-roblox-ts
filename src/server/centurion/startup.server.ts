@@ -1,5 +1,5 @@
-import { Centurion } from "@rbxts/centurion";
-import { ServerScriptService } from "@rbxts/services";
+import { Centurion } from '@rbxts/centurion';
+import { ServerScriptService } from '@rbxts/services';
 
 const server = Centurion.server();
 

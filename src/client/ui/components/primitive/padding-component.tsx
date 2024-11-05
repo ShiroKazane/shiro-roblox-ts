@@ -1,5 +1,5 @@
-import type { PropsWithChildren } from "@rbxts/react";
-import React, { forwardRef } from "@rbxts/react";
+import type { PropsWithChildren } from '@rbxts/react';
+import React, { forwardRef } from '@rbxts/react';
 
 interface PaddingProps extends PropsWithChildren {
 	Padding: number;
@@ -22,7 +22,7 @@ export const PaddingComponent = forwardRef(
 	({ Padding, children }: Readonly<PaddingProps>, ref: React.Ref<UIPadding>) => {
 		return (
 			<uipadding
-				key="Padding"
+				key='Padding'
 				ref={ref}
 				PaddingBottom={new UDim(0, Padding)}
 				PaddingLeft={new UDim(0, Padding)}

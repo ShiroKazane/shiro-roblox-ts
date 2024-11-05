@@ -1,14 +1,14 @@
-import type { OnInit } from "@flamework/core";
-import { Service } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
-import { MessagingService, Players, RunService, TeleportService } from "@rbxts/services";
+import type { OnInit } from '@flamework/core';
+import { Service } from '@flamework/core';
+import type { Logger } from '@rbxts/log';
+import { MessagingService, Players, RunService, TeleportService } from '@rbxts/services';
 
-import { store } from "server/store";
-import { selectPlayerProfile } from "shared/store/persistent";
+import { store } from 'server/store';
+import { selectPlayerProfile } from 'shared/store/persistent';
 
-import { Events } from "../network";
-import type PlayerEntity from "./player-entity";
-import type { OnPlayerJoin } from "./player-service";
+import { Events } from '../network';
+import type PlayerEntity from './player-entity';
+import type { OnPlayerJoin } from './player-service';
 
 interface ServerData {
 	jobId: string;
@@ -16,7 +16,7 @@ interface ServerData {
 	playerCount: number;
 }
 
-const SERVER_PING_TOPIC = "ServerPing";
+const SERVER_PING_TOPIC = 'ServerPing';
 
 @Service({})
 export class PlayerIdleService implements OnInit, OnPlayerJoin {
@@ -57,11 +57,11 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 
 		if (state?.idle !== undefined && state.idle) {
 			const Character = player.Character ?? player.CharacterAdded.Wait()[0];
-			const Humanoid = Character.WaitForChild("Humanoid", 10) as Humanoid;
+			const Humanoid = Character.WaitForChild('Humanoid', 10) as Humanoid;
 
 			if (Humanoid.RootPart) {
 				Humanoid.RootPart.CFrame = new CFrame(state.x, state.y, state.z);
-				store.changeProfile(tostring(player.UserId), "position", {
+				store.changeProfile(tostring(player.UserId), 'position', {
 					idle: false,
 					x: 0,
 					y: 0,
@@ -80,11 +80,11 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 	 */
 	private savePosition(player: Player): void {
 		const Character = player.Character ?? player.CharacterAdded.Wait()[0];
-		const Humanoid = Character.WaitForChild("Humanoid", 10) as Humanoid;
+		const Humanoid = Character.WaitForChild('Humanoid', 10) as Humanoid;
 
 		if (Humanoid.RootPart) {
 			const { Position } = Humanoid.RootPart;
-			store.changeProfile(tostring(player.UserId), "position", {
+			store.changeProfile(tostring(player.UserId), 'position', {
 				idle: true,
 				x: Position.X,
 				y: Position.Y,
@@ -103,7 +103,7 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 	 * @param player - The player to teleport.
 	 */
 	private teleportService(player: Player): void {
-		const otherPlayers = Players.GetPlayers().filter(plr => plr !== player);
+		const otherPlayers = Players.GetPlayers().filter((plr) => plr !== player);
 
 		if (this.isPrivateServer()) {
 			this.logger.Info(`${player.Name} is in a private server.`);
@@ -113,14 +113,12 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 		} else {
 			this.logger.Info(`${player.Name} is the only player. Teleport to a new server...`);
 
-			const availableServer = this.publicServers.find(server => server.jobId !== game.JobId);
+			const availableServer = this.publicServers.find((server) => server.jobId !== game.JobId);
 			if (availableServer) {
 				this.logger.Info(`${player.Name} is teleport to an available public server.`);
 				TeleportService.Teleport(availableServer.placeId, player, availableServer.jobId);
 			} else {
-				this.logger.Info(
-					`${player.Name} has no public servers available. Reserving a new server...`,
-				);
+				this.logger.Info(`${player.Name} has no public servers available. Reserving a new server...`);
 				const reserveServerId = TeleportService.ReserveServer(game.PlaceId);
 				TeleportService.TeleportToPrivateServer(game.PlaceId, reserveServerId[0], [player]);
 			}
@@ -133,7 +131,7 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 			return;
 		}
 
-		MessagingService.SubscribeAsync(SERVER_PING_TOPIC, message => {
+		MessagingService.SubscribeAsync(SERVER_PING_TOPIC, (message) => {
 			const serverData = message.Data as ServerData;
 
 			if (serverData.jobId !== game.JobId) {
@@ -171,6 +169,6 @@ export class PlayerIdleService implements OnInit, OnPlayerJoin {
 
 	/** @ignore */
 	private isPrivateServer(): boolean {
-		return game.PrivateServerId !== "" && game.PrivateServerOwnerId !== 0;
+		return game.PrivateServerId !== '' && game.PrivateServerOwnerId !== 0;
 	}
 }

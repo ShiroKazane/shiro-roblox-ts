@@ -1,16 +1,11 @@
-import type { OnStart } from "@flamework/core";
-import { Controller } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
-import Signal from "@rbxts/rbx-better-signal";
-import { promiseTree } from "@rbxts/validate-tree";
+import type { OnStart } from '@flamework/core';
+import { Controller } from '@flamework/core';
+import type { Logger } from '@rbxts/log';
+import Signal from '@rbxts/rbx-better-signal';
+import { promiseTree } from '@rbxts/validate-tree';
 
-import { LocalPlayer } from "client/constants";
-import {
-	CHARACTER_LOAD_TIMEOUT,
-	type CharacterRig,
-	characterSchema,
-	onCharacterAdded,
-} from "shared/util/player-util";
+import { LocalPlayer } from 'client/constants';
+import { CHARACTER_LOAD_TIMEOUT, type CharacterRig, characterSchema, onCharacterAdded } from 'shared/util/player-util';
 
 /**
  * A controller for managing the current character rig in the game. We verify
@@ -31,8 +26,8 @@ export default class CharacterController implements OnStart {
 
 	/** @ignore */
 	public onStart(): void {
-		onCharacterAdded(LocalPlayer, character => {
-			this.characterAdded(character).catch(err => {
+		onCharacterAdded(LocalPlayer, (character) => {
+			this.characterAdded(character).catch((err) => {
 				this.logger.Fatal(`Could not get character rig because:\n${err}`);
 			});
 		});
@@ -78,7 +73,7 @@ export default class CharacterController implements OnStart {
 		connection.Disconnect();
 
 		if (!success) {
-			throw "Character failed to load.";
+			throw 'Character failed to load.';
 		}
 
 		this.listenForCharacterRemoving(model);
@@ -96,7 +91,7 @@ export default class CharacterController implements OnStart {
 				return;
 			}
 
-			this.logger.Verbose(`Character has been removed.`);
+			this.logger.Verbose('Character has been removed.');
 
 			connection.Disconnect();
 			this.currentCharacter = undefined;
@@ -110,7 +105,7 @@ export default class CharacterController implements OnStart {
 	 * @param rig - The character rig that was loaded.
 	 */
 	private onRigLoaded(rig: CharacterRig): void {
-		this.logger.Debug(`Loaded character rig.`);
+		this.logger.Debug('Loaded character rig.');
 		this.currentCharacter = rig;
 		this.onCharacterAdded.Fire(rig);
 	}

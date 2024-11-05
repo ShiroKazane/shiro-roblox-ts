@@ -1,18 +1,18 @@
-import { Players } from "@rbxts/services";
-import type { EvaluateInstanceTree } from "@rbxts/validate-tree";
+import { Players } from '@rbxts/services';
+import type { EvaluateInstanceTree } from '@rbxts/validate-tree';
 
 export const CHARACTER_LOAD_TIMEOUT = 10;
 
 export type CharacterRig = EvaluateInstanceTree<typeof characterSchema>;
 
 export const characterSchema = {
-	$className: "Model",
-	Head: "MeshPart",
+	$className: 'Model',
+	Head: 'MeshPart',
 	Humanoid: {
-		$className: "Humanoid",
-		Animator: "Animator",
+		$className: 'Humanoid',
+		Animator: 'Animator',
 	},
-	HumanoidRootPart: "BasePart",
+	HumanoidRootPart: 'BasePart',
 } as const;
 
 /**
@@ -101,7 +101,7 @@ export function onCharacterAdded(player: Player, callback: (rig: Model) => void)
 export function getPlayerByName(name: string): Player | undefined {
 	const player = Players.FindFirstChild(name);
 
-	if (player?.IsA("Player") === false) {
+	if (player?.IsA('Player') === false) {
 		return;
 	}
 
@@ -121,5 +121,5 @@ export async function promisePlayerDisconnected(player: Player): Promise<void> {
 		return;
 	}
 
-	await Promise.fromEvent(Players.PlayerRemoving, playerWhoLeft => playerWhoLeft === player);
+	await Promise.fromEvent(Players.PlayerRemoving, (playerWhoLeft) => playerWhoLeft === player);
 }

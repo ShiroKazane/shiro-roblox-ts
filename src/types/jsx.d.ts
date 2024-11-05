@@ -1,4 +1,4 @@
-import type { InstanceProps } from "@rbxts/react";
+import type { InstanceProps } from '@rbxts/react';
 
 declare namespace JSX {
 	interface IntrinsicElements {

@@ -1,13 +1,13 @@
-import { Service } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
-import { BadgeService } from "@rbxts/services";
+import { Service } from '@flamework/core';
+import type { Logger } from '@rbxts/log';
+import { BadgeService } from '@rbxts/services';
 
-import { store } from "server/store";
-import { selectPlayerGames } from "shared/store/persistent";
-import { Badge } from "types/enum/badge";
+import { store } from 'server/store';
+import { selectPlayerGames } from 'shared/store/persistent';
+import { Badge } from 'types/enum/badge';
 
-import type PlayerEntity from "./player-entity";
-import type { OnPlayerJoin } from "./player-service";
+import type PlayerEntity from './player-entity';
+import type { OnPlayerJoin } from './player-service';
 
 @Service({})
 export default class PlayerBadgeService implements OnPlayerJoin {
@@ -16,11 +16,11 @@ export default class PlayerBadgeService implements OnPlayerJoin {
 	public onPlayerJoin(playerEntity: PlayerEntity): void {
 		const { userId } = playerEntity;
 
-		this.awardBadge(playerEntity, Badge.Welcome).catch(err => {
+		this.awardBadge(playerEntity, Badge.Welcome).catch((err) => {
 			this.logger.Error(`Failed to check if ${userId} has badge ${Badge.Welcome}: ${err}`);
 		});
 
-		this.awardUnrewardedBadges(playerEntity).catch(err => {
+		this.awardUnrewardedBadges(playerEntity).catch((err) => {
 			this.logger.Error(`Failed to award unrewarded badges to ${userId}: ${err}`);
 		});
 	}
@@ -46,10 +46,7 @@ export default class PlayerBadgeService implements OnPlayerJoin {
 		return this.giveBadge(playerEntity, badge);
 	}
 
-	public async checkIfPlayerHasBadge(
-		{ player, userId }: PlayerEntity,
-		badge: Badge,
-	): Promise<boolean> {
+	public async checkIfPlayerHasBadge({ player, userId }: PlayerEntity, badge: Badge): Promise<boolean> {
 		const hasBadge = store.getState(selectPlayerGames(userId))?.achievements.badges.get(badge);
 		if (hasBadge !== undefined) {
 			return true;
@@ -71,9 +68,7 @@ export default class PlayerBadgeService implements OnPlayerJoin {
 			return;
 		}
 
-		const [success, awarded] = pcall(() =>
-			BadgeService.AwardBadge(player.UserId, tonumber(badge)),
-		);
+		const [success, awarded] = pcall(() => BadgeService.AwardBadge(player.UserId, tonumber(badge)));
 		if (!success) {
 			throw awarded;
 		}
@@ -100,7 +95,7 @@ export default class PlayerBadgeService implements OnPlayerJoin {
 				continue;
 			}
 
-			this.awardBadge(playerEntity, badge).catch(err => {
+			this.awardBadge(playerEntity, badge).catch((err) => {
 				this.logger.Error(`Failed to check if ${userId} has badge ${badge}: ${err}`);
 			});
 		}

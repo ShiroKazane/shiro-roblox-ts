@@ -1,27 +1,27 @@
-import type { CommandContext } from "@rbxts/centurion";
-import { Command, Group, Guard, Register } from "@rbxts/centurion";
-import { Workspace } from "@rbxts/services";
+import type { CommandContext } from '@rbxts/centurion';
+import { Command, Group, Guard, Register } from '@rbxts/centurion';
+import { Workspace } from '@rbxts/services';
 
-import { isAdmin } from "../utils/is-admin";
+import { isAdmin } from '../utils/is-admin';
 
 @Register({
 	groups: [
 		{
-			name: "stats",
-			description: "Show server stats",
+			name: 'stats',
+			description: 'Show server stats',
 		},
 	],
 })
-@Group("stats")
+@Group('stats')
 export class Stats {
 	@Command({
-		name: "uptime",
-		description: "Show server uptime",
+		name: 'uptime',
+		description: 'Show server uptime',
 	})
 	@Guard(isAdmin)
 	public stats(context: CommandContext): void {
 		const uptime = math.floor(Workspace.DistributedGameTime);
-		let time = "";
+		let time = '';
 		if (uptime >= 86400) {
 			time += `${math.floor(uptime / 86400)}d `;
 		}

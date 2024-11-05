@@ -1,6 +1,6 @@
-import { fonts } from "./fonts";
-import { images } from "./images";
-import type { Theme } from "./theme";
+import { fonts } from './fonts';
+import { images } from './images';
+import type { Theme } from './theme';
 
 export const defaultTheme: Theme = {
 	colors: {

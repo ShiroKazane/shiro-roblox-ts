@@ -1,21 +1,21 @@
-import type { OnInit } from "@flamework/core";
-import { Service } from "@flamework/core";
-import type { Document } from "@rbxts/lapis";
-import type { Logger } from "@rbxts/log";
-import { Object } from "@rbxts/luau-polyfill";
-import { MarketplaceService, Players } from "@rbxts/services";
-import Sift from "@rbxts/sift";
-import Signal from "@rbxts/signal";
+import type { OnInit } from '@flamework/core';
+import { Service } from '@flamework/core';
+import type { Document } from '@rbxts/lapis';
+import type { Logger } from '@rbxts/log';
+import { Object } from '@rbxts/luau-polyfill';
+import { MarketplaceService, Players } from '@rbxts/services';
+import Sift from '@rbxts/sift';
+import Signal from '@rbxts/signal';
 
-import type { PlayerData } from "shared/store/persistent";
-import { selectPlayerData, selectPlayerGames } from "shared/store/persistent";
-import { noYield } from "shared/util/no-yield";
-import { GamePass, Product } from "types/enum/mtx";
+import type { PlayerData } from 'shared/store/persistent';
+import { selectPlayerData, selectPlayerGames } from 'shared/store/persistent';
+import { noYield } from 'shared/util/no-yield';
+import { GamePass, Product } from 'types/enum/mtx';
 
-import type PlayerEntity from "./player/player-entity";
-import type { OnPlayerJoin } from "./player/player-service";
-import type PlayerService from "./player/player-service";
-import { store } from "./store";
+import type PlayerEntity from './player/player-entity';
+import type { OnPlayerJoin } from './player/player-service';
+import type PlayerService from './player/player-service';
+import { store } from './store';
 
 const NETWORK_RETRY_DELAY = 2;
 const NETWORK_RETRY_ATTEMPTS = 10;
@@ -45,10 +45,7 @@ type ProductInfo = DeveloperProductInfo | GamePassProductInfo;
  */
 @Service({})
 export default class MtxService implements OnInit, OnPlayerJoin {
-	private readonly productHandlers = new Map<
-		Product,
-		(playerEntity: PlayerEntity, productId: Product) => boolean
-	>();
+	private readonly productHandlers = new Map<Product, (playerEntity: PlayerEntity, productId: Product) => boolean>();
 
 	private readonly productInfoCache = new Map<number, ProductInfo>();
 	private readonly purchaseIdLog = 50;
@@ -86,17 +83,17 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 			return;
 		}
 
-		const unowned = Object.values(GamePass).filter(gamePassId => !gamePasses.has(gamePassId));
+		const unowned = Object.values(GamePass).filter((gamePassId) => !gamePasses.has(gamePassId));
 		for (const gamePassId of unowned) {
 			this.checkForGamePassOwned(playerEntity, gamePassId)
-				.then(owned => {
+				.then((owned) => {
 					if (!owned) {
 						return;
 					}
 
 					store.purchaseGamePass(userId, gamePassId);
 				})
-				.catch(err => {
+				.catch((err) => {
 					this.logger.Warn(`Error checking game pass ${gamePassId}: ${err}`);
 				});
 		}
@@ -142,10 +139,7 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 	 * @returns A Promise that resolves to the product information, or undefined
 	 *   if the information is not available.
 	 */
-	public async getProductInfo(
-		infoType: Enum.InfoType,
-		productId: number,
-	): Promise<ProductInfo | undefined> {
+	public async getProductInfo(infoType: Enum.InfoType, productId: number): Promise<ProductInfo | undefined> {
 		if (this.productInfoCache.has(productId)) {
 			return this.productInfoCache.get(productId);
 		}
@@ -176,16 +170,10 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 	 * @returns A boolean indicating whether the game pass is active or not.
 	 */
 	public isGamePassActive({ userId }: PlayerEntity, gamePassId: GamePass): boolean {
-		return (
-			store.getState(selectPlayerGames(userId))?.mtx.gamePasses.get(gamePassId)?.active ??
-			false
-		);
+		return store.getState(selectPlayerGames(userId))?.mtx.gamePasses.get(gamePassId)?.active ?? false;
 	}
 
-	private async checkForGamePassOwned(
-		{ player, userId }: PlayerEntity,
-		gamePassId: GamePass,
-	): Promise<boolean> {
+	private async checkForGamePassOwned({ player, userId }: PlayerEntity, gamePassId: GamePass): Promise<boolean> {
 		// Ensure game passId is a valid game passes for our game
 		if (!Object.values(GamePass).includes(gamePassId)) {
 			throw `Invalid game pass id ${gamePassId}`;
@@ -206,9 +194,7 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 
 		// Ensure productId is a valid product for our game
 		if (!Object.values(Product).includes(product)) {
-			this.logger.Warn(
-				`Player ${userId} attempted to purchased invalid product ${productId}`,
-			);
+			this.logger.Warn(`Player ${userId} attempted to purchased invalid product ${productId}`);
 			return false;
 		}
 
@@ -229,19 +215,11 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 		return true;
 	}
 
-	private notifyProductActive(
-		playerEntity: PlayerEntity,
-		productId: GamePass,
-		isActive: boolean,
-	): void {
+	private notifyProductActive(playerEntity: PlayerEntity, productId: GamePass, isActive: boolean): void {
 		this.gamePassStatusChanged.Fire(playerEntity, productId, isActive);
 	}
 
-	private onGamePassPurchaseFinished(
-		playerEntity: PlayerEntity,
-		gamePassId: number,
-		wasPurchased: boolean,
-	): void {
+	private onGamePassPurchaseFinished(playerEntity: PlayerEntity, gamePassId: number, wasPurchased: boolean): void {
 		if (!wasPurchased) {
 			return;
 		}
@@ -251,9 +229,7 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 
 		// Ensure game passId is a valid game passes for our game
 		if (!Object.values(GamePass).includes(gamePass)) {
-			this.logger.Warn(
-				`Player ${userId} attempted to purchased invalid game pass ${gamePassId}`,
-			);
+			this.logger.Warn(`Player ${userId} attempted to purchased invalid game pass ${gamePassId}`);
 			return;
 		}
 
@@ -263,9 +239,7 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 	}
 
 	private async processReceipt(receiptInfo: ReceiptInfo): Promise<Enum.ProductPurchaseDecision> {
-		this.logger.Info(
-			`Processing receipt ${receiptInfo.PurchaseId} for ${receiptInfo.PlayerId}`,
-		);
+		this.logger.Info(`Processing receipt ${receiptInfo.PurchaseId} for ${receiptInfo.PlayerId}`);
 
 		const player = Players.GetPlayerByUserId(receiptInfo.PlayerId);
 		if (!player) {
@@ -315,11 +289,7 @@ export default class MtxService implements OnInit, OnPlayerJoin {
 		return Enum.ProductPurchaseDecision.PurchaseGranted;
 	}
 
-	private updateReceiptHistory(
-		data: PlayerData,
-		document: Document<PlayerData>,
-		purchaseId: string,
-	): void {
+	private updateReceiptHistory(data: PlayerData, document: Document<PlayerData>, purchaseId: string): void {
 		const { receiptHistory } = data.games.mtx;
 
 		let updatedReceiptHistory = Sift.Array.push(receiptHistory, purchaseId);

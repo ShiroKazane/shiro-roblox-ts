@@ -1,38 +1,35 @@
-import type { OnStart } from "@flamework/core";
-import { Controller } from "@flamework/core";
-import { Players, TextChatService } from "@rbxts/services";
+import type { OnStart } from '@flamework/core';
+import { Controller } from '@flamework/core';
+import { Players, TextChatService } from '@rbxts/services';
 
-import { store } from "client/store";
-import { selectPlayerProfile } from "shared/store/persistent";
+import { store } from 'client/store';
+import { selectPlayerProfile } from 'shared/store/persistent';
 
 @Controller({})
 export class ChatPrefixController implements OnStart {
-	private readonly rankPrefixMapping = new Map<
-		string,
-		{ border: string; color: string; prefix: string }
-	>([
+	private readonly rankPrefixMapping = new Map<string, { border: string; color: string; prefix: string }>([
 		[
-			"Adept",
+			'Adept',
 			{
-				border: "#FFAA7F",
-				color: "#FFFFFF",
-				prefix: "Adept",
+				border: '#FFAA7F',
+				color: '#FFFFFF',
+				prefix: 'Adept',
 			},
 		],
 		[
-			"Okyakusama",
+			'Okyakusama',
 			{
-				border: "#FFAAFF",
-				color: "#FFFFFF",
-				prefix: "🐰",
+				border: '#FFAAFF',
+				color: '#FFFFFF',
+				prefix: '🐰',
 			},
 		],
 		[
-			"Shiro",
+			'Shiro',
 			{
-				border: "#AAAAFF",
-				color: "#FFFFFF",
-				prefix: "Shiro",
+				border: '#AAAAFF',
+				color: '#FFFFFF',
+				prefix: 'Shiro',
 			},
 		],
 	]);
@@ -65,7 +62,7 @@ export class ChatPrefixController implements OnStart {
 				return;
 			}
 
-			const properties = new Instance("TextChatMessageProperties");
+			const properties = new Instance('TextChatMessageProperties');
 			const player = Players.GetPlayerByUserId(textSource.UserId);
 			if (player) {
 				const state = store.getState(selectPlayerProfile(tostring(player.UserId)))?.rank;

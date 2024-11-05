@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "@rbxts/react";
-import { setTimeout } from "@rbxts/set-timeout";
+import React, { useEffect, useState } from '@rbxts/react';
+import { setTimeout } from '@rbxts/set-timeout';
 
 interface DelayRenderProps extends React.PropsWithChildren {
 	/** The delay (in seconds) before rendering the children component. */

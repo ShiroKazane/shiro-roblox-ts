@@ -1,6 +1,6 @@
-import Log from "@rbxts/log";
-import type { ErrorInfo } from "@rbxts/react";
-import React, { ReactComponent } from "@rbxts/react";
+import Log from '@rbxts/log';
+import type { ErrorInfo } from '@rbxts/react';
+import React, { ReactComponent } from '@rbxts/react';
 
 interface ErrorBoundaryProps extends React.PropsWithChildren {
 	Fallback: (error: unknown) => React.ReactNode;
@@ -26,10 +26,7 @@ interface ErrorBoundaryState {
  * @see https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary
  */
 @ReactComponent
-export default class ErrorBoundary extends React.Component<
-	Readonly<ErrorBoundaryProps>,
-	ErrorBoundaryState
-> {
+export default class ErrorBoundary extends React.Component<Readonly<ErrorBoundaryProps>, ErrorBoundaryState> {
 	public readonly state: ErrorBoundaryState = {
 		hasError: false,
 	};

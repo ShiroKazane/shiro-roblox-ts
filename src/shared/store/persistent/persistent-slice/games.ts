@@ -1,9 +1,9 @@
-import { createProducer } from "@rbxts/reflex";
+import { createProducer } from '@rbxts/reflex';
 
-import type { Badge } from "types/enum/badge";
-import type { GamePass, Product } from "types/enum/mtx";
+import type { Badge } from 'types/enum/badge';
+import type { GamePass, Product } from 'types/enum/mtx';
 
-import type { PlayerData, PlayerGames } from "./default-data";
+import type { PlayerData, PlayerGames } from './default-data';
 
 export type GamesState = Readonly<Record<string, PlayerGames | undefined>>;
 
@@ -58,8 +58,7 @@ export const gamesSlice = createProducer(initialState, {
 				mtx: {
 					...games.mtx,
 					products: new Map([...games.mtx.products]).set(productId, {
-						timesPurchased:
-							(games.mtx.products.get(productId)?.timesPurchased ?? 0) + 1,
+						timesPurchased: (games.mtx.products.get(productId)?.timesPurchased ?? 0) + 1,
 					}),
 				},
 			},

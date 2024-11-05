@@ -1,7 +1,7 @@
-import { Service } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
+import { Service } from '@flamework/core';
+import type { Logger } from '@rbxts/log';
 
-import KickCode from "types/enum/kick-reason";
+import KickCode from 'types/enum/kick-reason';
 
 /** This handles removing the player from the game for various reasons. */
 @Service({})
@@ -28,16 +28,16 @@ export default class PlayerRemovalService {
 	public toMessage(code: KickCode): string {
 		switch (code) {
 			case KickCode.PlayerProfileUndefined: {
-				return `Your player profile is undefined. Please rejoin the game.`;
+				return 'Your player profile is undefined. Please rejoin the game.';
 			}
 			case KickCode.PlayerProfileReleased: {
-				return `Your player profile has been released. Please rejoin the game.`;
+				return 'Your player profile has been released. Please rejoin the game.';
 			}
 			case KickCode.PlayerFullServer: {
-				return `The server is full. Please try again later.`;
+				return 'The server is full. Please try again later.';
 			}
 			case KickCode.PlayerInstantiationError: {
-				return `An error occurred while instantiating your player. Please rejoin the game.`;
+				return 'An error occurred while instantiating your player. Please rejoin the game.';
 			}
 		}
 	}

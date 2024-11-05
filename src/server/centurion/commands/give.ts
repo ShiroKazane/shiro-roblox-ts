@@ -1,35 +1,35 @@
-import type { CommandContext } from "@rbxts/centurion";
-import { CenturionType, Command, Group, Guard, Register } from "@rbxts/centurion";
+import type { CommandContext } from '@rbxts/centurion';
+import { CenturionType, Command, Group, Guard, Register } from '@rbxts/centurion';
 
-import { store } from "server/store";
+import { store } from 'server/store';
 
-import { isAdmin } from "../utils/is-admin";
+import { isAdmin } from '../utils/is-admin';
 
 @Register({
 	groups: [
 		{
-			name: "give",
-			description: "Give player something",
+			name: 'give',
+			description: 'Give player something',
 		},
 	],
 })
-@Group("give")
+@Group('give')
 export class Give {
 	@Command({
-		name: "koban",
+		name: 'koban',
 		arguments: [
 			{
-				name: "player",
-				description: "Player to give",
+				name: 'player',
+				description: 'Player to give',
 				type: CenturionType.Player,
 			},
 			{
-				name: "amount",
-				description: "Amount to give",
+				name: 'amount',
+				description: 'Amount to give',
 				type: CenturionType.Integer,
 			},
 		],
-		description: "Give koban to player",
+		description: 'Give koban to player',
 	})
 	@Guard(isAdmin)
 	public give(context: CommandContext, player: Player, amount: number): void {

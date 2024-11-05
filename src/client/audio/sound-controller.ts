@@ -1,26 +1,26 @@
-import type { OnInit, OnStart } from "@flamework/core";
-import { Controller } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
-import { Inspect } from "@rbxts/rbx-debug";
-import { SoundService, TweenService } from "@rbxts/services";
+import type { OnInit, OnStart } from '@flamework/core';
+import { Controller } from '@flamework/core';
+import type { Logger } from '@rbxts/log';
+import { Inspect } from '@rbxts/rbx-debug';
+import { SoundService, TweenService } from '@rbxts/services';
 
-import { USER_ID } from "client/constants";
-import { store } from "client/store";
-import SoundSystem from "shared/modules/3d-sound-system";
-import Make from "shared/modules/make";
-import type { PlayerSetting } from "shared/store/persistent";
-import { selectPlayerSetting } from "shared/store/persistent";
+import { USER_ID } from 'client/constants';
+import { store } from 'client/store';
+import SoundSystem from 'shared/modules/3d-sound-system';
+import Make from 'shared/modules/make';
+import type { PlayerSetting } from 'shared/store/persistent';
+import { selectPlayerSetting } from 'shared/store/persistent';
 
-export const enum SoundType {
-	Music = "Music",
-	SoundEffect = "SoundEffect",
+export enum SoundType {
+	Music = 'Music',
+	SoundEffect = 'SoundEffect',
 }
 
 interface PlaySoundOptions {
 	attachToPoint?: BasePart;
 	debugName?: string;
 	sound: number;
-	soundProperties?: Omit<Partial<InstanceProperties<Sound>>, "Parent">;
+	soundProperties?: Omit<Partial<InstanceProperties<Sound>>, 'Parent'>;
 	soundType: SoundType;
 }
 
@@ -47,12 +47,12 @@ export default class SoundController implements OnInit, OnStart {
 		this.soundGroups.set(SoundType.Music, this.makeSoundGroup(SoundType.Music));
 		this.soundGroups.set(SoundType.SoundEffect, this.makeSoundGroup(SoundType.SoundEffect));
 
-		this.logger.Info(`Setup SoundGroup instances`);
+		this.logger.Info('Setup SoundGroup instances');
 	}
 
 	/** @ignore */
 	public onStart(): void {
-		store.subscribe(selectPlayerSetting(USER_ID), current => {
+		store.subscribe(selectPlayerSetting(USER_ID), (current) => {
 			if (!current) {
 				return;
 			}
@@ -61,18 +61,12 @@ export default class SoundController implements OnInit, OnStart {
 		});
 	}
 
-	public createSound({
-		attachToPoint,
-		debugName,
-		sound,
-		soundProperties = {},
-		soundType,
-	}: PlaySoundOptions): Sound {
+	public createSound({ attachToPoint, debugName, sound, soundProperties = {}, soundType }: PlaySoundOptions): Sound {
 		const soundGroup = this.soundGroups.get(soundType);
 		assert(soundGroup, `SoundGroup not found for SoundType ${soundType}`);
 
 		const soundParent = attachToPoint ?? soundGroup;
-		const soundObject = Make("Sound", {
+		const soundObject = Make('Sound', {
 			...soundProperties,
 			Name: debugName ?? Inspect(sound),
 			Parent: soundParent,
@@ -102,11 +96,7 @@ export default class SoundController implements OnInit, OnStart {
 		const desiredVolume = soundObject.Volume;
 		soundObject.Volume = 0;
 
-		const tweenInfo = new TweenInfo(
-			fadeInTime,
-			Enum.EasingStyle.Quad,
-			Enum.EasingDirection.Out,
-		);
+		const tweenInfo = new TweenInfo(fadeInTime, Enum.EasingStyle.Quad, Enum.EasingDirection.Out);
 
 		TweenService.Create(soundObject, tweenInfo, {
 			Volume: desiredVolume,
@@ -116,11 +106,11 @@ export default class SoundController implements OnInit, OnStart {
 	private makeSoundGroup(soundType: SoundType): SoundGroup {
 		// Make sure this SoundGroup doesn't already exist
 		const existing = SoundService.FindFirstChild(soundType);
-		if (existing?.IsA("SoundGroup") === true) {
+		if (existing?.IsA('SoundGroup') === true) {
 			return existing;
 		}
 
-		return Make("SoundGroup", {
+		return Make('SoundGroup', {
 			Name: soundType,
 			Parent: SoundService,
 			Volume: 1,
@@ -129,11 +119,11 @@ export default class SoundController implements OnInit, OnStart {
 
 	private onSettingsChanged(current: PlayerSetting): void {
 		const musicGroup = this.soundGroups.get(SoundType.Music);
-		assert(musicGroup, `Music SoundGroup not found`);
+		assert(musicGroup, 'Music SoundGroup not found');
 		musicGroup.Volume = current.musicVolume;
 
 		const sfxGroup = this.soundGroups.get(SoundType.SoundEffect);
-		assert(sfxGroup, `SoundEffect SoundGroup not found`);
+		assert(sfxGroup, 'SoundEffect SoundGroup not found');
 		sfxGroup.Volume = current.sfxVolume;
 	}
 }

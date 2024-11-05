@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "@rbxts/react";
+import { useEffect, useRef } from '@rbxts/react';
 
 /**
  * A simple function that checks how many times the component has been rendered.

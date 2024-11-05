@@ -1,6 +1,6 @@
-import { useCallback, useContext } from "@rbxts/react";
+import { useCallback, useContext } from '@rbxts/react';
 
-import { DEFAULT_REM, RemContext } from "../providers/rem-provider";
+import { DEFAULT_REM, RemContext } from '../providers/rem-provider';
 
 export interface RemOptions {
 	maximum?: number;
@@ -14,7 +14,7 @@ interface RemFunction {
 	(value: Vector2, mode?: RemScaleMode): Vector2;
 }
 
-type RemScaleMode = "pixel" | "unit";
+type RemScaleMode = 'pixel' | 'unit';
 
 const scaleFunctions = {
 	number: (value: number, rem: number): number => value * rem,
@@ -43,12 +43,10 @@ function useRemContext({ maximum = math.huge, minimum = 0 }: RemOptions = {}): n
 export function useRem(options?: RemOptions): RemFunction {
 	const rem = useRemContext(options);
 
-	const remFunction: RemFunction = <T>(value: T, mode: RemScaleMode = "unit"): T => {
-		const scale = scaleFunctions[typeOf(value) as never] as
-			| ((value: T, rem: number) => T)
-			| undefined;
+	const remFunction: RemFunction = <T>(value: T, mode: RemScaleMode = 'unit'): T => {
+		const scale = scaleFunctions[typeOf(value) as never] as ((value: T, rem: number) => T) | undefined;
 		if (scale) {
-			return mode === "unit" ? scale(value, rem) : scale(value, rem / DEFAULT_REM);
+			return mode === 'unit' ? scale(value, rem) : scale(value, rem / DEFAULT_REM);
 		}
 
 		return value;

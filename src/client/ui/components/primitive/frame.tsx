@@ -1,7 +1,7 @@
-import type { Ref } from "@rbxts/react";
-import React, { forwardRef } from "@rbxts/react";
+import type { Ref } from '@rbxts/react';
+import React, { forwardRef } from '@rbxts/react';
 
-import type { BindingValue } from "types/util/react";
+import type { BindingValue } from 'types/util/react';
 
 export interface FrameProps<T extends Instance = Frame> extends React.PropsWithChildren {
 	/** An optional helper that rounds the corners of the frame. */
@@ -29,19 +29,17 @@ export interface FrameProps<T extends Instance = Frame> extends React.PropsWithC
  *
  * @see https://create.roblox.com/docs/reference/engine/classes/Frame
  */
-export const Frame = forwardRef(
-	({ CornerRadius, Native, children }: Readonly<FrameProps>, ref: Ref<Frame>) => {
-		return (
-			<frame
-				ref={ref}
-				AnchorPoint={new Vector2(0.5, 0.5)}
-				Position={new UDim2(0.5, 0, 0.5, 0)}
-				Size={new UDim2(1, 0, 1, 0)}
-				{...Native}
-			>
-				{children}
-				{CornerRadius ? <uicorner CornerRadius={CornerRadius} /> : undefined}
-			</frame>
-		);
-	},
-);
+export const Frame = forwardRef(({ CornerRadius, Native, children }: Readonly<FrameProps>, ref: Ref<Frame>) => {
+	return (
+		<frame
+			ref={ref}
+			AnchorPoint={new Vector2(0.5, 0.5)}
+			Position={new UDim2(0.5, 0, 0.5, 0)}
+			Size={new UDim2(1, 0, 1, 0)}
+			{...Native}
+		>
+			{children}
+			{CornerRadius ? <uicorner CornerRadius={CornerRadius} /> : undefined}
+		</frame>
+	);
+});

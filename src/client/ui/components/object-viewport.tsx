@@ -1,7 +1,7 @@
-import { useMountEffect } from "@rbxts/pretty-react-hooks";
-import React, { useRef } from "@rbxts/react";
+import { useMountEffect } from '@rbxts/pretty-react-hooks';
+import React, { useRef } from '@rbxts/react';
 
-import Make from "shared/modules/make";
+import Make from 'shared/modules/make';
 
 export interface ObjectViewportProps extends React.PropsWithChildren {
 	/** Additional depth to push the camera back. */
@@ -54,11 +54,11 @@ export function ObjectViewport({
 
 	useMountEffect(() => {
 		const viewport = viewportRef.current;
-		assert(viewport !== undefined, "Viewport is not defined");
+		assert(viewport !== undefined, 'Viewport is not defined');
 
 		let model = Object;
-		if (!model.IsA("Model")) {
-			model = Make("Model", {
+		if (!model.IsA('Model')) {
+			model = Make('Model', {
 				Children: [Object],
 				PrimaryPart: Object as BasePart,
 			});
@@ -66,7 +66,7 @@ export function ObjectViewport({
 
 		model.Parent = viewport;
 
-		const viewportCamera = new Instance("Camera");
+		const viewportCamera = new Instance('Camera');
 		viewport.CurrentCamera = viewportCamera;
 		setDefaultCameraView(viewportCamera, model, ExtraCameraDepth);
 		viewportCamera.Parent = viewport;

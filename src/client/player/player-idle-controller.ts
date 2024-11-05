@@ -1,17 +1,17 @@
-import type { OnInit } from "@flamework/core";
-import { Controller } from "@flamework/core";
-import type { Logger } from "@rbxts/log";
-import { Players } from "@rbxts/services";
+import type { OnInit } from '@flamework/core';
+import { Controller } from '@flamework/core';
+import type { Logger } from '@rbxts/log';
+import { Players } from '@rbxts/services';
 
-import { USER_NAME } from "client/constants";
-import { Events } from "client/network";
+import { USER_NAME } from 'client/constants';
+import { Events } from 'client/network';
 
 @Controller({})
 export default class IdleController implements OnInit {
 	constructor(private readonly logger: Logger) {}
 
 	public onInit(): void {
-		Players.LocalPlayer.Idled.Connect(time => {
+		Players.LocalPlayer.Idled.Connect((time) => {
 			this.OnPlayerIdled(time);
 		});
 	}

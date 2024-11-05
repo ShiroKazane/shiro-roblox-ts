@@ -20,16 +20,15 @@
 		"dev:stop": "rbxts-build stop",
 		"dev:sync": "rbxts-build sync",
 		"dev:watch": "rbxts-build watch",
-		"eslint-config": "npx @eslint/config-inspector",
-		"lint": "eslint --max-warnings 0 --flag unstable_ts_config .",
-		"postassets:upload": "eslint src/shared/assets.d.ts --fix",
-		"postdev:sync": "eslint src/types/services.d.ts --fix",
+		"lint": "biome check --no-errors-on-unmatched .",
+		"postassets:upload": "biome check src/shared/assets.d.ts --fix",
+		"postdev:sync": "biome check src/types/services.d.ts --fix",
 		"prepare": "node .husky/install.js",
 		"prod:build": "npm run clean && NODE_ENV=production && npx rbxtsc --verbose && npm run darklua",
 		"prod:sync": "rojo serve ./build.project.json"
 	},
 	"lint-staged": {
-		"*": "eslint --fix --max-warnings 0 --no-warn-ignored --flag unstable_ts_config"
+		"*": "biome check --no-errors-on-unmatched --files-ignore-unknown=true --staged --fix"
 	},
 	"dependencies": {
 		"@flamework/components": "1.2.3",
@@ -65,20 +64,15 @@
 		"rbxts-transform-env": "github:roblox-aurora/rbxts-transform-env"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
 		"@commitlint/cli": "19.5.0",
 		"@commitlint/config-conventional": "19.5.0",
 		"@commitlint/prompt-cli": "19.5.0",
 		"@commitlint/types": "19.5.0",
-		"@eslint-react/eslint-plugin": "1.15.0",
-		"@eslint/config-inspector": "0.5.5",
-		"@isentinel/eslint-config": "0.8.0",
 		"@rbxts/compiler-types": "3.0.0-types.0",
 		"@rbxts/types": "1.0.813",
-		"eslint": "9.13.0",
-		"eslint-plugin-react-roblox-hooks": "5.1.0-rbx.1",
 		"git-pull-run": "1.4.0",
 		"husky": "9.1.6",
-		"jiti": "2.3.3",
 		"lint-staged": "15.2.10",
 		"rbxts-build": "2.4.0",
 		"rbxts-transformer-flamework": "1.2.3",

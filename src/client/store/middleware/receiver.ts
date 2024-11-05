@@ -1,10 +1,10 @@
-import type { ProducerMiddleware } from "@rbxts/reflex";
-import { createBroadcastReceiver } from "@rbxts/reflex";
+import type { ProducerMiddleware } from '@rbxts/reflex';
+import { createBroadcastReceiver } from '@rbxts/reflex';
 
-import { Events } from "client/network";
-import { $NODE_ENV } from "rbxts-transform-env";
-import { IS_EDIT } from "shared/constants";
-import { stateSerDes } from "shared/store";
+import { Events } from 'client/network';
+import { $NODE_ENV } from 'rbxts-transform-env';
+import { IS_EDIT } from 'shared/constants';
+import { stateSerDes } from 'shared/store';
 
 /**
  * A middleware that listens for actions dispatched from the server and
@@ -14,8 +14,8 @@ import { stateSerDes } from "shared/store";
  */
 export function receiverMiddleware(): ProducerMiddleware {
 	// Storybook support
-	if ($NODE_ENV === "development" && IS_EDIT) {
-		return () => dispatch => dispatch;
+	if ($NODE_ENV === 'development' && IS_EDIT) {
+		return () => (dispatch) => dispatch;
 	}
 
 	const receiver = createBroadcastReceiver({
@@ -24,11 +24,11 @@ export function receiverMiddleware(): ProducerMiddleware {
 		},
 	});
 
-	Events.store.dispatch.connect(actions => {
+	Events.store.dispatch.connect((actions) => {
 		receiver.dispatch(actions);
 	});
 
-	Events.store.hydrate.connect(state => {
+	Events.store.hydrate.connect((state) => {
 		receiver.hydrate(stateSerDes.deserialize(state.buffer, state.blobs));
 	});
 

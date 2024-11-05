@@ -1,14 +1,11 @@
-import { useLatestCallback } from "@rbxts/pretty-react-hooks";
-import type { Binding } from "@rbxts/react";
-import { useBinding, useEffect, useMemo } from "@rbxts/react";
-import type { Motion, MotionGoal } from "@rbxts/ripple";
-import { createMotion } from "@rbxts/ripple";
-import { RunService } from "@rbxts/services";
+import { useLatestCallback } from '@rbxts/pretty-react-hooks';
+import type { Binding } from '@rbxts/react';
+import { useBinding, useEffect, useMemo } from '@rbxts/react';
+import type { Motion, MotionGoal } from '@rbxts/ripple';
+import { createMotion } from '@rbxts/ripple';
+import { RunService } from '@rbxts/services';
 
-export function useMotion<T = number>(
-	goal: number,
-	mapper?: (value: number) => T,
-): LuaTuple<[Binding<T>, Motion]>;
+export function useMotion<T = number>(goal: number, mapper?: (value: number) => T): LuaTuple<[Binding<T>, Motion]>;
 
 export function useMotion<T extends MotionGoal, U = T>(
 	goal: T,
@@ -44,7 +41,7 @@ export function useMotion<T extends MotionGoal, U = T>(
 	}, [get, mapper, setValue]);
 
 	useEffect(() => {
-		const connection = RunService.Heartbeat.Connect(delta => {
+		const connection = RunService.Heartbeat.Connect((delta) => {
 			motion.step(delta);
 			setValue(get());
 		});

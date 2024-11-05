@@ -1,5 +1,5 @@
-import { map, useCamera, useDebounceState, useEventListener } from "@rbxts/pretty-react-hooks";
-import React, { createContext, useCallback, useEffect } from "@rbxts/react";
+import { map, useCamera, useDebounceState, useEventListener } from '@rbxts/pretty-react-hooks';
+import React, { createContext, useCallback, useEffect } from '@rbxts/react';
 
 export interface RemProviderProps extends React.PropsWithChildren {
 	baseRem?: number;
@@ -41,10 +41,7 @@ export function RemProvider({
 			return remOverride;
 		}
 
-		const resolution = new Vector2(
-			math.min(viewport.X, viewport.Y * MAX_ASPECT_RATIO),
-			viewport.Y,
-		);
+		const resolution = new Vector2(math.min(viewport.X, viewport.Y * MAX_ASPECT_RATIO), viewport.Y);
 		const scale = resolution.Magnitude / BASE_RESOLUTION.Magnitude;
 		const desktop = resolution.X > resolution.Y || scale >= 1;
 
@@ -54,7 +51,7 @@ export function RemProvider({
 		setRem(math.clamp(math.round(baseRem * factor), minimumRem, maximumRem));
 	}, [baseRem, camera, maximumRem, minimumRem, remOverride, setRem]);
 
-	useEventListener(camera.GetPropertyChangedSignal("ViewportSize"), update);
+	useEventListener(camera.GetPropertyChangedSignal('ViewportSize'), update);
 
 	useEffect(() => {
 		update();

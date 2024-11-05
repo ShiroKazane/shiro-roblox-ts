@@ -1,5 +1,5 @@
-import { TableToString } from "@rbxts/rbx-debug";
-import { useEffect, useRef } from "@rbxts/react";
+import { TableToString } from '@rbxts/rbx-debug';
+import { useEffect, useRef } from '@rbxts/react';
 
 interface RenderInfo {
 	name: string;
@@ -22,11 +22,7 @@ interface RenderInfo {
  * @returns The render information.
  * @see https://github.com/cool-organization/rbx-hooks/blob/main/src/debugging/use-render-info.ts
  */
-export function useRenderInfo(
-	name = "Unknown",
-	logFunction = print,
-	logEnabled = true,
-): Readonly<RenderInfo> {
+export function useRenderInfo(name = 'Unknown', logFunction = print, logEnabled = true): Readonly<RenderInfo> {
 	const count = useRef(0);
 	const lastRender = useRef<number>();
 	const currentTime = os.clock();

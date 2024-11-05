@@ -1,7 +1,7 @@
-import type { Janitor } from "@rbxts/janitor";
-import type { Document } from "@rbxts/lapis";
+import type { Janitor } from '@rbxts/janitor';
+import type { Document } from '@rbxts/lapis';
 
-import type { PlayerData } from "shared/store/persistent";
+import type { PlayerData } from 'shared/store/persistent';
 
 export default class PlayerEntity {
 	/** The player's username. */

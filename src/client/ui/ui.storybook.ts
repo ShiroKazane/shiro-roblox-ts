@@ -1,6 +1,6 @@
-import React from "@rbxts/react";
+import React from '@rbxts/react';
 
-import { GAME_NAME } from "shared/constants";
+import { GAME_NAME } from 'shared/constants';
 
 interface Storybook {
 	name: string;

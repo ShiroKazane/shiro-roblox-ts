@@ -1,6 +1,6 @@
-import { createProducer } from "@rbxts/reflex";
+import { createProducer } from '@rbxts/reflex';
 
-import type { PlayerData, PlayerProfile } from "./default-data";
+import type { PlayerData, PlayerProfile } from './default-data';
 
 export type ProfileState = Readonly<Record<string, PlayerProfile | undefined>>;
 

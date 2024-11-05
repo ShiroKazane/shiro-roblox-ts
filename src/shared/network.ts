@@ -1,7 +1,7 @@
-import { Networking } from "@flamework/networking";
-import type { BroadcastAction } from "@rbxts/reflex";
+import { Networking } from '@flamework/networking';
+import type { BroadcastAction } from '@rbxts/reflex';
 
-import type { SerializedSharedState } from "./store";
+import type { SerializedSharedState } from './store';
 
 /** Fired by client to server. */
 interface ClientToServerEvents {
@@ -42,7 +42,4 @@ interface ServerToClientEvents {
 type ClientToServerFunctions = object;
 
 export const GlobalEvents = Networking.createEvent<ClientToServerEvents, ServerToClientEvents>();
-export const GlobalFunctions = Networking.createFunction<
-	ClientToServerFunctions,
-	NonNullable<unknown>
->();
+export const GlobalFunctions = Networking.createFunction<ClientToServerFunctions, NonNullable<unknown>>();
