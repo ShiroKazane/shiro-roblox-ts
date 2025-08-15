@@ -58,7 +58,7 @@
 		"@rbxts/sift": "0.0.9",
 		"@rbxts/t": "3.1.1",
 		"@rbxts/topbar-plus": "3.0.2-ts.2",
-		"@rbxts/ui-labs": "2.3.0",
+		"@rbxts/ui-labs": "2.4.1",
 		"@rbxts/validate-tree": "2.0.2",
 		"rbxts-transform-debug": "2.2.0",
 		"rbxts-transform-env": "github:roblox-aurora/rbxts-transform-env"
