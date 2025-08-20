@@ -70,7 +70,7 @@
 		"@commitlint/prompt-cli": "19.5.0",
 		"@commitlint/types": "19.5.0",
 		"@rbxts/compiler-types": "3.0.0-types.0",
-		"@rbxts/types": "1.0.813",
+		"@rbxts/types": "1.0.877",
 		"git-pull-run": "1.4.0",
 		"husky": "9.1.6",
 		"lint-staged": "15.2.10",
